@@ -344,21 +344,22 @@ section .title::after {
   top: 0;
   background: rgba(12, 72, 106, 255);
 }
+.skills-content .right .python::before {
+  width: 80%;
+}
+.skills-content .right .js::before {
+  width: 90%;
+}
 .skills-content .right .html::before {
   width: 80%;
 }
 .skills-content .right .css::before {
   width: 60%;
 }
-.skills-content .right .js::before {
-  width: 90%;
-}
 .skills-content .right .php::before {
   width: 50%;
 }
-.skills-content .right .python::before {
-  width: 50%;
-}
+
 
 /* contact section styling */
 .contact .title::after {
