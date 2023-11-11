@@ -345,18 +345,21 @@ section .title::after {
   background: rgba(12, 72, 106, 255);
 }
 .skills-content .right .python::before {
-  width: 80%;
-}
-.skills-content .right .js::before {
   width: 90%;
 }
-.skills-content .right .html::before {
+.skills-content .right .pytorch::before {
+  width: 50%;
+}
+.skills-content .right .cpp::before {
+  width: 90%;
+}
+.skills-content .right .html5::before {
   width: 80%;
 }
 .skills-content .right .css::before {
   width: 60%;
 }
-.skills-content .right .php::before {
+.skills-content .right .csharp::before {
   width: 50%;
 }
 
