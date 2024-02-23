@@ -439,7 +439,12 @@ section .title::after {
   color: rgba(12, 72, 106, 255);
   background: none;
 }
-
+/* Responsive media query start */
+@media (max-width: 767px) {
+  .projects .project {
+    width: calc(100% - 20px);
+  }
+}
 
 /* contact section styling */
 .contact .title::after {
