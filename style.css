@@ -364,61 +364,71 @@ section .title::after {
   width: 50%;
 }
 
-/* projects section styles */
-.projects {
-  background-color: #f4f4f4;
-  padding: 80px 0;
-}
+/* Add this to the existing CSS file */
 
-.projects-content {
+/* projects section styling */
+.projects .title::after {
+  content: "my projects";
+}
+.projects .projects-content {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 40px;
 }
 
-.project {
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 20px;
+.projects .project {
+  width: calc(33% - 20px);
   margin-bottom: 20px;
-  width: calc(50% - 20px);
+  background: #222;
+  text-align: center;
+  border-radius: 6px;
+  padding: 20px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.project h3 {
-  font-size: 24px;
-  color: #333;
+.projects .project:hover {
+  background: rgba(12, 72, 106, 255);
+}
+
+.projects .project img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.projects .project h3 {
+  font-size: 20px;
+  font-weight: 600;
   margin-bottom: 10px;
+  color: #fff;
 }
 
-.project p {
+.projects .project p {
+  color: lightgrey;
   font-size: 16px;
-  color: #666;
+  line-height: 1.5;
+  margin-bottom: 15px;
 }
 
-.project-btn {
+.projects .project-btn {
   display: inline-block;
-  background-color: rgba(12, 72, 106, 255);
+  background: rgba(12, 72, 106, 255);
   color: #fff;
   font-size: 16px;
-  padding: 10px 15px;
+  padding: 8px 16px;
   border-radius: 6px;
-  text-align: center;
-  margin-top: 15px;
+  border: 2px solid rgba(12, 72, 106, 255);
+  transition: all 0.3s ease;
   text-decoration: none;
-  transition: background-color 0.3s ease;
 }
 
-.project-btn:hover {
-  background-color: #111;
+.projects .project-btn:hover {
+  color: rgba(12, 72, 106, 255);
+  background: none;
 }
 
-@media screen and (max-width: 768px) {
-  .project {
-    width: 100%;
-  }
-}
 /* contact section styling */
 .contact .title::after {
   content: "get in touch";
