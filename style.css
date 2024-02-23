@@ -388,7 +388,7 @@ section .title::after {
 }
 
 .projects .project:hover {
-  background: rgba(12, 72, 106, 255);
+  background-color: transparent;
 }
 
 .projects .project img {
