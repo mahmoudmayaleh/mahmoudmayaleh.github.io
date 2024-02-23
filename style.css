@@ -386,7 +386,7 @@ section .title::after {
 }
 
 .projects .project:hover {
-  color: #5c749c;
+  color: rgba(12, 72, 106, 255);
   background: none;
 }
 
