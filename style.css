@@ -24,6 +24,7 @@ section {
 .skills,
 .teams,
 .contact,
+.projects, 
 footer {
   font-family: "Poppins", sans-serif;
 }
@@ -363,7 +364,44 @@ section .title::after {
   width: 50%;
 }
 
+/* projects section styles */
+.projects {
+  background-color: #f4f4f4;
+  padding: 80px 0;
+}
 
+.projects-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.project {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: calc(50% - 20px);
+}
+
+.project h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.project p {
+  font-size: 16px;
+  color: #666;
+}
+
+@media screen and (max-width: 768px) {
+  .project {
+    width: 100%;
+  }
+}
 /* contact section styling */
 .contact .title::after {
   content: "get in touch";
