@@ -373,6 +373,7 @@ section .title::after {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;  
+  margin: 30px;
 }
 
 .projects .projects-content {
