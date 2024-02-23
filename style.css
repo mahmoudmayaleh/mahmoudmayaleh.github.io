@@ -397,6 +397,23 @@ section .title::after {
   color: #666;
 }
 
+.project-btn {
+  display: inline-block;
+  background-color: rgba(12, 72, 106, 255);
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 15px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.project-btn:hover {
+  background-color: #111;
+}
+
 @media screen and (max-width: 768px) {
   .project {
     width: 100%;
