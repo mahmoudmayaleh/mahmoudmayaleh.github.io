@@ -364,8 +364,6 @@ section .title::after {
   width: 50%;
 }
 
-/* Add this to the existing CSS file */
-
 /* projects section styling */
 .projects .title::after {
   content: "my projects";
@@ -388,7 +386,8 @@ section .title::after {
 }
 
 .projects .project:hover {
-  background-color: transparent;
+  color: #5c749c;
+  background: none;
 }
 
 .projects .project img {
