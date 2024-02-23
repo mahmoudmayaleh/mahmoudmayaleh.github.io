@@ -368,6 +368,13 @@ section .title::after {
 .projects .title::after {
   content: "my projects";
 }
+
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .projects .projects-content {
   display: flex;
   flex-wrap: wrap;
@@ -389,7 +396,7 @@ section .title::after {
 .projects .project:hover {
   color: rgba(12, 72, 106, 255);
   background: none;
-  border: 3px solid lightgrey;
+  border: 2px solid rgba(35, 45, 54, 0.8);
 }
 
 
