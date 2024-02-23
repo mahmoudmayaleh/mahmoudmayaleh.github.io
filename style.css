@@ -372,13 +372,13 @@ section .title::after {
 .projects {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center;  
 }
 
 .projects .projects-content {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center; 
 }
 
 .projects .project {
@@ -397,8 +397,8 @@ section .title::after {
   color: rgba(12, 72, 106, 255);
   background: none;
   border: 2px solid rgba(35, 45, 54, 0.8);
+  transform: scale(1.1);
 }
-
 
 .projects .project img {
   width: 300px;
@@ -437,6 +437,7 @@ section .title::after {
   color: rgba(12, 72, 106, 255);
   background: none;
 }
+
 
 /* contact section styling */
 .contact .title::after {
