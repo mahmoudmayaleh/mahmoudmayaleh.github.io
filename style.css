@@ -374,6 +374,7 @@ section .title::after {
   flex-wrap: wrap;
   justify-content: center;  
   margin: 30px;
+   width: 80%
 }
 
 .projects .projects-content {
@@ -383,7 +384,7 @@ section .title::after {
 }
 
 .projects .project {
-  width: calc(33% - 20px);
+  width: calc(30% - 20px);
   margin-bottom: 20px;
   margin: 0 20px 40px;
   background: transparent;
