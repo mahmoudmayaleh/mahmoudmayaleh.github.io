@@ -365,27 +365,22 @@ section .title::after {
 }
 
 /* projects section styling */
-.projects .title::after {
-  content: "my projects";
-}
-
 .projects {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;  
+  justify-content: center;
   margin: 30px;
 }
 
 .projects .projects-content {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .projects .project {
-  width: calc(30% - 20px);
-  margin-bottom: 20px;
-  margin: 0 18px 40px;
+  width: calc(33.33% - 20px);
+  margin: 0 20px 40px; 
   background: transparent;
   text-align: center;
   border-radius: 6px;
@@ -403,8 +398,8 @@ section .title::after {
 }
 
 .projects .project img {
-  width: 300px;
-  height: 200px;
+  width: 100%; /* Ensure images are responsive */
+  height: auto;
   border-radius: 6px;
   margin-bottom: 15px;
 }
@@ -439,10 +434,16 @@ section .title::after {
   color: rgba(12, 72, 106, 255);
   background: none;
 }
-/* Responsive media query start */
-@media (max-width: 767px) {
+
+/* Tablet responsiveness (max-width: 1024px) */
+@media (max-width: 1024px) {
   .projects .project {
-    width: calc(100% - 20px);
+    width: calc(50% - 20px); /* 2 items per row on tablets */
+    margin: 0 10px 40px; /* Maintain spacing */
+  }
+
+  .projects .project img {
+    width: 100%; /* Ensure images remain responsive */
   }
 }
 
