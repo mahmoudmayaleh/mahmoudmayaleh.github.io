@@ -56,21 +56,26 @@ $(document).ready(function () {
   });
 
  
-  emailjs.init("9ikn3t9V_OwCkCodC");
+emailjs.init("9ikn3t9V_OwCkCodC");
 
-  // Handle the form submission
-  $("form").submit(function (event) {
-    event.preventDefault();  
+$("form").submit(function (event) {
+  event.preventDefault();  
 
-    
-    emailjs.sendForm("service_brq095l", "template_sn27fo7", this)  
-      .then(function(response) {
-        console.log("Success", response);
-        alert("Message sent successfully!");
-        $("form")[0].reset(); 
-      }, function(error) {
-        console.log("Error", error);
-        alert("Failed to send message. Please try again.");
-      });
+  // Set the 'reply_to' field dynamically based on the 'from_email' field
+  $("input[name='reply_to']").val($("input[name='from_email']").val());
+
+  // Send form with all the data, including 'reply_to'
+  emailjs.sendForm("service_brq095l", "template_sn27fo7", this)  
+    .then(function(response) {
+      console.log("Success", response);
+      alert("Message sent successfully!");
+      
+      // Reset the form fields after successful submission
+      $("form")[0].reset();  // This clears the form fields
+    }, function(error) {
+      console.log("Error", error);
+      alert("Failed to send message. Please try again.");
+    });
   });
+
 });
