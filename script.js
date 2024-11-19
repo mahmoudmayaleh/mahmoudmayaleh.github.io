@@ -67,6 +67,7 @@ $(document).ready(function () {
       .then(function(response) {
         console.log("Success", response);
         alert("Message sent successfully!");
+        $("form")[0].reset(); 
       }, function(error) {
         console.log("Error", error);
         alert("Failed to send message. Please try again.");
