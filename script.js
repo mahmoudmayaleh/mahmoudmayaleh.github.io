@@ -18,12 +18,11 @@ $(document).ready(function () {
   // slide-up script
   $(".scroll-up-btn").click(function () {
     $("html").animate({ scrollTop: 0 });
-  
+
     $("html").css("scrollBehavior", "auto");
   });
 
   $(".navbar .menu li a").click(function () {
-
     $("html").css("scrollBehavior", "smooth");
   });
 
@@ -54,5 +53,23 @@ $(document).ready(function () {
         nav: false,
       },
     },
+  });
+
+ 
+  emailjs.init("9ikn3t9V_OwCkCodC");
+
+  // Handle the form submission
+  $("form").submit(function (event) {
+    event.preventDefault();  
+
+    
+    emailjs.sendForm("service_brq095l", "template_sn27fo7", this)  
+      .then(function(response) {
+        console.log("Success", response);
+        alert("Message sent successfully!");
+      }, function(error) {
+        console.log("Error", error);
+        alert("Failed to send message. Please try again.");
+      });
   });
 });
