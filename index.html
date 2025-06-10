@@ -35,6 +35,13 @@
     />
   </head>
   <body>
+    <div id="neural-bg">
+      <svg id="neural-svg-bg" width="100vw" height="100vh" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100vw;height:100vh;">
+        <!-- Example: 3 layers, 5-7 nodes each, lines between layers -->
+        <g id="connections-bg" stroke="#00eaff" stroke-width="3" opacity="0.3"></g>
+        <g id="nodes-bg"></g>
+      </svg>
+    </div>
     <div class="scroll-up-btn">
       <i class="fas fa-angle-up"></i>
     </div>
@@ -57,26 +64,62 @@
     <!-- home section start -->
     <section class="home" id="home">
       <div class="max-width">
-        <div class="home-content">
-          <div class="text-1">Hello, my name is</div>
-          <div class="text-2">Mahmoud Mayaleh</div>
-          <div class="text-3">
-            And I'm an AI engineer
+        <div class="home-content-wrapper">
+          <div class="home-content">
+            <div class="text-1">Hello, my name is</div>
+            <div class="text-2">Mahmoud Mayaleh</div>
+            <div class="text-3 typewriter-container">
+  <span class="typewriter-static">And I'm </span><span id="typewriter-text" class="typewriter"></span>
+</div>
+            <a href="mailto: mahmoudmayaleh@gmail.com">Reach out</a>
           </div>
-          <a href="mailto: mahmoudmayaleh@gmail.com">Reach out</a>
+          <div class="neural-hero-illustration">
+            <!-- Example for one connection, repeat for each line you want animated -->
+<svg id="neural-svg" width="340" height="260" viewBox="0 0 340 260">
+  <!-- Connections -->
+  <g stroke="#00eaff" stroke-width="2" opacity="0.5">
+    <!-- Input to hidden -->
+    <line x1="40" y1="50" x2="150" y2="40"/>
+    <line x1="40" y1="50" x2="150" y2="110"/>
+    <line x1="40" y1="50" x2="150" y2="180"/>
+    <line x1="40" y1="130" x2="150" y2="40"/>
+    <line x1="40" y1="130" x2="150" y2="110"/>
+    <line x1="40" y1="130" x2="150" y2="180"/>
+    <line x1="40" y1="210" x2="150" y2="40"/>
+    <line x1="40" y1="210" x2="150" y2="110"/>
+    <line x1="40" y1="210" x2="150" y2="180"/>
+    <line x1="40" y1="50" x2="150" y2="70"/>
+    <line x1="40" y1="130" x2="150" y2="70"/>
+    <line x1="40" y1="210" x2="150" y2="70"/>
+    <!-- Hidden to output -->
+    <line x1="150" y1="40" x2="280" y2="80"/>
+    <line x1="150" y1="70" x2="280" y2="80"/>
+    <line x1="150" y1="110" x2="280" y2="80"/>
+    <line x1="150" y1="180" x2="280" y2="80"/>
+    <line x1="150" y1="40" x2="280" y2="200"/>
+    <line x1="150" y1="70" x2="280" y2="200"/>
+    <line x1="150" y1="110" x2="280" y2="200"/>
+    <line x1="150" y1="180" x2="280" y2="200"/>
+  </g>
+  <!-- Nodes -->
+  <g>
+    <!-- Input layer -->
+    <g class="nn-node-group" data-idx="0"><circle class="nn-node" cx="40" cy="50" r="14" fill="#fff" data-tooltip="Education"/></g>
+    <g class="nn-node-group" data-idx="1"><circle class="nn-node" cx="40" cy="130" r="14" fill="#fff" data-tooltip="Input Node 2"/></g>
+    <g class="nn-node-group" data-idx="2"><circle class="nn-node" cx="40" cy="210" r="14" fill="#fff" data-tooltip="Input Node 3"/></g>
+    <!-- Hidden layer -->
+    <g class="nn-node-group" data-idx="3"><circle class="nn-node" cx="150" cy="40" r="14" fill="#fff" data-tooltip="Problem Solving"/></g>
+    <g class="nn-node-group" data-idx="4"><circle class="nn-node" cx="150" cy="70" r="14" fill="#fff" data-tooltip="Hidden Node 2"/></g>
+    <g class="nn-node-group" data-idx="5"><circle class="nn-node" cx="150" cy="110" r="14" fill="#fff" data-tooltip="Hidden Node 3"/></g>
+    <g class="nn-node-group" data-idx="6"><circle class="nn-node" cx="150" cy="180" r="14" fill="#fff" data-tooltip="Hidden Node 4"/></g>
+    <!-- Output layer -->
+    <g class="nn-node-group" data-idx="7"><circle class="nn-node" cx="280" cy="80" r="14" fill="#fff" data-tooltip="AI Projects"/></g>
+    <g class="nn-node-group" data-idx="8"><circle class="nn-node" cx="280" cy="200" r="14" fill="#fff" data-tooltip="Output Node 2"/></g>
+  </g>
+
+</svg>
+          </div>
         </div>
-        <svg class="neural-network" viewBox="0 0 600 400">
-          <circle cx="100" cy="200" r="6" fill="white" />
-          <circle cx="200" cy="150" r="6" fill="white" />
-          <circle cx="300" cy="250" r="6" fill="white" />
-          <circle cx="400" cy="100" r="6" fill="white" />
-          <circle cx="500" cy="300" r="6" fill="white" />
-        
-          <line x1="100" y1="200" x2="200" y2="150" stroke="white" stroke-width="2" />
-          <line x1="200" y1="150" x2="300" y2="250" stroke="white" stroke-width="2" />
-          <line x1="300" y1="250" x2="400" y2="100" stroke="white" stroke-width="2" />
-          <line x1="400" y1="100" x2="500" y2="300" stroke="white" stroke-width="2" />
-        </svg>
         <div class="scroll-arrow">
         <i class="fas fa-chevron-down"></i>
       </div>
@@ -85,14 +128,14 @@
     </section>
 
     <!-- about section start -->
-    <section class="about" id="about">
+    <section class="about reveal" id="about">
       <div class="max-width">
         <h2 class="title">About me</h2>
         <div class="about-content">
           <div class="column left">
             <img src="images/mayaleh-logo.jpg" alt="" />
           </div>
-          <div class="column right">
+                   <div class="column right">
             <div class="text">I'm Mahmoud and I'm an AI engineer</div>
             <p>
               I specialize in machine learning development, with hands-on experience in building and deploying ML models. 
@@ -104,7 +147,7 @@
                 class="badge-base__link LI-simple-link"
                 href="https://tr.linkedin.com/in/mahmoud-mayaleh-450510200?trk=profile-badge"
                 target="_blank">linkedin</a>
-             
+              <a href="Mahmoud-Mayaleh-CV-05-2025.pdf" class="cv-btn" target="_blank" rel="noopener">View CV</a>
             </div>
             
           </div>
@@ -113,9 +156,9 @@
     </section>
 
     <!-- skills section start -->
-    <section class="skills" id="skills">
+    <section class="skills reveal" id="skills">
       <div class="max-width">
-        <h2 class="title">My skills</h2>
+        <h2 class="title">Skills</h2>
         <div class="skills-content">
           <div class="column left">
             <div class="text">My skills.</div>
@@ -124,63 +167,56 @@
               and data manipulation, I enjoy tackling complex challenges. 
               My portfolio includes projects like LipLingo, sales forecasting and sentiment analysis, 
               reflecting my approach to using technology for practical, data-driven insights.
-
             </p>
           </div>
           <div class="column right">
-            <div class="bars">
-              <div class="info">
-                <span>Python</span>
-                <span>90%</span>
-              </div>
-              <div class="line python"></div>
-            </div>
-            <div class="bars">
-              <div class="info">
-                <span>Pytorch</span>
-                <span>50%</span>
-              </div>
-              <div class="line pytorch"></div>
-            </div>
-             <div class="bars">
-              <div class="info">
-                <span>C++</span>
-                <span>90%</span>
-              </div>
-              <div class="line cpp"></div>
-            </div>
-            <div class="bars">
-              <div class="info">
-                <span>HTML5</span>
-                <span>80%</span>
-              </div>
-              <div class="line html5"></div>
-            </div>
-            <div class="bars">
-              <div class="info">
-                <span>CSS</span>
-                <span>60%</span>
-              </div>
-              <div class="line css"></div>
-            </div>
-            <div class="bars">
-              <div class="info">
-                <span>C#</span>
-                <span>50%</span>
-              </div>
-              <div class="line csharp"></div>
-            </div>
+            <div class="skill">
+  <span class="skill-label">Python</span>
+  <div class="skill-bar">
+    <div class="skill-bar-fill" data-skill="90"></div>
+  </div>
+</div>
+<div class="skill">
+  <span class="skill-label">Pytorch</span>
+  <div class="skill-bar">
+    <div class="skill-bar-fill" data-skill="50"></div>
+  </div>
+</div>
+<div class="skill">
+  <span class="skill-label">C++</span>
+  <div class="skill-bar">
+    <div class="skill-bar-fill" data-skill="90"></div>
+  </div>
+</div>
+<div class="skill">
+  <span class="skill-label">HTML5</span>
+  <div class="skill-bar">
+    <div class="skill-bar-fill" data-skill="80"></div>
+  </div>
+</div>
+<div class="skill">
+  <span class="skill-label">CSS</span>
+  <div class="skill-bar">
+    <div class="skill-bar-fill" data-skill="60"></div>
+  </div>
+</div>
+<div class="skill">
+  <span class="skill-label">C#</span>
+  <div class="skill-bar">
+    <div class="skill-bar-fill" data-skill="50"></div>
+  </div>
+</div>
           </div>
         </div>
       </div>
     </section>
     <!-- projects section start -->
-<section class="projects" id="projects">
+<section class="projects reveal" id="projects">
   <div class="max-width">
-    <h2 class="title">My Projects</h2>
+    <h2 class="title">Projects</h2>
     <div class="projects-content">
       <!-- Project 1 -->
-            <div class="project">
+            <div class="project reveal">
         <h3>LipLingo: Deep Learning Model for Lip Reading</h3>
         <img src="images/Liplingo-logo.png" alt="Project 1">
         <p>
@@ -192,7 +228,7 @@
       </div>
       
       <!-- Project 2 -->
-      <div class="project">
+      <div class="project reveal">
         <h3>Sentiment Analysis on Social Media Comments</h3>
         <img src="images/proj-sentiment.png" alt="Project 1">
         <p>
@@ -203,7 +239,7 @@
          <a href="https://github.com/mahmoudmayaleh/Sentiment_Analysis" class="project-btn" target="_blank">View on GitHub</a>
       </div>
        <!-- Project 3 -->
-      <div class="project">
+      <div class="project reveal">
         <h3>Sales Forecast</h3>
         <img src="images/proj-forecast.png" alt="Project 1">
         <p>
@@ -220,11 +256,11 @@
 </section>
 
 <!-- publications section start -->
-<section class="publications" id="publications">
+<section class="publications reveal" id="publications">
   <div class="max-width">
     <h2 class="title">Publications</h2>
     <div class="publications-content">
-      <div class="publication">
+      <div class="publication reveal">
         <h3>Enhancing Sentiment Classification on Small Datasets</h3>
         <p>
           A comparative study on data augmentation and transfer learning techniques for sentiment classification on small datasets.
@@ -232,14 +268,19 @@
         </p>
         <a href="https://hal.science/hal-05090101v1" class="project-btn" target="_blank">Read Publication</a>
       </div>
+      <!--
       <div class="publication">
         <h3>Federated Learning for Privacy-Preserving AI</h3>
         <p>
           Implementation of a federated learning system using the Flower framework with a custom server strategy.
           Targeted at secure AI for connected industries.
         </p>
+        <p>
+          More details about this publication, or a summary, shown under the title.
+        </p>
         <a href="https://hal.science/hal-05090101v1" class="project-btn" target="_blank">Read Publication</a>
       </div>
+      -->
     </div>
   </div>
 </section>
@@ -247,7 +288,7 @@
   
 
     <!-- contact section start -->
-    <section class="contact" id="contact">
+    <section class="contact reveal" id="contact">
       <div class="max-width">
         <h2 class="title">Contact me</h2>
         
@@ -311,6 +352,9 @@
         <span class="far fa-copyright"></span> 2024 All rights reserved.</span
       >
     </footer>
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+  <i class="fas fa-moon"></i>
+</button>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script src="script.js"></script>
   </body>
