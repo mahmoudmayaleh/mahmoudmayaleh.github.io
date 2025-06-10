@@ -227,6 +227,9 @@ section .title::after {
 }
 
 .neural-network circle {
+  fill: white;
+  stroke: #ffffff;
+  stroke-width: 2;
   animation: pulse 2s infinite alternate;
 }
 
