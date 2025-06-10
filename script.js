@@ -15,14 +15,16 @@ $(document).ready(function () {
     }
   });
 
+  document.addEventListener("DOMContentLoaded", function () {
   particlesJS("particles-js", {
-  particles: {
-    number: { value: 100 },
-    size: { value: 3 },
-    move: { speed: 2 },
-    color: { value: "#ffffff" },
-    line_linked: { color: "#ffffff" }
-  }
+    particles: {
+      number: { value: 100 },
+      size: { value: 3 },
+      move: { speed: 2 },
+      color: { value: "#ffffff" },
+      line_linked: { color: "#ffffff" }
+    }
+  });
 });
   
   window.addEventListener("scroll", function () {
