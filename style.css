@@ -202,7 +202,7 @@ section .title::after {
   font-size: 30px;
   color: white;
   animation: bounce 1.5s infinite;
-  z-index: 1000;
+  z-index: 100  
 }
 
 @keyframes bounce {
