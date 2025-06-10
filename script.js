@@ -14,6 +14,11 @@ $(document).ready(function () {
       $(".scroll-up-btn").removeClass("show");
     }
   });
+  
+  window.addEventListener("scroll", function () {
+  document.querySelector(".scroll-arrow").style.display = 
+    window.scrollY > 50 ? "none" : "block";
+});
 
   // slide-up script
   $(".scroll-up-btn").click(function () {
