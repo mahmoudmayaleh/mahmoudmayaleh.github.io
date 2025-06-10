@@ -14,6 +14,16 @@ $(document).ready(function () {
       $(".scroll-up-btn").removeClass("show");
     }
   });
+
+  particlesJS("particles-js", {
+  particles: {
+    number: { value: 100 },
+    size: { value: 3 },
+    move: { speed: 2 },
+    color: { value: "#ffffff" },
+    line_linked: { color: "#ffffff" }
+  }
+});
   
   window.addEventListener("scroll", function () {
   document.querySelector(".scroll-arrow").style.display = 
