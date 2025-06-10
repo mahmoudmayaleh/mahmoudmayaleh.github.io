@@ -394,7 +394,7 @@ section .title::after {
 
 .publications .publication {
   width: calc(33.33% - 40px);
-  background: #f5f5f5;
+  background: #f5f5f5; 
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -403,7 +403,7 @@ section .title::after {
 }
 
 .publications .publication:hover {
-  background: #fff;
+  background: #fff; 
   transform: scale(1.05);
 }
 
