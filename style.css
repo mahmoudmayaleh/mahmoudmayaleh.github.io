@@ -901,7 +901,7 @@ body.dark-mode footer * {
   min-width: 340px;
   min-height: 260px;
   height: 100%;
-  margin-left: 60px; 
+  margin-left: 60px;
 }
 @media (max-width: 900px) {
   .home-content-wrapper {
