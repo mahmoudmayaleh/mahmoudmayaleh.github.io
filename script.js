@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const typewriter = document.getElementById("typewriter-text");
   if (typewriter) {
-    const texts = ["an AI engineer", "a Machine Learning engineer"];
+    const texts = ["an AI engineer", "a ML engineer"];
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
