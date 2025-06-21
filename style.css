@@ -427,8 +427,11 @@ section .title::after {
 .contact .contact-content .info .head {
   font-weight: 500;
 }
+.contact .contact-content .info .head {
+  color: rgba(12, 72, 106, 255);
+}
 .contact .contact-content .info .sub-title {
-  color: #333;
+  color: #fff;
 }
 .contact .right form .fields {
   display: flex;
