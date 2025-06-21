@@ -226,3 +226,52 @@ document.addEventListener("DOMContentLoaded", function () {
     type();
   }
 });
+
+function highlightTimelineItems() {
+  const items = document.querySelectorAll(".timeline-vertical-item");
+  let found = false;
+  items.forEach((item) => item.classList.remove("active"));
+  for (let i = 0; i < items.length; i++) {
+    const rect = items[i].getBoundingClientRect();
+    if (
+      !found &&
+      rect.top < window.innerHeight * 0.5 &&
+      rect.bottom > window.innerHeight * 0.2
+    ) {
+      items[i].classList.add("active");
+      found = true;
+    }
+  }
+}
+window.addEventListener("scroll", highlightTimelineItems);
+window.addEventListener("load", highlightTimelineItems);
+
+function highlightWavyTimelineItems() {
+  const items = document.querySelectorAll(".timeline-wavy-item");
+  let found = false;
+  items.forEach((item) => item.classList.remove("active"));
+  for (let i = 0; i < items.length; i++) {
+    const rect = items[i].getBoundingClientRect();
+    if (
+      !found &&
+      rect.top < window.innerHeight * 0.5 &&
+      rect.bottom > window.innerHeight * 0.2
+    ) {
+      items[i].classList.add("active");
+      found = true;
+    }
+  }
+}
+window.addEventListener("scroll", highlightWavyTimelineItems);
+window.addEventListener("load", highlightWavyTimelineItems);
+
+//floating sparks
+const createParticle = () => {
+  const particle = document.createElement("div");
+  particle.classList.add("particle");
+  particle.style.left = `${Math.random() * 100}%`;
+  particle.style.top = `${Math.random() * 100}%`;
+  document.body.appendChild(particle);
+  setTimeout(() => particle.remove(), 5000);
+};
+setInterval(createParticle, 300);
