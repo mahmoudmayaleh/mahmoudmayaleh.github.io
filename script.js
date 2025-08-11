@@ -275,3 +275,25 @@ const createParticle = () => {
   setTimeout(() => particle.remove(), 5000);
 };
 setInterval(createParticle, 300);
+//Projects
+<script>
+  // open
+  document.querySelectorAll('[data-dialog]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const dlg = document.getElementById(btn.dataset.dialog);
+      if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+    });
+  });
+  // close
+  document.querySelectorAll('dialog .close').forEach(btn=>{
+    btn.addEventListener('click', ()=> btn.closest('dialog')?.close());
+  });
+  // click outside to close
+  document.querySelectorAll('dialog').forEach(dlg=>{
+    dlg.addEventListener('click', (e)=>{
+      const r = dlg.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+    });
+  });
+</script>
+
