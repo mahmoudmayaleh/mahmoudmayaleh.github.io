@@ -1,3 +1,83 @@
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .querySelectorAll(".publication-summary .view-more-toggle")
+    .forEach(function (toggle) {
+      toggle.addEventListener("click", function () {
+        // Close all others
+        document
+          .querySelectorAll(".publication-summary .view-more-content.expanded")
+          .forEach(function (opened) {
+            if (
+              opened !==
+              toggle.parentElement.querySelector(".view-more-content")
+            ) {
+              opened.classList.remove("expanded");
+              const btn =
+                opened.parentElement.querySelector(".view-more-toggle");
+              if (btn) {
+                btn.classList.remove("expanded");
+                btn.innerHTML = 'View more <span class="arrow">▼</span>';
+              }
+            }
+          });
+        // Toggle this one
+        const content =
+          toggle.parentElement.querySelector(".view-more-content");
+        const expanded = content.classList.toggle("expanded");
+        toggle.classList.toggle("expanded", expanded);
+        toggle.innerHTML = expanded
+          ? 'View less <span class="arrow">▲</span>'
+          : 'View more <span class="arrow">▼</span>';
+      });
+      toggle.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggle.click();
+        }
+      });
+    });
+});
+// Expandable 'View more' for publication cards - only one open at a time
+// This must be outside of $(document).ready() to ensure it runs properly
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .querySelectorAll(".publication-summary .view-more-toggle")
+    .forEach(function (toggle) {
+      toggle.addEventListener("click", function () {
+        // Close all others
+        document
+          .querySelectorAll(".publication-summary .view-more-content.expanded")
+          .forEach(function (opened) {
+            if (
+              opened !==
+              toggle.parentElement.querySelector(".view-more-content")
+            ) {
+              opened.classList.remove("expanded");
+              const btn =
+                opened.parentElement.querySelector(".view-more-toggle");
+              if (btn) {
+                btn.classList.remove("expanded");
+                btn.innerHTML = 'View more <span class="arrow">▼</span>';
+              }
+            }
+          });
+        // Toggle this one
+        const content =
+          toggle.parentElement.querySelector(".view-more-content");
+        const expanded = content.classList.toggle("expanded");
+        toggle.classList.toggle("expanded", expanded);
+        toggle.innerHTML = expanded
+          ? 'View less <span class="arrow">▲</span>'
+          : 'View more <span class="arrow">▼</span>';
+      });
+      toggle.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggle.click();
+        }
+      });
+    });
+});
 $(document).ready(function () {
   $(window).scroll(function () {
     // sticky navbar on scroll script
@@ -275,6 +355,3 @@ const createParticle = () => {
   setTimeout(() => particle.remove(), 5000);
 };
 setInterval(createParticle, 300);
-
-
-
