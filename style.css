@@ -614,7 +614,7 @@ section .title::after {
 .publications .publication .thumb {
   width: auto;
   max-width: 100%;
-  height: 100px; /* small thumbnail height */
+  height: 140px; /* small thumbnail height */
   object-fit: contain; /* keeps full image visible without cropping */
   margin: 0 auto 12px;
   border-radius: 6px;
@@ -1529,4 +1529,5 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
 
