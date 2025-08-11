@@ -675,26 +675,7 @@ button.project-btn:focus-visible {
   margin-bottom: 15px;
 }
 
-/* Button: consistent + readable on hover */
-.publications .project-btn {
-  margin-top: auto;
-  align-self: center;
-  background: var(--brand);
-  border: 2px solid var(--brand);
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background .25s, border-color .25s, transform .25s;
-}
 
-.publications .project-btn:hover {
-  background: #0e577f;
-  border-color: #0e577f;
-  color: #fff;
-  transform: translateY(-1px);
-}
 
 /* Kill the hover overlay so it doesn’t wash out text */
 .publications .publication .publication-desc { display: none !important; }
@@ -1570,6 +1551,7 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
 
 
 
