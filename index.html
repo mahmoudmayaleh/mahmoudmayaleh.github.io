@@ -583,12 +583,58 @@
       >
     </footer>
     <button id="theme-toggle" aria-label="Toggle dark mode">
-  <i class="fas fa-moon"></i>
-</button>
+      <i class="fas fa-moon"></i>
+    </button>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script src="script.js"></script>
+
+    //Projects
+    <script>
+      // open
+      document.querySelectorAll('[data-dialog]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const dlg = document.getElementById(btn.dataset.dialog);
+          if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+        });
+      });
+      // close
+      document.querySelectorAll('dialog .close').forEach(btn=>{
+        btn.addEventListener('click', ()=> btn.closest('dialog')?.close());
+      });
+      // click outside to close
+      document.querySelectorAll('dialog').forEach(dlg=>{
+        dlg.addEventListener('click', (e)=>{
+          const r = dlg.getBoundingClientRect();
+          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+        });
+      });
+    </script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      Array.from(document.querySelectorAll('[data-dialog]')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var dlg = document.getElementById(btn.dataset.dialog);
+          if (dlg && dlg.showModal) dlg.showModal();
+        });
+      });
+      Array.from(document.querySelectorAll('dialog .close')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var dlg = btn.closest('dialog'); if (dlg) dlg.close();
+        });
+      });
+      Array.from(document.querySelectorAll('dialog')).forEach(function (dlg) {
+        dlg.addEventListener('click', function (e) {
+          var r = dlg.getBoundingClientRect();
+          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+        });
+      });
+    });
+    </script>
+    
   </body>
 </html>
+
 
 
 
