@@ -34,6 +34,21 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
     />
+    <!-- Person schema-->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mahmoud Mayaleh",
+      "url": "https://mayaleh.com/",
+      "jobTitle": "AI Engineer",
+      "email": "mailto:mahmoudmayaleh@gmail.com",
+      "sameAs": [
+        "https://www.linkedin.com/in/mahmoud-mayaleh/",
+        "https://github.com/mahmoudmayaleh"
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="neural-bg">
@@ -333,45 +348,140 @@
     <h2 class="title">Projects</h2>
     <div class="projects-content">
       <!-- Project 1 -->
-            <div class="project reveal">
+      <article class="project">
         <h3>LipLingo: Deep Learning Model for Lip Reading</h3>
-        <img src="images/Liplingo-logo.png" alt="Project 1">
-        <p>
-          LipLingo is a deep learning model that enhances automatic lip reading for speech recognition and aiding the hearing impaired. 
-          Built on a modified LipNet architecture, it uses CNNs for spatial features, bidirectional LSTMs for temporal modeling, and dense layers for prediction. 
-          With a robust TensorFlow pipeline and improved accuracy over existing models, LipLingo advances accessible communication technology.
+        <img class="project-thumb" src="images/Liplingo-logo.png" alt="LipLingo logo and model schematic">
+        <p class="summary">
+          Lip-reading model on a modified LipNet with improved preprocessing and spatio-temporal modeling for accessible speech tech.
         </p>
-          <a href="https://github.com/mahmoudmayaleh/LipLingo" class="project-btn" target="_blank">View on GitHub</a>
-      </div>
+        <div class="project-cta">
+          <a class="project-btn" href="https://github.com/mahmoudmayaleh/LipLingo" target="_blank" rel="noopener">View on GitHub</a>
+          <button class="project-btn btn-ghost" type="button" data-dialog="dlg-liplingo">View details</button>
+        </div>
+      </article>
       
       <!-- Project 2 -->
-      <div class="project reveal">
+      <article class="project">
         <h3>Sentiment Analysis on Social Media Comments</h3>
-        <img src="images/proj-sentiment.png" alt="Project 1">
-        <p>
-          Performed professional sentiment analysis using Python, pandas,
-          Matplotlib, NLTK, and scikit-learn. Extracted nuanced emotions from text
-          for insightful decision-making.
+        <img class="project-thumb" src="images/proj-sentiment.png" alt="Sentiment analysis">
+        <p class="summary">
+          Text-classification pipeline extracting nuanced emotions from comments using classic ML and lightweight NLP.
         </p>
-         <a href="https://github.com/mahmoudmayaleh/Sentiment_Analysis" class="project-btn" target="_blank">View on GitHub</a>
-      </div>
+        <div class="project-cta">
+          <a class="project-btn" href="https://github.com/mahmoudmayaleh/sentiment-analysis" target="_blank" rel="noopener">View on GitHub</a>
+          <button class="project-btn btn-ghost" type="button" data-dialog="dlg-sentiment">View details</button>
+        </div>
+      </article>
        <!-- Project 3 -->
-      <div class="project reveal">
+      <article class="project">
         <h3>Sales Forecast</h3>
-        <img src="images/proj-forecast.png" alt="Project 1">
-        <p>
-          Conducted a sales forecasting project using Linear Regression in Python,
-          employing NumPy, pandas, and Matplotlib. Evaluated model performance with
-          metrics like mean squared error, mean absolute error, and R2 score,
-          providing valuable insights for informed decision-making in sales analytics.
-        </p>
-          <a href="https://github.com/mahmoudmayaleh/Sales_Forecast" class="project-btn" target="_blank">View on GitHub</a>
-      </div>
+        <img class="project-thumb" src="images/proj-forecast.png" alt="Line and bar chart showing forecasted sales">
+        <p class="summary">
+            Sales forecasting with linear regression and clear error metrics for decision-ready insights.
+          </p>
+          <div class="project-cta">
+            <a class="project-btn" href="https://github.com/mahmoudmayaleh/sales-forecast" target="_blank" rel="noopener">View on GitHub</a>
+            <button class="project-btn btn-ghost" type="button" data-dialog="dlg-sales">View details</button>
+          </div>
+        </article>
 
     </div>
   </div>
 </section>
 
+    <!-- ===== Project detail modals ===== -->
+<dialog id="dlg-liplingo" class="modal" aria-labelledby="liplingo-title">
+  <h3 id="liplingo-title">LipLingo — Details</h3>
+  <div class="modal-grid">
+    <div>
+      <h4>Highlights</h4>
+      <ul>
+        <li>Modified LipNet with enhanced preprocessing and spatio-temporal pipeline.</li>
+        <li>Designed for accessibility and assistive technologies.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Metrics</h4>
+      <ul>
+        <li>95% character-level accuracy</li>
+        <li>87% sentence-level accuracy</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Tech stack</h4>
+      <ul>
+        <li>Python, TensorFlow/Keras</li>
+        <li>NumPy, OpenCV (preprocessing)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <a class="project-btn" href="https://github.com/mahmoudmayaleh/LipLingo" target="_blank" rel="noopener">GitHub</a>
+    <button class="project-btn btn-ghost close" type="button">Close</button>
+  </div>
+</dialog>
+
+<dialog id="dlg-sentiment" class="modal" aria-labelledby="sentiment-title">
+  <h3 id="sentiment-title">Sentiment Analysis — Details</h3>
+  <div class="modal-grid">
+    <div>
+      <h4>Highlights</h4>
+      <ul>
+        <li>Feature engineering + classical ML for robust baselines.</li>
+        <li>Clear evaluation and visual reporting.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Metrics</h4>
+      <ul>
+        <li>Accuracy / Precision / Recall (task-dependent)</li>
+        <li>Confusion matrix & ROC where applicable</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Tech stack</h4>
+      <ul>
+        <li>Python, scikit-learn, NLTK</li>
+        <li>pandas, Matplotlib</li>
+      </ul>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <a class="project-btn" href="https://github.com/mahmoudmayaleh/sentiment-analysis" target="_blank" rel="noopener">GitHub</a>
+    <button class="project-btn btn-ghost close" type="button">Close</button>
+  </div>
+</dialog>
+
+<dialog id="dlg-sales" class="modal" aria-labelledby="sales-title">
+  <h3 id="sales-title">Sales Forecast — Details</h3>
+  <div class="modal-grid">
+    <div>
+      <h4>Highlights</h4>
+      <ul>
+        <li>Simple, explainable linear regression baseline.</li>
+        <li>Metrics and plots for decision-making.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Metrics</h4>
+      <ul>
+        <li>MSE, MAE, R²</li>
+        <li>Train/validation curves</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Tech stack</h4>
+      <ul>
+        <li>Python, NumPy, pandas</li>
+        <li>Matplotlib</li>
+      </ul>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <a class="project-btn" href="https://github.com/mahmoudmayaleh/sales-forecast" target="_blank" rel="noopener">GitHub</a>
+    <button class="project-btn btn-ghost close" type="button">Close</button>
+  </div>
+</dialog>
 <!-- publications section start -->
 <section class="publications" id="publications">
   <div class="max-width">
@@ -479,6 +589,7 @@
     <script src="script.js"></script>
   </body>
 </html>
+
 
 
 
