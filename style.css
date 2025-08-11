@@ -1531,10 +1531,6 @@ body {
 
 
 
-/* TEMP: force everything with .reveal to show */
-#projects .reveal { opacity: 1 !important; transform: none !important; }
-
-
 
 
 
