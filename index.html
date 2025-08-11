@@ -351,12 +351,33 @@
       <article class="project">
         <h3>LipLingo: Deep Learning Model for Lip Reading</h3>
         <img class="project-thumb" src="images/Liplingo-logo.png" alt="LipLingo logo and model schematic">
-        <p class="summary">
-          Lip-reading model on a modified LipNet with improved preprocessing and spatio-temporal modeling for accessible speech tech.
-        </p>
-        <div class="project-cta">
-          <a class="project-btn" href="https://github.com/mahmoudmayaleh/LipLingo" target="_blank" rel="noopener">View on GitHub</a>
-          <button class="project-btn btn-ghost" type="button" data-dialog="dlg-liplingo">View details</button>
+        <div class="project-summary">
+          <span class="summary">LipLingo is a lip-reading tool that turns silent video of someone’s mouth into text. It learns typical lip-movement patterns, useful when audio is missing or noisy.
+</span>
+
+            <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+            <a class="project-btn" href="https://github.com/mahmoudmayaleh/LipLingo" target="_blank" rel="noopener">View on GitHub</a>
+
+          <div class="view-more-content">
+            <div class="project-details-grid">
+              <div>
+                <h4>Highlights</h4>
+                <ul>
+                  <li>Visual lip-reading system that converts silent mouth video into text</li>
+                  <li>Data & prep: trained and evaluated on the GRID corpus with face/mouth detection, frame normalization, and basic augmentations.</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Tech Stack</h4>
+                <div class="tech-stack">
+                  <span>Python</span>
+                  <span>TensorFlow/Keras</span>
+                  <span>NumPy</span>
+                  <span>OpenCV</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
       
@@ -364,124 +385,68 @@
       <article class="project">
         <h3>Sentiment Analysis on Social Media Comments</h3>
         <img class="project-thumb" src="images/proj-sentiment.png" alt="Sentiment analysis">
-        <p class="summary">
-          Text-classification pipeline extracting nuanced emotions from comments using classic ML and lightweight NLP.
-        </p>
-        <div class="project-cta">
-          <a class="project-btn" href="https://github.com/mahmoudmayaleh/sentiment-analysis" target="_blank" rel="noopener">View on GitHub</a>
-          <button class="project-btn btn-ghost" type="button" data-dialog="dlg-sentiment">View details</button>
+        <div class="project-summary">
+          <span class="summary">Text-classification pipeline extracting emotions from comments using classic ML and lightweight NLP.</span>
+            <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+            <a class="project-btn" href="https://github.com/mahmoudmayaleh/sentiment-analysis" target="_blank" rel="noopener">View on GitHub</a>
+          <div class="view-more-content">
+            <div class="project-details-grid">
+              <div>
+                <h4>Highlights</h4>
+                <ul>
+                  <li>Computed per-comment scores from Twitter_Data.csv and wrote labeled outputs.</li>
+                  <li>Generated a sentiment-score histogram and calculated the dataset’s average compound sentiment.</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Tech Stack</h4>
+                <div class="tech-stack">
+                  <span>Python</span>
+                  <span>scikit-learn</span>
+                  <span>NLTK</span>
+                  <span>pandas</span>
+                  <span>Matplotlib</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
        <!-- Project 3 -->
       <article class="project">
-        <h3>Sales Forecast</h3>
+        <h3>Data-Driven Sales Trend Predictor</h3>
         <img class="project-thumb" src="images/proj-forecast.png" alt="Line and bar chart showing forecasted sales">
-        <p class="summary">
-            Sales forecasting with linear regression and clear error metrics for decision-ready insights.
-          </p>
-          <div class="project-cta">
+        <div class="project-summary">
+          <span class="summary">Sales forecasting with linear regression and clear error metrics for decision-ready insights.</span>
+            <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
             <a class="project-btn" href="https://github.com/mahmoudmayaleh/sales-forecast" target="_blank" rel="noopener">View on GitHub</a>
-            <button class="project-btn btn-ghost" type="button" data-dialog="dlg-sales">View details</button>
+          <div class="view-more-content">
+            <div class="project-details-grid">
+              <div>
+                <h4>Highlights</h4>
+                <ul>
+                  <li>Sales forecasting tool that predicts future demand per store/item from historical transactions.</li>
+                  <li>Pipeline: EDA → cleaning & time-indexing → feature engineering (lags, rolling means, seasonality/holiday flags) → model training → backtesting → error analysis.</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Tech Stack</h4>
+                <div class="tech-stack">
+                  <span>Python</span>
+                  <span>NumPy</span>
+                  <span>pandas</span>
+                  <span>Matplotlib</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </article>
+        </div>
+      </article>
 
     </div>
   </div>
 </section>
 
-    <!-- ===== Project detail modals ===== -->
-<dialog id="dlg-liplingo" class="modal" aria-labelledby="liplingo-title">
-  <h3 id="liplingo-title">LipLingo — Details</h3>
-  <div class="modal-grid">
-    <div>
-      <h4>Highlights</h4>
-      <ul>
-        <li>Modified LipNet with enhanced preprocessing and spatio-temporal pipeline.</li>
-        <li>Designed for accessibility and assistive technologies.</li>
-      </ul>
-    </div>
-    <div>
-      <h4>Metrics</h4>
-      <ul>
-        <li>95% character-level accuracy</li>
-        <li>87% sentence-level accuracy</li>
-      </ul>
-    </div>
-    <div>
-      <h4>Tech stack</h4>
-      <ul>
-        <li>Python, TensorFlow/Keras</li>
-        <li>NumPy, OpenCV (preprocessing)</li>
-      </ul>
-    </div>
-  </div>
-  <div class="modal-actions">
-    <a class="project-btn" href="https://github.com/mahmoudmayaleh/LipLingo" target="_blank" rel="noopener">GitHub</a>
-    <button class="project-btn btn-ghost close" type="button">Close</button>
-  </div>
-</dialog>
-
-<dialog id="dlg-sentiment" class="modal" aria-labelledby="sentiment-title">
-  <h3 id="sentiment-title">Sentiment Analysis — Details</h3>
-  <div class="modal-grid">
-    <div>
-      <h4>Highlights</h4>
-      <ul>
-        <li>Feature engineering + classical ML for robust baselines.</li>
-        <li>Clear evaluation and visual reporting.</li>
-      </ul>
-    </div>
-    <div>
-      <h4>Metrics</h4>
-      <ul>
-        <li>Accuracy / Precision / Recall (task-dependent)</li>
-        <li>Confusion matrix & ROC where applicable</li>
-      </ul>
-    </div>
-    <div>
-      <h4>Tech stack</h4>
-      <ul>
-        <li>Python, scikit-learn, NLTK</li>
-        <li>pandas, Matplotlib</li>
-      </ul>
-    </div>
-  </div>
-  <div class="modal-actions">
-    <a class="project-btn" href="https://github.com/mahmoudmayaleh/sentiment-analysis" target="_blank" rel="noopener">GitHub</a>
-    <button class="project-btn btn-ghost close" type="button">Close</button>
-  </div>
-</dialog>
-
-<dialog id="dlg-sales" class="modal" aria-labelledby="sales-title">
-  <h3 id="sales-title">Sales Forecast — Details</h3>
-  <div class="modal-grid">
-    <div>
-      <h4>Highlights</h4>
-      <ul>
-        <li>Simple, explainable linear regression baseline.</li>
-        <li>Metrics and plots for decision-making.</li>
-      </ul>
-    </div>
-    <div>
-      <h4>Metrics</h4>
-      <ul>
-        <li>MSE, MAE, R²</li>
-        <li>Train/validation curves</li>
-      </ul>
-    </div>
-    <div>
-      <h4>Tech stack</h4>
-      <ul>
-        <li>Python, NumPy, pandas</li>
-        <li>Matplotlib</li>
-      </ul>
-    </div>
-  </div>
-  <div class="modal-actions">
-    <a class="project-btn" href="https://github.com/mahmoudmayaleh/sales-forecast" target="_blank" rel="noopener">GitHub</a>
-    <button class="project-btn btn-ghost close" type="button">Close</button>
-  </div>
-</dialog>
 <!-- publications section start -->
 <section class="publications" id="publications">
   <div class="max-width">
@@ -492,10 +457,34 @@
       <article class="publication">
         <img class="thumb" src="images/sentiment-chart.png" alt="Bar chart from sentiment classification study">
         <h3>Enhancing Sentiment Classification on Small Datasets</h3>
-        <p>
-          This study compares EDA, back-translation, and contextual (NLPaug) augmentation for small-scale sentiment classification,
-          finding contextual augmentation best for BERT and EDA/back-translation more effective for traditional models.
-        </p>
+        <div class="publication-summary">
+          <span class="summary">This study compares EDA, back-translation, and contextual (NLPaug) augmentation for small-scale sentiment classification, finding contextual augmentation best for BERT and EDA/back-translation more effective for traditional models.</span>
+          <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+          <div class="view-more-content">
+            <div class="publication-abstract">
+              <strong>Abstract:</strong>
+              <p>
+                The classification of sentiment on a small scale often suffers from the small amount of data, which limits the generalization ability of the models. This study evaluates and compares the effectiveness of three data augmentation strategies:
+              </p>
+              <ul>
+                <li><strong>EDA (Easy Data Augmentation)</strong></li>
+                <li><strong>Back-translation</strong></li>
+                <li><strong>Contextual token substitution (nlpaug-style)</strong></li>
+              </ul>
+              <p>
+                <strong>Methods:</strong> Tested on both traditional ML classifiers (SVM, Random Forest) and transformer-based models (BERT) using low-resource sentiment datasets.
+              </p>
+              <ul>
+                <li><strong>All augmentation methods improved performance</strong></li>
+                <li><strong>Contextual augmentation</strong> gave the most consistent gains for BERT</li>
+                <li><strong>EDA and back-translation</strong> were more effective for traditional classifiers</li>
+              </ul>
+              <div class="pub-meta">
+                <span><strong>Published in:</strong> TechRxiv, 2025</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <a class="project-btn" href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174970275.53478483/v1" target="_blank" rel="noopener">
           Read Publication
         </a>
@@ -505,10 +494,34 @@
       <article class="publication">
         <img class="thumb" src="images/liplingo-model.png" alt="LipLingo CNN lip-reading model schematic">
         <h3>LipLingo: CNN Model for Lip Reading</h3>
-        <p>
-          LipLingo is a deep learning lip-reading system built on LipNet with enhanced preprocessing and spatio-temporal modeling.
-          It achieves 95% character-level and 87% sentence-level accuracy, showing strong potential for assistive tech and biometrics.
-        </p>
+        <div class="publication-summary">
+          <span class="summary">LipLingo is a deep learning lip-reading system built on LipNet with enhanced preprocessing and spatio-temporal modeling. It achieves 95% character-level and 87% sentence-level accuracy, showing strong potential for assistive tech and biometrics.</span>
+          <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+          <div class="view-more-content">
+            <div class="publication-abstract">
+              <strong>Abstract:</strong>
+              <p>
+                Lip reading plays a crucial role in applications such as speech recognition, assistive technologies for the hearing-impaired, and biometric authentication. However, performance often degrades when the speaker varies, the environment changes, or the speech sounds are visually similar. To overcome these challenges, we propose <strong>LipLingo</strong>:
+              </p>
+              <ul>
+                <li>Based on the LipNet architecture</li>
+                <li>Enhanced with standardized preprocessing for consistent mouth-region representation</li>
+                <li>Uses rotational validation for better generalization</li>
+                <li>Combines 3D convolutional layers (spatio-temporal features) and bidirectional recurrent layers (sequence modeling)</li>
+                <li>Optimized with Adam optimizer and CTC loss</li>
+              </ul>
+              <p><strong>Results:</strong></p>
+              <ul>
+                <li>95% character-level accuracy</li>
+                <li>87% sentence-level accuracy</li>
+                <li>Outperforms baseline LipNet</li>
+              </ul>
+              <div class="pub-meta">
+                <span><strong>Published in:</strong> 2025</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <a class="project-btn" href="#" target="_blank" rel="noopener">
           Read Publication
         </a>
@@ -587,46 +600,33 @@
     </button>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script src="script.js"></script>
-
-    //Projects
     <script>
-      // open
-      document.querySelectorAll('[data-dialog]').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          const dlg = document.getElementById(btn.dataset.dialog);
-          if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
-        });
-      });
-      // close
-      document.querySelectorAll('dialog .close').forEach(btn=>{
-        btn.addEventListener('click', ()=> btn.closest('dialog')?.close());
-      });
-      // click outside to close
-      document.querySelectorAll('dialog').forEach(dlg=>{
-        dlg.addEventListener('click', (e)=>{
-          const r = dlg.getBoundingClientRect();
-          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
-        });
-      });
-    </script>
-    
-    <script>
+    // Expandable 'View more' for project cards - only one open at a time, no box expansion for others
     document.addEventListener('DOMContentLoaded', function () {
-      Array.from(document.querySelectorAll('[data-dialog]')).forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var dlg = document.getElementById(btn.dataset.dialog);
-          if (dlg && dlg.showModal) dlg.showModal();
+      document.querySelectorAll('.view-more-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+          // Close all others
+          document.querySelectorAll('.view-more-content.expanded').forEach(function(opened) {
+            if (opened !== toggle.parentElement.querySelector('.view-more-content')) {
+              opened.classList.remove('expanded');
+              const btn = opened.parentElement.querySelector('.view-more-toggle');
+              if (btn) {
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'View more <span class="arrow">▼</span>';
+              }
+            }
+          });
+          // Toggle this one
+          const content = toggle.parentElement.querySelector('.view-more-content');
+          const expanded = content.classList.toggle('expanded');
+          toggle.classList.toggle('expanded', expanded);
+          toggle.innerHTML = expanded ? 'View less <span class="arrow">▲</span>' : 'View more <span class="arrow">▼</span>';
         });
-      });
-      Array.from(document.querySelectorAll('dialog .close')).forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var dlg = btn.closest('dialog'); if (dlg) dlg.close();
-        });
-      });
-      Array.from(document.querySelectorAll('dialog')).forEach(function (dlg) {
-        dlg.addEventListener('click', function (e) {
-          var r = dlg.getBoundingClientRect();
-          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+        toggle.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggle.click();
+          }
         });
       });
     });
