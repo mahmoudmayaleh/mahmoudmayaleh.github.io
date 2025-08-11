@@ -628,9 +628,10 @@ section .title::after {
 }
 
 .publications .publication p {
-  font-size: 15px;
-  color: #f5f8fa;
+  font-size: 1rem;         /* ~16px */
   line-height: 1.5;
+  font-weight: 400;
+  color: #f5f8fa;
   margin-bottom: 16px;
 }
 
@@ -1529,6 +1530,7 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
 
 
 
