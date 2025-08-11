@@ -613,7 +613,7 @@ section .title::after {
 
 .publications .publication .thumb {
   width: 100%;
-  height: 210px; 
+  height: 230px; 
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
@@ -1529,6 +1529,7 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
 
 
 
