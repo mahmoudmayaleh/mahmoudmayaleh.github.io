@@ -1846,3 +1846,11 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
+/* Ensure Font Awesome keeps its own font even if * sets a font-family */
+.fa-solid  { font-family: "Font Awesome 6 Free"; font-weight: 900; }
+.fa-regular{ font-family: "Font Awesome 6 Free"; font-weight: 400; }
+.fa-brands { font-family: "Font Awesome 6 Brands"; font-weight: 400; }
+
+/* Optional: consistent icon size/color across site */
+i.fa-solid, i.fa-regular, i.fa-brands { font-size: 22px; color: var(--brand, #0c486a); }
