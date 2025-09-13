@@ -1134,6 +1134,20 @@ body.dark-mode footer * {
   background: transparent !important;
 }
 
+/* Copyright link color: softer accent for both modes */
+footer a {
+  color: #1fa2c7;
+  font-weight: 600;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+footer a:hover {
+  color: #fff;
+}
+body.dark-mode footer a {
+  color: #4bb6c1 !important;
+}
+
 /* Timeline Section */
 .timeline {
   background: #0e3c4e;
@@ -1526,6 +1540,12 @@ body.dark-mode .timeline-content p {
   }
   footer {
     padding-bottom: 72px;
+    font-size: 15px;
+    line-height: 1.3;
+    word-break: break-word;
+    white-space: normal;
+    text-align: center;
+    letter-spacing: 0.2px;
   }
 }
 .home-content-wrapper {
