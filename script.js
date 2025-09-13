@@ -204,15 +204,27 @@ function animateSkillBars() {
     const skillsSection = document.getElementById("skills");
     if (!skillsSection) return;
     const rect = skillsSection.getBoundingClientRect();
-    if (!animated && rect.top < window.innerHeight - 100) {
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    const shouldAnimate =
+      isVisible ||
+      skillsSection.classList.contains("active") ||
+      skillsSection.style.opacity === "1";
+    if (shouldAnimate && !animated) {
       bars.forEach((bar) => {
         const skill = bar.getAttribute("data-skill");
         bar.style.width = skill + "%";
       });
       animated = true;
+    } else if (!shouldAnimate && animated) {
+      bars.forEach((bar) => {
+        bar.style.width = "0";
+      });
+      animated = false;
     }
   }
   window.addEventListener("scroll", checkAndAnimate);
+  window.addEventListener("resize", checkAndAnimate);
+  setInterval(checkAndAnimate, 500); // fallback for edge cases
   checkAndAnimate();
 }
 document.addEventListener("DOMContentLoaded", animateSkillBars);
@@ -273,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const typewriter = document.getElementById("typewriter-text");
   if (typewriter) {
-    const texts = ["an AI engineer", "a ML engineer"];
+    const texts = ["AI engineer", "ML engineer"];
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
