@@ -654,15 +654,15 @@ section .title::after {
 .skill span {
   display: block;
   font-weight: 600;
-  color: var(--ink);
+  color: #e6eef3;
   margin-bottom: 6px;
   margin-left: 6px;
   font-size: 1.05em;
 }
 
 .skill-bar {
-  background: var(--bg-soft);
-  border: 1px solid var(--brand);
+  background: #1a1a1a; /* darker than pure white */
+  border: 1px solid #0e3c4e;
   border-radius: 8px;
   height: 18px;
   width: 100%;
@@ -672,12 +672,18 @@ section .title::after {
 }
 
 .skill-bar-fill {
-  background: linear-gradient(90deg, #0e3c4e 60%, var(--brand-2) 100%);
+  background: linear-gradient(90deg, #0e3c4e 0%, #007a99 100%);
   height: 100%;
-  width: 0; /* will be set via JS based on data-skill */
-  border-radius: 8px;
+  width: 0;
+  border-radius: 8px 0 0 8px; /* round only left edge */
   transition: width 1.2s cubic-bezier(0.4, 2, 0.6, 1);
-  will-change: width;
+}
+.skill-bar-fill[data-skill]:not([style*="width: 0"]) {
+  border-radius: 8px; /* when filled, round both ends */
+}
+
+.skill-bar-fill::after {
+  display: none;
 }
 
 /* Optional subtle shine on fill */
@@ -1867,4 +1873,5 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
 
