@@ -592,39 +592,39 @@ section .title::after {
 :root{
   --brand: rgba(12, 72, 106, 1);
   --brand-2: #007a99;
-  --ink: #0e3c4e;
-  --bg-soft: #fff;
-  --track: #e6eef3;
+  --ink: #0e3c4e;   /* kept for buttons/borders */
+  --bg-soft: #111;  /* darker track bg for dark theme */
+  --track: #2b2f33;
 }
 
-.skills .title::after {
-  content: "what do i know ?";
-}
+#skills .title,
+#skills .skills-content { color: #fff; }
+
+.skills .title::after { content: "what do i know ?"; }
 
 .skills .skills-content {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  color: #ffffff;
 }
 
-.skills .skills-content .column {
-  width: calc(50% - 30px);
-}
+/* columns */
+.skills .skills-content .column { width: calc(50% - 30px); }
 
+/* left column text (force white) */
 .skills .skills-content .left .text {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 10px;
-  color: var(--ink);
+  color: #fff;
 }
-
 .skills .skills-content .left p {
   text-align: justify;
-  color: #123;
   line-height: 1.6;
+  color: #fff;            /* was #123 -> now white */
 }
 
+/* left column button */
 .skills .skills-content .left a {
   display: inline-block;
   background: var(--brand);
@@ -642,28 +642,25 @@ section .title::after {
   background: none;
 }
 
-/* Right column: unified bar system */
-.skills .skills-content .right {
-  width: calc(50% - 30px);
-}
+/* right column */
+.skills .skills-content .right { width: calc(50% - 30px); }
+.skills-content .skill { margin-bottom: 22px; }
 
-.skills-content .skill {
-  margin-bottom: 22px;
-}
-
+/* labels (force white) */
 .skill-label,
 .skill span {
   display: block;
   font-weight: 600;
-  color: #ffffff;
+  color: #fff;            /* was #0e3c4e -> now white */
   margin-bottom: 6px;
   margin-left: 6px;
   font-size: 1.05em;
 }
 
+/* bars */
 .skill-bar {
-  background: #1a1a1a; /* darker than pure white */
-  border: 1px solid #0e3c4e;
+  background: var(--bg-soft);
+  border: 1px solid var(--ink);
   border-radius: 8px;
   height: 18px;
   width: 100%;
@@ -672,58 +669,40 @@ section .title::after {
   position: relative;
 }
 
+/* fill */
 .skill-bar-fill {
-  background: linear-gradient(90deg, #0e3c4e 0%, #007a99 100%);
+  background: linear-gradient(90deg, #0e3c4e 0%, var(--brand-2) 100%);
   height: 100%;
-  width: 0;
-  border-radius: 8px 0 0 8px; /* round only left edge */
+  width: 0; /* JS animates to data-skill% */
+  border-radius: 8px 0 0 8px; /* round left while collapsed */
   transition: width 1.2s cubic-bezier(0.4, 2, 0.6, 1);
+  will-change: width;
 }
 .skill-bar-fill[data-skill]:not([style*="width: 0"]) {
-  border-radius: 8px; /* when filled, round both ends */
+  border-radius: 8px; /* both ends when filled */
 }
 
-.skill-bar-fill::after {
-  display: none;
-}
+/* remove shimmer/glow (clean look) */
+.skill-bar-fill::after { display: none; }
 
-/* Optional subtle shine on fill */
-.skill-bar-fill::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.15) 50%, rgba(255,255,255,0) 100%);
-  transform: translateX(-100%);
-  animation: shimmer 2.2s ease-in-out 0.4s infinite;
-  pointer-events: none;
-}
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Light track */
+/* subtle top sheen on track */
 .skill-bar::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,.35), transparent);
+  background: linear-gradient(180deg, rgba(255,255,255,.15), transparent);
   pointer-events: none;
 }
 
-/* Reveal-on-scroll support (if your script toggles .in-view on .reveal) */
+/* Reveal-on-scroll note: width is controlled by JS */
 .reveal .skill-bar-fill { width: 0; }
-.reveal.in-view .skill-bar-fill[data-skill] { /* JS sets width inline; this ensures animation triggers on reveal */
-  /* width is controlled by inline style for accuracy */
-}
 
-/* Responsive */
+/* responsive */
 @media (max-width: 992px) {
   .skills .skills-content .column,
-  .skills .skills-content .right {
-    width: 100%;
-  }
+  .skills .skills-content .right { width: 100%; }
 }
+
 
 
 /* contact section styling */
@@ -1874,6 +1853,7 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
 
 
 
