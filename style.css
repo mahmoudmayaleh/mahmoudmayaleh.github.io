@@ -4,6 +4,7 @@ body,
 * {
   font-family: "Inter", Arial, sans-serif;
 }
+
 /* Subtle bounce animation for view-more-toggle buttons */
 @keyframes bounceHint {
   0%,
@@ -1853,6 +1854,7 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
 
 
 
