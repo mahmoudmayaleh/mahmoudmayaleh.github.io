@@ -605,6 +605,7 @@ section .title::after {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
+  color: #ffffff;
 }
 
 .skills .skills-content .column {
@@ -654,7 +655,7 @@ section .title::after {
 .skill span {
   display: block;
   font-weight: 600;
-  color: #e6eef3;
+  color: #ffffff;
   margin-bottom: 6px;
   margin-left: 6px;
   font-size: 1.05em;
@@ -1873,5 +1874,6 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
 
 
