@@ -5,6 +5,131 @@ body,
   font-family: "Inter", Arial, sans-serif;
 }
 
+/* Global fluid layout */
+:root {
+  --page-max: 1100px;
+  --gutter: 16px;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+* {
+  box-sizing: border-box;
+  max-width: 100%; /* Prevent content from overflowing its container */
+}
+
+/* Fluid type: scales between phones and desktop */
+h1 {
+  font-size: clamp(28px, 6vw, 56px);
+  line-height: 1.1;
+}
+h2 {
+  font-size: clamp(22px, 4.5vw, 34px);
+}
+p,
+li,
+a,
+button {
+  font-size: clamp(14px, 2.2vw, 18px);
+  line-height: 1.6;
+}
+
+/* Reusable container */
+.max-width {
+  width: min(var(--page-max), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+section {
+  padding: clamp(40px, 6vw, 96px) 0;
+}
+
+/* Media: compact spacing on small screens */
+@media (max-width: 768px) {
+  section {
+    padding: 30px 0;
+  }
+  .max-width {
+    width: 95% !important; /* Enforce width for mobile */
+    padding: 0 10px !important; /* Consistent padding */
+  }
+  /* Fix overflow issues */
+  img,
+  canvas,
+  svg,
+  video {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  /* Prevent horizontal scrolling */
+  html,
+  body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+}
+
+/* Hero block */
+.hero {
+  min-height: 85svh;
+  display: grid;
+  align-items: center;
+}
+.hero .max-width {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr 1fr;
+}
+.hero h1 {
+  margin: 0;
+}
+.hero .cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Image/animation never overflows */
+.hero img,
+.hero canvas,
+.hero svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* On phones, stack content and center it */
+@media (max-width: 900px) {
+  .hero .max-width {
+    grid-template-columns: 1fr;
+    text-align: left;
+    width: 90%; /* Ensure content doesn't overflow */
+    margin: 0 auto;
+  }
+  .hero {
+    padding: 20px 0;
+    min-height: auto; /* Don't force excessive height on mobile */
+  }
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.nav ul {
+  display: flex;
+  gap: clamp(8px, 3vw, 24px);
+  flex-wrap: wrap;
+}
+.nav a {
+  padding: 8px 10px;
+  display: block;
+}
+
 /* Subtle bounce animation for view-more-toggle buttons */
 @keyframes bounceHint {
   0%,
@@ -244,26 +369,8 @@ body,
   margin-bottom: 3px;
   display: inline-block;
 }
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 /* Expandable project summary styles */
-.project-summary {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 16px;
-  text-align: left;
-}
-.project-summary .summary {
-  display: block;
-  margin-bottom: 8px;
-}
+/* Project summary styles already defined above */
 .read-more-toggle {
   color: var(--brand);
   cursor: pointer;
@@ -292,15 +399,6 @@ body,
 .read-more-content.expanded {
   display: block;
 }
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -311,20 +409,15 @@ html {
   scroll-behavior: smooth;
 }
 
-section {
-  padding: 100px 0;
-}
-.max-width {
-  max-width: 1300px;
-  padding: 0 80px;
-  margin: auto;
-}
+/* Section and max-width styles are defined earlier in the file */
 .about,
 .skills,
 .teams,
 .contact,
 .projects,
 footer {
+  width: 100%;
+  overflow: hidden; /* Prevent horizontal scrollbars */
 }
 .about .about-content,
 .skills .skills-content,
@@ -403,6 +496,8 @@ section .title::after {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  padding: 0 15px; /* Ensure there's padding on mobile */
 }
 
 .navbar .menu li {
@@ -412,11 +507,12 @@ section .title::after {
 .navbar .menu li a {
   display: block;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px; /* Smaller font size for better mobile display */
   font-weight: 500;
-  margin-left: 25px;
+  margin-left: 15px; /* Reduced margin for mobile */
   transition: color 0.3s ease;
   text-align: center;
+  padding: 8px; /* Add padding for touch targets */
 }
 .navbar .menu li a:hover {
   color: black;
@@ -590,18 +686,22 @@ section .title::after {
 
 /* skills section styling - updated for .skill/.skill-bar/.skill-bar-fill[data-skill] */
 
-:root{
+:root {
   --brand: rgba(12, 72, 106, 1);
   --brand-2: #007a99;
-  --ink: #0e3c4e;   /* kept for buttons/borders */
-  --bg-soft: #111;  /* darker track bg for dark theme */
+  --ink: #0e3c4e; /* kept for buttons/borders */
+  --bg-soft: #111; /* darker track bg for dark theme */
   --track: #2b2f33;
 }
 
 #skills .title,
-#skills .skills-content { color: #fff; }
+#skills .skills-content {
+  color: #fff;
+}
 
-.skills .title::after { content: "what do i know ?"; }
+.skills .title::after {
+  content: "what do i know ?";
+}
 
 .skills .skills-content {
   display: flex;
@@ -610,7 +710,9 @@ section .title::after {
 }
 
 /* columns */
-.skills .skills-content .column { width: calc(50% - 30px); }
+.skills .skills-content .column {
+  width: calc(50% - 30px);
+}
 
 /* left column text (force white) */
 .skills .skills-content .left .text {
@@ -622,7 +724,7 @@ section .title::after {
 .skills .skills-content .left p {
   text-align: justify;
   line-height: 1.6;
-  color: #fff;            /* was #123 -> now white */
+  color: #fff; /* was #123 -> now white */
 }
 
 /* left column button */
@@ -644,15 +746,19 @@ section .title::after {
 }
 
 /* right column */
-.skills .skills-content .right { width: calc(50% - 30px); }
-.skills-content .skill { margin-bottom: 22px; }
+.skills .skills-content .right {
+  width: calc(50% - 30px);
+}
+.skills-content .skill {
+  margin-bottom: 22px;
+}
 
 /* labels (force white) */
 .skill-label,
 .skill span {
   display: block;
   font-weight: 600;
-  color: #fff;            /* was #0e3c4e -> now white */
+  color: #fff; /* was #0e3c4e -> now white */
   margin-bottom: 6px;
   margin-left: 6px;
   font-size: 1.05em;
@@ -684,27 +790,32 @@ section .title::after {
 }
 
 /* remove shimmer/glow (clean look) */
-.skill-bar-fill::after { display: none; }
+.skill-bar-fill::after {
+  display: none;
+}
 
 /* subtle top sheen on track */
 .skill-bar::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,.15), transparent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), transparent);
   pointer-events: none;
 }
 
 /* Reveal-on-scroll note: width is controlled by JS */
-.reveal .skill-bar-fill { width: 0; }
-
-/* responsive */
-@media (max-width: 992px) {
-  .skills .skills-content .column,
-  .skills .skills-content .right { width: 100%; }
+.reveal .skill-bar-fill {
+  width: 0;
 }
 
+/* These skills content styles are already defined above */
 
+/* responsive */
+@media (max-width: 900px) {
+  .skills .skills-content .column {
+    width: 100%;
+  }
+}
 
 /* contact section styling */
 .contact .title::after {
@@ -738,8 +849,6 @@ section .title::after {
 }
 .contact .contact-content .info .head {
   font-weight: 500;
-}
-.contact .contact-content .info .head {
   color: rgba(12, 72, 106, 255);
 }
 .contact .contact-content .info .sub-title {
@@ -809,13 +918,13 @@ section .title::after {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
+  gap: 20px; /* Reduce gap on smaller screens */
 }
 
 .projects .project {
   position: relative;
   flex: 1 1 300px;
-  max-width: 350px;
+  max-width: 100%; /* Allow full width on mobile */
   background: #384953;
   padding: 20px;
   border-radius: 10px;
@@ -824,6 +933,7 @@ section .title::after {
   border: 2px solid rgba(12, 72, 106, 255);
   overflow: hidden;
   cursor: pointer;
+  margin: 0 10px; /* Add some horizontal margin */
 }
 
 .projects .project:hover {
@@ -898,13 +1008,12 @@ section .title::after {
 }
 
 /* === Publications Section === */
-:root {
-  --brand: #0c486a;
-}
+/* Brand color is already defined in the root variables above */
 
 .publications,
 .publications .publication,
 .publications .publication * {
+  max-width: 100%; /* Ensure elements don't overflow */
 }
 
 .publications .publications-content {
@@ -1083,7 +1192,7 @@ body.dark-mode .timeline .title {
   left: 50%;
   text-align: left;
 }
-.timeline-content {
+.timeline-item .timeline-content {
   background: #0e3c4e;
   padding: 18px 28px;
   border-radius: 8px;
@@ -1093,6 +1202,8 @@ body.dark-mode .timeline .title {
   border-left: 6px solid #0c3438;
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  flex: 1;
+  min-width: 0;
 }
 .timeline-item.left .timeline-content {
   border-left: none;
@@ -1254,7 +1365,8 @@ body.dark-mode .timeline-vertical-item.active {
   width: 28px;
   height: 28px;
 }
-.timeline-content {
+/* Additional timeline-content styles for vertical layout */
+.timeline-vertical .timeline-content {
   margin-left: 80px;
   margin-right: 80px;
   padding: 18px 24px;
@@ -1284,17 +1396,36 @@ body.dark-mode .timeline-content p {
   color: #eaf6fb;
 }
 
+/* Base: two-sided layout */
+.timeline-wavy-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  /* remove any fixed widths/heights here */
+}
+.timeline-logo-wrapper img {
+  max-width: 72px;
+  height: auto;
+}
+/* Base timeline content flex properties */
+.timeline-wavy-item .timeline-content {
+  flex: 1;
+  min-width: 0; /* prevent overflow */
+}
+
 /* responsive media query start */
 @media (max-width: 1104px) {
   .about .about-content .left img {
     height: 350px;
     width: 350px;
+    max-width: 100%; /* Ensure images don't overflow */
   }
 }
 
 @media (max-width: 991px) {
   .max-width {
-    padding: 0 50px;
+    padding: 0 20px; /* Reduce padding on medium screens */
+    width: 100%; /* Full width with padding */
   }
 }
 @media (max-width: 947px) {
@@ -1380,14 +1511,14 @@ body.dark-mode .timeline-content p {
 
 @media (max-width: 500px) {
   .home .home-content .text-2 {
-    font-size: 50px;
+    font-size: 36px; /* Smaller font size for mobile */
   }
   .home .home-content .text-3 {
-    font-size: 27px;
+    font-size: 22px; /* Smaller font size for mobile */
   }
   .about .about-content .right .text,
   .skills .skills-content .left .text {
-    font-size: 19px;
+    font-size: 18px;
   }
   .contact .right form .fields {
     flex-direction: column;
@@ -1407,31 +1538,53 @@ body.dark-mode .timeline-content p {
     font-size: 23px;
     line-height: 38px;
   }
+  /* Adjust buttons for mobile */
+  .home .home-content a,
+  .cv-btn,
+  .linkedin-btn {
+    font-size: 16px;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  /* Fix home content wrapper spacing */
+  .home-content-wrapper {
+    padding: 20px 0;
+  }
 }
 .home-content-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
-  min-height: 400px;
+  gap: 20px;
+  min-height: auto; /* Don't force height on mobile */
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  padding: 40px 0;
 }
 .neural-hero-illustration {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  min-width: 340px;
-  min-height: 260px;
-  height: 100%;
-  margin-left: 60px;
+  width: 100%; /* Full width on mobile */
+  max-width: 340px;
+  height: auto;
+  margin-left: 0; /* Remove margin on mobile */
 }
 @media (max-width: 768px) {
   .home-content-wrapper {
     flex-direction: column;
-    gap: 0;
+    gap: 20px;
+    padding: 20px 0;
   }
   .neural-hero-illustration {
     display: none !important;
+  }
+  /* Make the main content center-aligned */
+  .home-content {
+    width: 100%;
+    text-align: center;
   }
 }
 #neural-bg {
@@ -1525,11 +1678,7 @@ body.dark-mode .typewriter {
   color: #fff !important;
 }
 
-.typewriter-container,
-.typewriter-static,
-.typewriter {
-  color: #fff;
-}
+/* Color already specified above */
 
 .typewriter {
   border-right: 2px solid #0e3c4e;
@@ -1669,7 +1818,7 @@ body.dark-mode .linkedin-btn:hover {
 }
 
 /* Content styling */
-.timeline-content {
+.timeline-wavy .timeline-content {
   background: #0a282b;
   padding: 20px;
   border-radius: 6px;
@@ -1725,19 +1874,14 @@ body.dark-mode .linkedin-btn:hover {
 }
 
 /* Timeline content elements */
-.timeline-date {
-  display: block;
-  color: #0c3438;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
+/* .timeline-date is already defined earlier */
 
-.timeline-content h3 {
+.timeline-wavy .timeline-content h3 {
   margin: 0 0 10px;
   color: #fff;
 }
 
-.timeline-content p {
+.timeline-wavy .timeline-content p {
   margin: 0 0 10px;
   color: #dbdbdb;
 }
@@ -1854,8 +1998,3 @@ body {
   background-size: 400px;
   color: #fff;
 }
-
-
-
-
-
