@@ -222,29 +222,45 @@ $(document).ready(function () {
     );
   });
 
-  // Expand/collapse functionality for projects and publications
-  $(document).on("click", ".expand-btn, .view-more-toggle", function () {
-    const $this = $(this);
-    const $content = $this.siblings(".more-content, .view-more-content");
-    const $description = $this.siblings(
-      ".project-description, .publication-description"
+  // Expand/collapse functionality for projects and publications (robust version)
+  // Markup patterns:
+  //  - Publications: button.view-more-toggle is sibling of span.summary and .view-more-content directly inside .publication-summary
+  //  - Projects: button.view-more-toggle inside .button-row; .view-more-content is sibling of .project-summary (descendant of article.project)
+  // Initial hide to prevent flash
+  $(".view-more-content").hide();
+  $(".view-more-toggle").attr({
+    "aria-expanded": "false",
+    "aria-controls": "",
+  });
+  $(document).on("click", ".view-more-toggle", function () {
+    const $btn = $(this);
+    let $container = $btn.closest(
+      ".publication, .project, .publication-summary, .project-summary"
     );
-    const $arrow = $this.find(".arrow");
+    if (!$container.length) return;
 
-    if ($content.is(":visible")) {
-      $content.slideUp();
-      $description.removeClass("expanded");
-      $this.html("Show More");
-      if ($arrow.length) {
-        $this.html('View more <span class="arrow">▼</span>');
-      }
+    // For button inside .button-row inside .project-summary, we want the summary container
+    if ($container.hasClass("project") || $container.hasClass("publication")) {
+      $container = $container
+        .find(".project-summary, .publication-summary")
+        .first();
+    }
+    const $content = $container.find("> .view-more-content");
+    if (!$content.length) return;
+
+    const expanded = $content.is(":visible");
+    if (expanded) {
+      $content.stop(true, true).slideUp(220, () => {
+        $content.removeClass("expanded");
+      });
+      $btn.html('View more <span class="arrow">▼</span>');
+      $btn.attr("aria-expanded", "false");
     } else {
-      $content.slideDown();
-      $description.addClass("expanded");
-      $this.html("Show Less");
-      if ($arrow.length) {
-        $this.html('View less <span class="arrow">▲</span>');
-      }
+      $content.stop(true, true).slideDown(260, () => {
+        $content.addClass("expanded");
+      });
+      $btn.html('View less <span class="arrow">▲</span>');
+      $btn.attr("aria-expanded", "true");
     }
   });
 }); // end jQuery ready block
@@ -486,54 +502,4 @@ const createParticle = () => {
 };
 setInterval(createParticle, 300);
 
-// --- Wavy timeline auto-highlight & progress bar ---
-// Targets .timeline-wavy section with .timeline-wavy-item rows and a
-// sticky internal .timeline-progress-wrapper containing .timeline-progress-bar
-(function(){
-  const section = document.querySelector('.timeline-wavy');
-  if(!section) return;
-  const items = Array.from(section.querySelectorAll('.timeline-wavy-item'));
-  const progressBar = section.querySelector('.timeline-progress-bar');
-  if(!progressBar) return;
-
-  let ticking = false;
-
-  function update(){
-    ticking = false;
-    const rect = section.getBoundingClientRect();
-    const vh = window.innerHeight;
-    const sectionTop = rect.top + window.scrollY;
-    const sectionHeight = section.offsetHeight;
-    const scrollY = window.scrollY;
-    const denom = Math.max(1, sectionHeight - vh); // avoid divide-by-zero
-    const rawProgress = (scrollY - sectionTop) / denom;
-    const progress = Math.min(1, Math.max(0, rawProgress));
-    progressBar.style.width = (progress * 100).toFixed(2) + '%';
-
-    // Highlight item whose bounding box crosses center band (25% - 55% of viewport)
-    const upper = vh * 0.55;
-    const lower = vh * 0.25;
-    let activated = false;
-    items.forEach(it => it.classList.remove('is-active'));
-    for(const it of items){
-      const r = it.getBoundingClientRect();
-      if(!activated && r.top < upper && r.bottom > lower){
-        it.classList.add('is-active');
-        activated = true;
-      }
-    }
-  }
-
-  function onScroll(){
-    if(!ticking){
-      requestAnimationFrame(update);
-      ticking = true;
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll);
-  window.addEventListener('load', update);
-  update();
-})();
-// --- End wavy timeline enhancement ---
+// Timeline auto-highlight & progress bar removed per user request.

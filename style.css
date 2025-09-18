@@ -103,8 +103,7 @@ body.dark-mode {
 body,
 .navbar,
 .project-btn,
-.view-more-toggle,
-.timeline-progress-bar {
+.view-more-toggle {
   transition: background-color 0.55s var(--ease-acc),
     color 0.45s var(--ease-acc), border-color 0.55s var(--ease-acc),
     filter 0.6s var(--ease-acc), box-shadow 0.6s var(--ease-acc);
@@ -153,16 +152,6 @@ a.project-btn {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent-glow);
-}
-
-/* Timeline progress bar recolor */
-.timeline-progress-bar {
-  background: linear-gradient(
-    90deg,
-    var(--accent) 0%,
-    color-mix(in srgb, var(--accent) 40%, #0c486a) 60%,
-    var(--accent-glow) 100%
-  );
 }
 
 /* Links accent on hover */
@@ -273,22 +262,8 @@ body {
   letter-spacing: 0.01em;
 }
 /* publication-summary uses the shared .view-more-toggle rules below */
-.publication-summary .view-more-content {
-  display: none !important;
-  margin-top: 8px;
-  animation: none;
-  max-height: 0 !important;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
-.publication-summary .view-more-content.expanded {
-  display: block !important;
-  max-height: 2000px !important;
-  opacity: 1;
-  animation: fadeIn 0.3s;
-  pointer-events: auto;
-}
+/* Publication expandable content (generic handling; rely on shared rules below) */
+/* Removed earlier !important-based hiding to allow JS slide animations */
 .publication-abstract {
   background: none;
   border: none;
@@ -338,14 +313,12 @@ body {
 /* Ensure view-more-content hidden by default (generic) */
 .project-summary .view-more-content,
 .publication-summary .view-more-content {
-  display: none;
-  max-height: 0;
+  display: none; /* jQuery slideDown will override inline */
   overflow: hidden;
 }
 .project-summary .view-more-content.expanded,
 .publication-summary .view-more-content.expanded {
   display: block;
-  max-height: 2000px;
 }
 .view-more-toggle {
   display: inline-block;
@@ -1639,41 +1612,6 @@ body.dark-mode .timeline-vertical {
   z-index: 1;
 }
 
-/* Subtle active highlight (reintroduced) */
-.timeline-vertical-item.active .timeline-content {
-  background: rgba(14, 60, 78, 0.35);
-  box-shadow: 0 4px 18px -4px #0c343855;
-  border-radius: 10px;
-  transition: background 0.4s, box-shadow 0.4s;
-}
-body.dark-mode .timeline-vertical-item.active .timeline-content {
-  background: rgba(26, 39, 51, 0.45);
-  box-shadow: 0 4px 18px -4px #0c343888;
-}
-
-/* Timeline progress bar */
-#timeline-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(
-    to right,
-    var(--accent-color) var(--progress, 0%),
-    transparent 0%
-  );
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  z-index: 999;
-}
-#timeline-progress.visible {
-  opacity: 1;
-}
-body.dark-mode #timeline-progress {
-  filter: brightness(1.1) saturate(1.2);
-}
 .timeline-icon {
   position: absolute;
   left: 50%;
@@ -2139,51 +2077,6 @@ body.dark-mode .linkedin-btn:hover {
 .timeline-wavy {
   position: relative;
   padding: 100px 0;
-}
-
-/* Timeline scroll progress bar */
-.timeline-progress-wrapper {
-  position: sticky;
-  top: 0; /* stays at top of viewport while scrolling timeline */
-  height: 6px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.08),
-    rgba(255, 255, 255, 0.05)
-  );
-  border-radius: 4px;
-  overflow: hidden;
-  margin: 0 0 28px 0;
-  box-shadow: 0 0 0 1px rgba(0, 234, 255, 0.12),
-    0 4px 12px -2px rgba(0, 0, 0, 0.4) inset;
-}
-.timeline-progress-bar {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #00eaff, #0c486a 60%, #00eaff);
-  background-size: 180% 100%;
-  animation: progressShift 6s linear infinite;
-  box-shadow: 0 0 12px 2px rgba(0, 234, 255, 0.5);
-  transition: width 0.35s cubic-bezier(0.4, 2, 0.6, 1);
-}
-@keyframes progressShift {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -180% 0;
-  }
-}
-
-/* Active timeline item highlight */
-.timeline-wavy-item.is-active .timeline-content {
-  box-shadow: 0 0 0 1px #00eaff55, 0 0 22px -4px #00eaff66;
-  transform: translateY(-4px);
-  border-color: #00eaff !important;
-}
-.timeline-wavy-item.is-active .timeline-logo-wrapper {
-  box-shadow: 0 0 0 2px #00eaffaa, 0 0 18px #00eaff88;
-  transform: scale(1.07);
 }
 
 .timeline-wavy-container {
