@@ -1,82 +1,38 @@
+// Unified expandable logic (multiple open allowed) for publications & projects
 document.addEventListener("DOMContentLoaded", function () {
-  document
-    .querySelectorAll(".publication-summary .view-more-toggle")
-    .forEach(function (toggle) {
-      toggle.addEventListener("click", function () {
-        // Close all others
-        document
-          .querySelectorAll(".publication-summary .view-more-content.expanded")
-          .forEach(function (opened) {
-            if (
-              opened !==
-              toggle.parentElement.querySelector(".view-more-content")
-            ) {
-              opened.classList.remove("expanded");
-              const btn =
-                opened.parentElement.querySelector(".view-more-toggle");
-              if (btn) {
-                btn.classList.remove("expanded");
-                btn.innerHTML = 'View more <span class="arrow">▼</span>';
-              }
-            }
-          });
-        // Toggle this one
-        const content =
-          toggle.parentElement.querySelector(".view-more-content");
-        const expanded = content.classList.toggle("expanded");
-        toggle.classList.toggle("expanded", expanded);
-        toggle.innerHTML = expanded
-          ? 'View less <span class="arrow">▲</span>'
-          : 'View more <span class="arrow">▼</span>';
-      });
-      toggle.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          toggle.click();
-        }
-      });
+  document.querySelectorAll(".view-more-toggle").forEach(function (toggle) {
+    // If arrow span not present, append one
+    if (!toggle.querySelector(".arrow")) {
+      const arrowSpan = document.createElement("span");
+      arrowSpan.className = "arrow";
+      arrowSpan.textContent = "▼";
+      arrowSpan.style.marginLeft = "6px";
+      toggle.appendChild(arrowSpan);
+    }
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.addEventListener("click", function () {
+      let container = toggle.closest(".publication-summary, .project-summary");
+      if (!container) return;
+      const content = container.querySelector(".view-more-content");
+      if (!content) return;
+      const expanded = content.classList.toggle("expanded");
+      toggle.classList.toggle("expanded", expanded);
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      // Rotate arrow by toggling a class
+      const arrow = toggle.querySelector(".arrow");
+      if (arrow) {
+        arrow.style.display = "inline-block";
+        arrow.style.transition = "transform 0.3s";
+        arrow.style.transform = expanded ? "rotate(180deg)" : "rotate(0deg)";
+      }
     });
-});
-// Expandable 'View more' for publication cards - only one open at a time
-// This must be outside of $(document).ready() to ensure it runs properly
-document.addEventListener("DOMContentLoaded", function () {
-  document
-    .querySelectorAll(".publication-summary .view-more-toggle")
-    .forEach(function (toggle) {
-      toggle.addEventListener("click", function () {
-        // Close all others
-        document
-          .querySelectorAll(".publication-summary .view-more-content.expanded")
-          .forEach(function (opened) {
-            if (
-              opened !==
-              toggle.parentElement.querySelector(".view-more-content")
-            ) {
-              opened.classList.remove("expanded");
-              const btn =
-                opened.parentElement.querySelector(".view-more-toggle");
-              if (btn) {
-                btn.classList.remove("expanded");
-                btn.innerHTML = 'View more <span class="arrow">▼</span>';
-              }
-            }
-          });
-        // Toggle this one
-        const content =
-          toggle.parentElement.querySelector(".view-more-content");
-        const expanded = content.classList.toggle("expanded");
-        toggle.classList.toggle("expanded", expanded);
-        toggle.innerHTML = expanded
-          ? 'View less <span class="arrow">▲</span>'
-          : 'View more <span class="arrow">▼</span>';
-      });
-      toggle.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          toggle.click();
-        }
-      });
+    toggle.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggle.click();
+      }
     });
+  });
 });
 $(document).ready(function () {
   $(window).scroll(function () {

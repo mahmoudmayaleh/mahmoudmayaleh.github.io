@@ -391,8 +391,10 @@
           <span class="summary">LipLingo is a lip-reading tool that turns silent video of someone’s mouth into text. It learns typical lip-movement patterns, useful when audio is missing or noisy.
 </span>
 
-            <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
-            <a class="project-btn" href="https://github.com/mahmoudmayaleh/LipLingo" target="_blank" rel="noopener">View on GitHub</a>
+            <div class="button-row">
+              <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+              <a class="project-btn" href="https://github.com/mahmoudmayaleh/LipLingo" target="_blank" rel="noopener">View on GitHub</a>
+            </div>
 
           <div class="view-more-content">
             <div class="project-details-grid">
@@ -423,8 +425,10 @@
         <img class="project-thumb" src="images/proj-sentiment.png" alt="Sentiment analysis">
         <div class="project-summary">
           <span class="summary">Text-classification pipeline extracting emotions from comments using classic ML and lightweight NLP.</span>
-            <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
-            <a class="project-btn" href="https://github.com/mahmoudmayaleh/sentiment-analysis" target="_blank" rel="noopener">View on GitHub</a>
+            <div class="button-row">
+              <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+              <a class="project-btn" href="https://github.com/mahmoudmayaleh/sentiment-analysis" target="_blank" rel="noopener">View on GitHub</a>
+            </div>
           <div class="view-more-content">
             <div class="project-details-grid">
               <div>
@@ -454,8 +458,10 @@
         <img class="project-thumb" src="images/proj-forecast.png" alt="Line and bar chart showing forecasted sales">
         <div class="project-summary">
           <span class="summary">Sales forecasting with linear regression and clear error metrics for decision-ready insights.</span>
-            <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
-            <a class="project-btn" href="https://github.com/mahmoudmayaleh/sales-forecast" target="_blank" rel="noopener">View on GitHub</a>
+            <div class="button-row">
+              <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+              <a class="project-btn" href="https://github.com/mahmoudmayaleh/sales-forecast" target="_blank" rel="noopener">View on GitHub</a>
+            </div>
           <div class="view-more-content">
             <div class="project-details-grid">
               <div>
@@ -553,37 +559,7 @@
     </button>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script src="script.js"></script>
-    <script>
-    // Expandable 'View more' for project cards - only one open at a time, no box expansion for others
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.view-more-toggle').forEach(function(toggle) {
-        toggle.addEventListener('click', function() {
-          // Close all others
-          document.querySelectorAll('.view-more-content.expanded').forEach(function(opened) {
-            if (opened !== toggle.parentElement.querySelector('.view-more-content')) {
-              opened.classList.remove('expanded');
-              const btn = opened.parentElement.querySelector('.view-more-toggle');
-              if (btn) {
-                btn.classList.remove('expanded');
-                btn.innerHTML = 'View more <span class="arrow">▼</span>';
-              }
-            }
-          });
-          // Toggle this one
-          const content = toggle.parentElement.querySelector('.view-more-content');
-          const expanded = content.classList.toggle('expanded');
-          toggle.classList.toggle('expanded', expanded);
-          toggle.innerHTML = expanded ? 'View less <span class="arrow">▲</span>' : 'View more <span class="arrow">▼</span>';
-        });
-        toggle.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            toggle.click();
-          }
-        });
-      });
-    });
-    </script>
+    <!-- Removed inline duplicate toggle script: logic lives in script.js -->
     
   </body>
 </html>
