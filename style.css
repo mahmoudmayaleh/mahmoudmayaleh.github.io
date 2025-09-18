@@ -5,6 +5,178 @@ body,
   font-family: "Inter", Arial, sans-serif;
 }
 
+/* ==========================================
+   Adaptive Accent System
+   (Defines CSS variables for accent colors/themes)
+   ========================================== */
+/* Light mode: deeper teal accent
+  Dark mode: shifts hue slightly toward aqua
+  Use var(--accent) / var(--accent-glow) / var(--accent-bg) */
+:root {
+  --accent-h: 196; /* teal base */
+  --accent-s: 82%;
+  --accent-l: 40%;
+  --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --accent-glow: hsl(
+    var(--accent-h) var(--accent-s) calc(var(--accent-l) + 18%)
+  );
+  --accent-bg: hsla(var(--accent-h), var(--accent-s), 20%, 0.18);
+  --accent-soft: hsla(var(--accent-h), var(--accent-s), 55%, 0.35);
+  --ease-acc: cubic-bezier(0.4, 2, 0.6, 1);
+}
+body.dark-mode {
+  /* shift hue & lighten slightly for luminous aqua feel */
+  --accent-h: 185;
+  --accent-s: 95%;
+  --accent-l: 52%;
+}
+
+/* === Skill Radar (reintroduced) === */
+.skill-radar-wrapper {
+  max-width: 340px;
+  margin: 0 auto 2.2rem auto;
+  position: relative;
+  animation: fadeIn 0.9s ease 0.15s both;
+  display: flex;
+  justify-content: center;
+}
+
+#skill-radar {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+#skill-radar text {
+  fill: var(--text-secondary, #c8d4e5);
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.35);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+#skill-radar .axis-line {
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-width: 1;
+}
+
+#skill-radar .level-ring {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 0.7;
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Points removed for cleaner line pulse focus */
+
+#skill-radar #radar-outline {
+  stroke-dasharray: 6 10;
+  opacity: 0.5;
+  vector-effect: non-scaling-stroke;
+}
+
+#skill-radar #radar-polygon {
+  animation: polygonBreath 7.5s ease-in-out infinite;
+  transform-origin: 160px 160px;
+}
+
+@keyframes polygonBreath {
+  0%,
+  100% {
+    transform: scale(0.995);
+    filter: drop-shadow(0 0 6px var(--accent-glow));
+  }
+  50% {
+    transform: scale(1.01);
+    filter: drop-shadow(0 0 12px var(--accent-glow));
+  }
+}
+
+@media (max-width: 880px) {
+  .skill-radar-wrapper {
+    margin: 0 auto 2.2rem;
+  }
+}
+
+/* Smooth transition when toggling theme */
+body,
+.navbar,
+.project-btn,
+.view-more-toggle,
+.timeline-progress-bar {
+  transition: background-color 0.55s var(--ease-acc),
+    color 0.45s var(--ease-acc), border-color 0.55s var(--ease-acc),
+    filter 0.6s var(--ease-acc), box-shadow 0.6s var(--ease-acc);
+}
+
+/* Generic accent utilities */
+.accent-text {
+  color: var(--accent) !important;
+}
+.accent-border {
+  border-color: var(--accent) !important;
+}
+.accent-bg {
+  background: var(--accent-bg) !important;
+}
+
+/* Override key components to use accent variables */
+.view-more-toggle {
+  color: var(--accent);
+}
+.view-more-toggle:hover,
+.view-more-toggle.expanded {
+  color: var(--accent-glow);
+  text-shadow: 0 0 12px var(--accent-soft);
+}
+
+.project-btn,
+a.project-btn {
+  background: linear-gradient(145deg, var(--accent) 0%, var(--accent-glow) 90%);
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 14px -4px var(--accent-soft);
+}
+.project-btn:hover {
+  filter: brightness(1.08) saturate(1.1);
+  box-shadow: 0 6px 18px -6px var(--accent-soft), 0 0 0 1px var(--accent);
+}
+
+.tech-stack span {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-soft);
+  color: var(--accent-glow);
+  transition: background 0.4s var(--ease-acc), color 0.4s var(--ease-acc),
+    border-color 0.4s var(--ease-acc);
+}
+.tech-stack span:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent-glow);
+}
+
+/* Timeline progress bar recolor */
+.timeline-progress-bar {
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    color-mix(in srgb, var(--accent) 40%, #0c486a) 60%,
+    var(--accent-glow) 100%
+  );
+}
+
+/* Links accent on hover */
+a:hover,
+a:focus {
+  color: var(--accent-glow);
+}
+
+/* Return shadow already applied via nav-return; ensure color ties to accent */
+.navbar.nav-return {
+  box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.45),
+    0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
 /* Global layout + overflow controls */
 html,
 body {
@@ -448,8 +620,22 @@ section .title::after {
   z-index: 999;
   padding: 30px 0;
   font-family: "Ubuntu", sans-serif;
-  transition: all 0.3s ease;
+  transition: padding 0.3s ease, background 0.3s ease,
+    transform 0.45s cubic-bezier(0.4, 2, 0.6, 1), opacity 0.4s ease;
   background: rgba(12, 72, 106, 255);
+}
+.navbar.nav-hide {
+  transform: translateY(-120%);
+  opacity: 0;
+  pointer-events: none;
+}
+.navbar.nav-return {
+  box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(0, 234, 255, 0.25);
+}
+.navbar,
+.navbar.nav-hide {
+  will-change: transform, opacity;
 }
 .navbar.sticky {
   padding: 15px 0;
@@ -1218,7 +1404,8 @@ section .title::after {
 .about.reveal,
 .projects.reveal,
 .contact.reveal,
-#skills.reveal {
+#skills.reveal,
+.skill-radar.reveal {
   opacity: 1 !important;
   transform: none !important;
   filter: none !important;
@@ -1450,17 +1637,42 @@ body.dark-mode .timeline-vertical {
   display: flex;
   align-items: flex-start;
   z-index: 1;
-  transition: filter 0.3s, background 0.3s;
-  filter: grayscale(0.7) brightness(0.8);
 }
-.timeline-vertical-item.active {
-  filter: none;
-  background: #0e3c4e;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px #0c343833;
+
+/* Subtle active highlight (reintroduced) */
+.timeline-vertical-item.active .timeline-content {
+  background: rgba(14, 60, 78, 0.35);
+  box-shadow: 0 4px 18px -4px #0c343855;
+  border-radius: 10px;
+  transition: background 0.4s, box-shadow 0.4s;
 }
-body.dark-mode .timeline-vertical-item.active {
-  background: #1a2733;
+body.dark-mode .timeline-vertical-item.active .timeline-content {
+  background: rgba(26, 39, 51, 0.45);
+  box-shadow: 0 4px 18px -4px #0c343888;
+}
+
+/* Timeline progress bar */
+#timeline-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    var(--accent-color) var(--progress, 0%),
+    transparent 0%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 999;
+}
+#timeline-progress.visible {
+  opacity: 1;
+}
+body.dark-mode #timeline-progress {
+  filter: brightness(1.1) saturate(1.2);
 }
 .timeline-icon {
   position: absolute;
@@ -1681,13 +1893,55 @@ body.dark-mode .timeline-content p {
   height: 100%;
   margin-left: 60px;
 }
+.neural-hero-illustration {
+  position: relative;
+}
+/* Neon white glow for node glimmers */
+#neural-svg .nn-node-glow {
+  filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px #ffffff);
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+#neural-svg .nn-node {
+  /* Keep base node color tied to accent but allow subtle bloom */
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.4));
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
 @media (max-width: 768px) {
   .home-content-wrapper {
     flex-direction: column;
-    gap: 0;
+    gap: 40px;
   }
   .neural-hero-illustration {
-    display: none !important;
+    flex: none;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    min-width: 200px;
+    min-height: 150px;
+    /* Adjust vertical position of network under the Reach Out button.
+       Increase (more negative) translateY to move further up, decrease to move down. */
+    transform: translateY(-290px) scale(0.68);
+    justify-content: center;
+  }
+}
+
+/* Fine-tune vertical spacing so network sits just under Reach Out button on small screens */
+@media (max-width: 768px) {
+  .home {
+    position: relative;
+    padding-top: 40px; /* keep some top spacing */
+    padding-bottom: 140px; /* create room for pulled-up network without overlapping next section */
+  }
+  .home-content-wrapper {
+    position: relative;
+  }
+  .home-content-wrapper .home-content a[href="#contact"] {
+    margin-bottom: 70px; /* space below button so pulled-up network visually sits right after */
+    display: inline-block;
+  }
+  /* Slightly adjust arrow so it stays below the network */
+  .scroll-arrow {
+    margin-top: -60px;
   }
 }
 #neural-bg {
@@ -1885,6 +2139,51 @@ body.dark-mode .linkedin-btn:hover {
 .timeline-wavy {
   position: relative;
   padding: 100px 0;
+}
+
+/* Timeline scroll progress bar */
+.timeline-progress-wrapper {
+  position: sticky;
+  top: 0; /* stays at top of viewport while scrolling timeline */
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.05)
+  );
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 0 28px 0;
+  box-shadow: 0 0 0 1px rgba(0, 234, 255, 0.12),
+    0 4px 12px -2px rgba(0, 0, 0, 0.4) inset;
+}
+.timeline-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #00eaff, #0c486a 60%, #00eaff);
+  background-size: 180% 100%;
+  animation: progressShift 6s linear infinite;
+  box-shadow: 0 0 12px 2px rgba(0, 234, 255, 0.5);
+  transition: width 0.35s cubic-bezier(0.4, 2, 0.6, 1);
+}
+@keyframes progressShift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -180% 0;
+  }
+}
+
+/* Active timeline item highlight */
+.timeline-wavy-item.is-active .timeline-content {
+  box-shadow: 0 0 0 1px #00eaff55, 0 0 22px -4px #00eaff66;
+  transform: translateY(-4px);
+  border-color: #00eaff !important;
+}
+.timeline-wavy-item.is-active .timeline-logo-wrapper {
+  box-shadow: 0 0 0 2px #00eaffaa, 0 0 18px #00eaff88;
+  transform: scale(1.07);
 }
 
 .timeline-wavy-container {

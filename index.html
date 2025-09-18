@@ -73,41 +73,107 @@
           </div>
           <div class="neural-hero-illustration">
 <svg id="neural-svg" width="340" height="260" viewBox="0 0 340 260">
-  <g stroke="#00eaff" stroke-width="2" opacity="0.5">
-    <line x1="40" y1="50" x2="150" y2="40"/>
-    <line x1="40" y1="50" x2="150" y2="110"/>
-    <line x1="40" y1="50" x2="150" y2="180"/>
-    <line x1="40" y1="130" x2="150" y2="40"/>
-    <line x1="40" y1="130" x2="150" y2="110"/>
-    <line x1="40" y1="130" x2="150" y2="180"/>
-    <line x1="40" y1="210" x2="150" y2="40"/>
-    <line x1="40" y1="210" x2="150" y2="110"/>
-    <line x1="40" y1="210" x2="150" y2="180"/>
-    <line x1="40" y1="50" x2="150" y2="70"/>
-    <line x1="40" y1="130" x2="150" y2="70"/>
-    <line x1="40" y1="210" x2="150" y2="70"/>
-    <line x1="150" y1="40" x2="280" y2="80"/>
-    <line x1="150" y1="70" x2="280" y2="80"/>
-    <line x1="150" y1="110" x2="280" y2="80"/>
-    <line x1="150" y1="180" x2="280" y2="80"/>
-    <line x1="150" y1="40" x2="280" y2="200"/>
-    <line x1="150" y1="70" x2="280" y2="200"/>
-    <line x1="150" y1="110" x2="280" y2="200"/>
-    <line x1="150" y1="180" x2="280" y2="200"/>
+  <defs>
+    <radialGradient id="nodeGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Flowing curved connections -->
+  <g id="flow-connections" stroke="var(--accent)" stroke-width="1.5" fill="none" opacity="0.3">
+    <!-- Layer 1 to Layer 2 -->
+    <path d="M 50,60 Q 100,50 140,70"/>
+    <path d="M 50,60 Q 100,80 140,110"/>
+    <path d="M 50,60 Q 100,120 140,150"/>
+    
+    <path d="M 50,130 Q 100,100 140,70"/>
+    <path d="M 50,130 Q 100,120 140,110"/>
+    <path d="M 50,130 Q 100,140 140,150"/>
+    <path d="M 50,130 Q 100,160 140,190"/>
+    
+    <path d="M 50,200 Q 100,180 140,150"/>
+    <path d="M 50,200 Q 100,195 140,190"/>
+    
+    <!-- Layer 2 to Layer 3 -->
+    <path d="M 140,70 Q 190,75 230,90"/>
+    <path d="M 140,70 Q 190,100 230,130"/>
+    
+    <path d="M 140,110 Q 190,105 230,90"/>
+    <path d="M 140,110 Q 190,115 230,130"/>
+    <path d="M 140,110 Q 190,140 230,170"/>
+    
+    <path d="M 140,150 Q 190,135 230,130"/>
+    <path d="M 140,150 Q 190,155 230,170"/>
+    
+    <path d="M 140,190 Q 190,180 230,170"/>
+    
+    <!-- Layer 3 to Layer 4 -->
+    <path d="M 230,90 Q 270,85 310,100"/>
+    <path d="M 230,130 Q 270,125 310,100"/>
+    <path d="M 230,130 Q 270,135 310,140"/>
+    <path d="M 230,170 Q 270,165 310,140"/>
   </g>
-  <g>
-    <g class="nn-node-group" data-idx="0"><circle class="nn-node" cx="40" cy="50" r="14" fill="#fff" data-tooltip="Education"/></g>
-    <g class="nn-node-group" data-idx="1"><circle class="nn-node" cx="40" cy="130" r="14" fill="#fff" data-tooltip="Input Node 2"/></g>
-    <g class="nn-node-group" data-idx="2"><circle class="nn-node" cx="40" cy="210" r="14" fill="#fff" data-tooltip="Input Node 3"/></g>
-    <g class="nn-node-group" data-idx="3"><circle class="nn-node" cx="150" cy="40" r="14" fill="#fff" data-tooltip="Problem Solving"/></g>
-    <g class="nn-node-group" data-idx="4"><circle class="nn-node" cx="150" cy="70" r="14" fill="#fff" data-tooltip="Hidden Node 2"/></g>
-    <g class="nn-node-group" data-idx="5"><circle class="nn-node" cx="150" cy="110" r="14" fill="#fff" data-tooltip="Hidden Node 3"/></g>
-    <g class="nn-node-group" data-idx="6"><circle class="nn-node" cx="150" cy="180" r="14" fill="#fff" data-tooltip="Hidden Node 4"/></g>
-    <g class="nn-node-group" data-idx="7"><circle class="nn-node" cx="280" cy="80" r="14" fill="#fff" data-tooltip="AI Projects"/></g>
-    <g class="nn-node-group" data-idx="8"><circle class="nn-node" cx="280" cy="200" r="14" fill="#fff" data-tooltip="Output Node 2"/></g>
+  
+  <!-- Neural nodes arranged in flowing sequence -->
+  <g id="neural-nodes">
+    <!-- Layer 1 (Input) -->
+    <g class="nn-node-group" data-idx="0" data-layer="0">
+      <circle class="nn-node" cx="50" cy="60" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="50" cy="60" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    <g class="nn-node-group" data-idx="1" data-layer="0">
+      <circle class="nn-node" cx="50" cy="130" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="50" cy="130" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    <g class="nn-node-group" data-idx="2" data-layer="0">
+      <circle class="nn-node" cx="50" cy="200" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="50" cy="200" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    
+    <!-- Layer 2 (Hidden) -->
+    <g class="nn-node-group" data-idx="3" data-layer="1">
+      <circle class="nn-node" cx="140" cy="70" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="140" cy="70" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    <g class="nn-node-group" data-idx="4" data-layer="1">
+      <circle class="nn-node" cx="140" cy="110" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="140" cy="110" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    <g class="nn-node-group" data-idx="5" data-layer="1">
+      <circle class="nn-node" cx="140" cy="150" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="140" cy="150" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    <g class="nn-node-group" data-idx="6" data-layer="1">
+      <circle class="nn-node" cx="140" cy="190" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="140" cy="190" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    
+    <!-- Layer 3 (Hidden) -->
+    <g class="nn-node-group" data-idx="7" data-layer="2">
+      <circle class="nn-node" cx="230" cy="90" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="230" cy="90" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    <g class="nn-node-group" data-idx="8" data-layer="2">
+      <circle class="nn-node" cx="230" cy="130" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="230" cy="130" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    <g class="nn-node-group" data-idx="9" data-layer="2">
+      <circle class="nn-node" cx="230" cy="170" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="230" cy="170" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    
+    <!-- Layer 4 (Output) -->
+    <g class="nn-node-group" data-idx="10" data-layer="3">
+      <circle class="nn-node" cx="310" cy="100" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="310" cy="100" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
+    <g class="nn-node-group" data-idx="11" data-layer="3">
+      <circle class="nn-node" cx="310" cy="140" r="12" fill="var(--accent)"/>
+      <circle class="nn-node-glow" cx="310" cy="140" r="18" fill="url(#nodeGlow)" opacity="0"/>
+    </g>
   </g>
-
-
 </svg>
           </div>
         </div>
@@ -145,14 +211,13 @@
         </div>
       </div>
     </section>
-<svg class="circuit-lines" viewBox="0 0 600 400" preserveAspectRatio="none">
-  <path d="M 0,200 Q 300,100 600,200" stroke="#00f0ff" stroke-width="2" fill="none"/>
-</svg>
-
 
 <section class="timeline-wavy" id="timeline">
   <div class="max-width">
     <h2 class="title">My Journey</h2>
+    <div class="timeline-progress-wrapper" aria-hidden="true">
+      <div class="timeline-progress-bar"></div>
+    </div>
     <div class="timeline-wavy-container">
 
       <!-- Row 1: Research Intern (Left) -->
@@ -251,19 +316,46 @@
 
 
 
-   <!-- skills section start -->
+  <!-- Skills section -->
+  <!-- skills section start -->
+
 <section class="skills reveal" id="skills">
   <div class="max-width">
     <h2 class="title">Skills</h2>
+    <!-- (Radar chart removed) -->
     <div class="skills-content">
       <div class="column left">
+        <div class="skill-radar-wrapper">
+          <svg id="skill-radar" viewBox="0 0 320 320" width="320" height="320" aria-label="Skill radar" role="img">
+            <defs>
+              <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="var(--accent-glow)" stop-opacity="0.35" />
+                <stop offset="70%" stop-color="var(--accent)" stop-opacity="0.06" />
+                <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+              </radialGradient>
+              <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="18" result="blur" />
+                <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0 0 0 0.85  0 0 0 0 0.95  0 0 0 0.65 0" />
+              </filter>
+            </defs>
+            <g id="radar-bg">
+              <circle cx="160" cy="160" r="140" fill="url(#radarGlow)" opacity="0.55" />
+            </g>
+            <g id="radar-grid"></g>
+            <g id="radar-polygon-group">
+              <path id="radar-polygon" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent-glow)" stroke-width="2" filter="url(#softGlow)" />
+              <path id="radar-outline" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linejoin="round" />
+            </g>
+            <g id="radar-points"></g>
+            <g id="radar-labels" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="600"></g>
+          </svg>
+        </div>
         <div class="text">Core stack</div>
         <p>
           Applied AI/ML engineer focused on building end-to-end systems—data pipelines, model training/serving, and MLOps.
           Strong in Python + PyTorch, with hands-on work in NLP and Computer Vision.
         </p>
       </div>
-
       <div class="column right">
         <!-- Programming & ML -->
         <div class="skill">
@@ -290,7 +382,8 @@
           <span class="skill-label">Computer Vision (OpenCV)</span>
           <div class="skill-bar"><div class="skill-bar-fill" data-skill="75"></div></div>
         </div>
-     </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -550,7 +643,7 @@
     <!-- footer section start -->
     <footer>
       <span
-        >Created By <a href="https://www.linkedin.com/in/mahmoud-mayaleh">Mahmoud Mayaleh</a> |
+        >By <a href="https://www.linkedin.com/in/mahmoud-mayaleh">Mahmoud Mayaleh</a> |
         <span class="far fa-copyright"></span> 2025 All rights reserved.</span
       >
     </footer>

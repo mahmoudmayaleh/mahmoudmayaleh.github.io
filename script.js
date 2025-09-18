@@ -1,56 +1,149 @@
-// Unified expandable logic (multiple open allowed) for publications & projects
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".view-more-toggle").forEach(function (toggle) {
-    // If arrow span not present, append one
-    if (!toggle.querySelector(".arrow")) {
-      const arrowSpan = document.createElement("span");
-      arrowSpan.className = "arrow";
-      arrowSpan.textContent = "▼";
-      arrowSpan.style.marginLeft = "6px";
-      toggle.appendChild(arrowSpan);
+// Skill Radar (reintroduced) -------------------------------------------------
+function initSkillRadar() {
+  const svg = document.getElementById("skill-radar");
+  if (!svg) return; // guard
+
+  const center = { x: 160, y: 160 };
+  const radius = 135;
+  const levels = 5; // concentric hex rings
+  // Order & percentages aligned with reference (approximate visually):
+  // NLP ~85, Computer Vision ~80, MLOps ~90, Data Engineering ~72, Deep Learning ~88, LLMs ~78
+  const skills = [
+    { label: "NLP", value: 85 },
+    { label: "Computer Vision", value: 80 },
+    { label: "MLOps", value: 90 },
+    { label: "Data Engineering", value: 72 },
+    { label: "Deep Learning", value: 88 },
+    { label: "LLMs", value: 78 },
+  ];
+
+  const gridGroup = svg.querySelector("#radar-grid");
+  const polygon = svg.querySelector("#radar-polygon");
+  const outline = svg.querySelector("#radar-outline");
+  const pointsGroup = svg.querySelector("#radar-points");
+  const labelsGroup = svg.querySelector("#radar-labels");
+
+  // Utility: build hex path for given radius
+  function hexPath(r) {
+    let d = "";
+    for (let i = 0; i < 6; i++) {
+      const angle = -Math.PI / 2 + i * ((Math.PI * 2) / 6);
+      const x = center.x + Math.cos(angle) * r;
+      const y = center.y + Math.sin(angle) * r;
+      d += `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
     }
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.addEventListener("click", function () {
-      let container = toggle.closest(".publication-summary, .project-summary");
-      if (!container) return;
-      const content = container.querySelector(".view-more-content");
-      if (!content) return;
-      const expanded = content.classList.toggle("expanded");
-      toggle.classList.toggle("expanded", expanded);
-      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
-      // Rotate arrow by toggling a class
-      const arrow = toggle.querySelector(".arrow");
-      if (arrow) {
-        arrow.style.display = "inline-block";
-        arrow.style.transition = "transform 0.3s";
-        arrow.style.transform = expanded ? "rotate(180deg)" : "rotate(0deg)";
-      }
-    });
-    toggle.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        toggle.click();
-      }
-    });
+    return d + " Z";
+  }
+  // Build concentric hex level rings
+  for (let l = 1; l <= levels; l++) {
+    const r = (radius / levels) * l;
+    const ring = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    ring.setAttribute("class", "level-ring");
+    ring.setAttribute("d", hexPath(r));
+    gridGroup.appendChild(ring);
+  }
+
+  // Axis lines & compute points (6 axes for hex)
+  const angleSlice = (Math.PI * 2) / skills.length;
+  const points = skills.map((skill, i) => {
+    const angle = -Math.PI / 2 + i * angleSlice; // start at top
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("class", "axis-line");
+    line.setAttribute("x1", center.x);
+    line.setAttribute("y1", center.y);
+    line.setAttribute("x2", (center.x + Math.cos(angle) * radius).toFixed(2));
+    line.setAttribute("y2", (center.y + Math.sin(angle) * radius).toFixed(2));
+    gridGroup.appendChild(line);
+
+    const valueRadius = (skill.value / 100) * radius;
+    return {
+      x: center.x + Math.cos(angle) * valueRadius,
+      y: center.y + Math.sin(angle) * valueRadius,
+      label: skill.label,
+      value: skill.value,
+      angle,
+    };
   });
-});
+
+  function buildPolygonPath(scaleFactor = 1) {
+    return (
+      points
+        .map((p, i) => {
+          const sx = center.x + (p.x - center.x) * scaleFactor;
+          const sy = center.y + (p.y - center.y) * scaleFactor;
+          return `${i === 0 ? "M" : "L"}${sx.toFixed(2)},${sy.toFixed(2)}`;
+        })
+        .join(" ") + " Z"
+    );
+  }
+
+  // Initial collapsed state for intro animation
+  polygon.setAttribute("d", buildPolygonPath(0));
+  outline.setAttribute("d", buildPolygonPath(0));
+
+  // Labels only (points optional, minimal)
+  points.forEach((p) => {
+    const label = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "text"
+    );
+    const labelRadius = radius + 28; // push labels outward a bit more
+    const lx = center.x + Math.cos(p.angle) * labelRadius;
+    const ly = center.y + Math.sin(p.angle) * labelRadius;
+    label.setAttribute("x", lx.toFixed(2));
+    label.setAttribute("y", ly.toFixed(2));
+    label.setAttribute(
+      "text-anchor",
+      Math.cos(p.angle) > 0.45
+        ? "start"
+        : Math.cos(p.angle) < -0.45
+        ? "end"
+        : "middle"
+    );
+    label.setAttribute("dominant-baseline", "middle");
+    label.textContent = p.label;
+    labelsGroup.appendChild(label);
+  });
+
+  // Intro animation (expand polygon & grow points)
+  const duration = 1300;
+  const start = performance.now();
+  function animateIntro(t) {
+    const elapsed = t - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease =
+      progress < 0.5
+        ? 2 * progress * progress
+        : -1 + (4 - 2 * progress) * progress; // easeInOutQuad
+    const path = buildPolygonPath(ease);
+    polygon.setAttribute("d", path);
+    outline.setAttribute("d", path);
+    // no point expansion now
+    if (progress < 1) requestAnimationFrame(animateIntro);
+  }
+  requestAnimationFrame(animateIntro);
+
+  // Edge pulse: animate polygon stroke opacity & width
+  function edgePulse() {
+    let last = performance.now();
+    function frame(t) {
+      const dt = (t - last) / 1000;
+      last = t;
+      const pulse = (Math.sin(t / 900) + 1) / 2; // 0..1
+      const w = 1.2 + pulse * 1.4;
+      outline.style.strokeWidth = w.toFixed(2);
+      outline.style.opacity = (0.35 + pulse * 0.45).toFixed(3);
+      polygon.style.fillOpacity = (0.15 + pulse * 0.12).toFixed(3);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  edgePulse();
+}
+document.addEventListener("DOMContentLoaded", initSkillRadar);
+
+// jQuery dependent UI logic
 $(document).ready(function () {
-  $(window).scroll(function () {
-    // sticky navbar on scroll script
-    if (this.scrollY > 20) {
-      $(".navbar").addClass("sticky");
-    } else {
-      $(".navbar").removeClass("sticky");
-    }
-
-    // scroll-up button show/hide script
-    if (this.scrollY > 500) {
-      $(".scroll-up-btn").addClass("show");
-    } else {
-      $(".scroll-up-btn").removeClass("show");
-    }
-  });
-
   document.addEventListener("DOMContentLoaded", function () {
     particlesJS("particles-js", {
       particles: {
@@ -128,30 +221,119 @@ $(document).ready(function () {
       }
     );
   });
-});
 
-// Neural network nodes animation
-function pulseNeuralNodes() {
-  const nodes = document.querySelectorAll("#neural-svg .nn-node");
-  let t = 0;
-  setInterval(() => {
-    nodes.forEach((node, i) => {
-      const scale = 1 + 0.1 * Math.sin(t + i * 0.8);
-      const cx = parseFloat(node.getAttribute("cx"));
-      const cy = parseFloat(node.getAttribute("cy"));
-      // Center the scale transform on the node's center
-      node.setAttribute(
-        "transform",
-        `translate(${cx},${cy}) scale(${scale}) translate(${-cx},${-cy})`
-      );
-      node.style.filter = `drop-shadow(0 0 ${
-        8 + 8 * Math.abs(Math.sin(t + i))
-      }px #00eaff)`;
+  // Expand/collapse functionality for projects and publications
+  $(document).on("click", ".expand-btn, .view-more-toggle", function () {
+    const $this = $(this);
+    const $content = $this.siblings(".more-content, .view-more-content");
+    const $description = $this.siblings(
+      ".project-description, .publication-description"
+    );
+    const $arrow = $this.find(".arrow");
+
+    if ($content.is(":visible")) {
+      $content.slideUp();
+      $description.removeClass("expanded");
+      $this.html("Show More");
+      if ($arrow.length) {
+        $this.html('View more <span class="arrow">▼</span>');
+      }
+    } else {
+      $content.slideDown();
+      $description.addClass("expanded");
+      $this.html("Show Less");
+      if ($arrow.length) {
+        $this.html('View less <span class="arrow">▲</span>');
+      }
+    }
+  });
+}); // end jQuery ready block
+
+// Sequential neural network animation with gentle bounce and glimmer
+function sequentialNeuralPulse() {
+  const nodeGroups = document.querySelectorAll("#neural-svg .nn-node-group");
+  if (!nodeGroups.length) return;
+
+  let currentNode = 0;
+  const pulseInterval = 800; // ms between pulses
+  const pulseDuration = 1200; // ms for each bounce and glimmer
+
+  function activateNode(index) {
+    if (index >= nodeGroups.length) return;
+
+    const group = nodeGroups[index];
+    const node = group.querySelector(".nn-node");
+    const glow = group.querySelector(".nn-node-glow");
+
+    if (!node || !glow) return;
+
+    // Reset any previous animations
+    node.style.transform = "";
+    node.style.filter = "";
+    glow.style.opacity = "0";
+
+    // Gentle bounce with glimmer animation
+    const startTime = performance.now();
+
+    function animate(time) {
+      const elapsed = time - startTime;
+      const progress = Math.min(elapsed / pulseDuration, 1);
+
+      if (progress < 1) {
+        // Gentle bounce effect (smoother, calmer)
+        const bouncePhase =
+          Math.sin(progress * Math.PI * 2) * Math.exp(-progress * 3);
+        const scale = 1 + bouncePhase * 0.15; // More subtle bounce
+
+        // Glimmer effect with smooth glow
+        const glimmerPhase = Math.sin(progress * Math.PI * 1.5);
+        const glowOpacity = glimmerPhase * 0.6;
+        const brightness = 1 + glimmerPhase * 0.4;
+
+        // Apply gentle transform and glimmer
+        node.style.transform = `scale(${scale})`;
+        node.style.transformOrigin = "center";
+        node.style.filter = `brightness(${brightness})`;
+        glow.style.opacity = Math.max(0, glowOpacity);
+
+        requestAnimationFrame(animate);
+      } else {
+        // Fade out smoothly
+        node.style.transform = "";
+        node.style.filter = "";
+        glow.style.opacity = "0";
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  function sequentialActivation() {
+    // Group nodes by layer for proper sequencing
+    const layers = [];
+    nodeGroups.forEach((group) => {
+      const layer = parseInt(group.dataset.layer) || 0;
+      if (!layers[layer]) layers[layer] = [];
+      layers[layer].push(group);
     });
-    t += 0.07;
-  }, 40);
+
+    let totalDelay = 0;
+
+    layers.forEach((layerNodes, layerIndex) => {
+      layerNodes.forEach((group, nodeIndex) => {
+        const nodeIdx = Array.from(nodeGroups).indexOf(group);
+        setTimeout(() => activateNode(nodeIdx), totalDelay);
+        totalDelay += 200; // Stagger within layer
+      });
+      totalDelay += 400; // Extra delay between layers for calmer effect
+    });
+  }
+
+  // Start sequence and repeat
+  sequentialActivation();
+  setInterval(sequentialActivation, 5000); // Slower repeat for calmness
 }
-document.addEventListener("DOMContentLoaded", pulseNeuralNodes);
+document.addEventListener("DOMContentLoaded", sequentialNeuralPulse);
 
 function animateSkillBars() {
   const bars = document.querySelectorAll(".skill-bar-fill");
@@ -184,6 +366,22 @@ function animateSkillBars() {
   checkAndAnimate();
 }
 document.addEventListener("DOMContentLoaded", animateSkillBars);
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Scroll reveal effect
+  const reveals = document.querySelectorAll(".reveal");
+  function revealOnScroll() {
+    const windowHeight = window.innerHeight;
+    reveals.forEach((el) => {
+      const top = el.getBoundingClientRect().top;
+      if (top < windowHeight - 60) {
+        el.classList.add("active");
+      }
+    });
+  }
+  window.addEventListener("scroll", revealOnScroll);
+  revealOnScroll();
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   // Live validation for contact form fields
@@ -275,43 +473,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function highlightTimelineItems() {
-  const items = document.querySelectorAll(".timeline-vertical-item");
-  let found = false;
-  items.forEach((item) => item.classList.remove("active"));
-  for (let i = 0; i < items.length; i++) {
-    const rect = items[i].getBoundingClientRect();
-    if (
-      !found &&
-      rect.top < window.innerHeight * 0.5 &&
-      rect.bottom > window.innerHeight * 0.2
-    ) {
-      items[i].classList.add("active");
-      found = true;
-    }
-  }
-}
-window.addEventListener("scroll", highlightTimelineItems);
-window.addEventListener("load", highlightTimelineItems);
-
-function highlightWavyTimelineItems() {
-  const items = document.querySelectorAll(".timeline-wavy-item");
-  let found = false;
-  items.forEach((item) => item.classList.remove("active"));
-  for (let i = 0; i < items.length; i++) {
-    const rect = items[i].getBoundingClientRect();
-    if (
-      !found &&
-      rect.top < window.innerHeight * 0.5 &&
-      rect.bottom > window.innerHeight * 0.2
-    ) {
-      items[i].classList.add("active");
-      found = true;
-    }
-  }
-}
-window.addEventListener("scroll", highlightWavyTimelineItems);
-window.addEventListener("load", highlightWavyTimelineItems);
+// Timeline auto-highlight previously removed was reintroduced in enhanced form further below.
 
 //floating sparks
 const createParticle = () => {
@@ -323,3 +485,55 @@ const createParticle = () => {
   setTimeout(() => particle.remove(), 5000);
 };
 setInterval(createParticle, 300);
+
+// --- Wavy timeline auto-highlight & progress bar ---
+// Targets .timeline-wavy section with .timeline-wavy-item rows and a
+// sticky internal .timeline-progress-wrapper containing .timeline-progress-bar
+(function(){
+  const section = document.querySelector('.timeline-wavy');
+  if(!section) return;
+  const items = Array.from(section.querySelectorAll('.timeline-wavy-item'));
+  const progressBar = section.querySelector('.timeline-progress-bar');
+  if(!progressBar) return;
+
+  let ticking = false;
+
+  function update(){
+    ticking = false;
+    const rect = section.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const sectionTop = rect.top + window.scrollY;
+    const sectionHeight = section.offsetHeight;
+    const scrollY = window.scrollY;
+    const denom = Math.max(1, sectionHeight - vh); // avoid divide-by-zero
+    const rawProgress = (scrollY - sectionTop) / denom;
+    const progress = Math.min(1, Math.max(0, rawProgress));
+    progressBar.style.width = (progress * 100).toFixed(2) + '%';
+
+    // Highlight item whose bounding box crosses center band (25% - 55% of viewport)
+    const upper = vh * 0.55;
+    const lower = vh * 0.25;
+    let activated = false;
+    items.forEach(it => it.classList.remove('is-active'));
+    for(const it of items){
+      const r = it.getBoundingClientRect();
+      if(!activated && r.top < upper && r.bottom > lower){
+        it.classList.add('is-active');
+        activated = true;
+      }
+    }
+  }
+
+  function onScroll(){
+    if(!ticking){
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  window.addEventListener('load', update);
+  update();
+})();
+// --- End wavy timeline enhancement ---
