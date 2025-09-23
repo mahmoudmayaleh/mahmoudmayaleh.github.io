@@ -1000,7 +1000,16 @@ section .title::after {
   padding: 0 15px;
   font-size: 17px;
   transition: all 0.3s ease;
+  background: #fff;   /* White background */
+  color: #000;        /* Black text */
 }
+
+/* Placeholder styling */
+.contact .right form .field input::placeholder,
+.contact .right form .textarea textarea::placeholder {
+  color: #777;        /* Gray placeholder */
+}
+
 .contact .right form .field input:focus,
 .contact .right form .textarea textarea:focus {
   border-color: #b3b3b3;
@@ -1032,6 +1041,7 @@ section .title::after {
   color: rgba(12, 72, 106, 255);
   background: none;
 }
+
 
 /* === Projects Section === */
 .projects .projects-content {
@@ -2317,3 +2327,4 @@ body {
   background-size: 400px;
   color: #fff;
 }
+
