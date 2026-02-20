@@ -489,116 +489,263 @@
   </div>
 </section>
 
-    <!-- projects section start -->
+  <!-- projects section start -->
 <section class="projects reveal" id="projects">
   <div class="max-width">
     <h2 class="title">Projects</h2>
     <div class="projects-content">
-      <!-- Project 1 -->
-      <article class="project">
-        <h3>LipLingo: Deep Learning Model for Lip Reading</h3>
-        <img class="project-thumb" src="images/Liplingo-logo.png" alt="LipLingo logo and model schematic">
-        <div class="project-summary">
-          <span class="summary">LipLingo is a lip-reading tool that turns silent video of someone’s mouth into text. It learns typical lip-movement patterns, useful when audio is missing or noisy.
-</span>
+      <div class="projects-grid">
 
+        <!-- Project 1: ATLAS -->
+        <article class="project">
+          <h3>ATLAS: Adaptive Task-aware Federated Learning for LLMs</h3>
+          <img class="project-thumb" src="images/proj-atlas.png" alt="Diagram of federated learning with edge devices">
+          <div class="project-summary">
+            <span class="summary">
+              Publication-ready federated learning framework enabling efficient multi-task LLM fine-tuning on heterogeneous edge devices.
+            </span>
             <div class="button-row">
-              <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
-              <a class="project-btn" href="https://github.com/mahmoudmayaleh/LipLingo" target="_blank" rel="noopener">View on GitHub</a>
+              <button class="view-more-toggle" type="button">
+                View more <span class="arrow">▼</span>
+              </button>
+              <a class="project-btn" href="https://github.com/mahmoudmayaleh/ATLAS" target="_blank" rel="noopener">
+                View on GitHub
+              </a>
             </div>
-
-          <div class="view-more-content">
-            <div class="project-details-grid">
-              <div>
-                <h4>Highlights</h4>
-                <ul>
-                  <li>Visual lip-reading system that converts silent mouth video into text</li>
-                  <li>Data & prep: trained and evaluated on the GRID corpus with face/mouth detection, frame normalization, and basic augmentations.</li>
-                </ul>
-              </div>
-              <div>
-                <h4>Tech Stack</h4>
-                <div class="tech-stack">
-                  <span>Python</span>
-                  <span>TensorFlow/Keras</span>
-                  <span>NumPy</span>
-                  <span>OpenCV</span>
+            <div class="view-more-content">
+              <div class="project-details-grid">
+                <div>
+                  <h4>Highlights</h4>
+                  <ul>
+                    <li>Four-phase pipeline: task clustering, heterogeneous LoRA configuration, split federated learning, and Laplacian-based personalization.</li>
+                    <li>Publication-quality experiments (30 rounds, 5000 samples, 3 local epochs) with session-based training and IEEE-ready figures.</li>
+                    <li>Supports DistilBERT, BERT, RoBERTa, GPT-2 with real PyTorch + HuggingFace training.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Tech Stack</h4>
+                  <div class="tech-stack">
+                    <span>Python</span>
+                    <span>PyTorch</span>
+                    <span>HuggingFace</span>
+                    <span>PEFT/LoRA</span>
+                    <span>Federated Learning</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </article>
-      
-      <!-- Project 2 -->
-      <article class="project">
-        <h3>Sentiment Analysis on Social Media Comments</h3>
-        <img class="project-thumb" src="images/proj-sentiment.png" alt="Sentiment analysis">
-        <div class="project-summary">
-          <span class="summary">Text-classification pipeline extracting emotions from comments using classic ML and lightweight NLP.</span>
-            <div class="button-row">
-              <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
-              <a class="project-btn" href="https://github.com/mahmoudmayaleh/sentiment-analysis" target="_blank" rel="noopener">View on GitHub</a>
-            </div>
-          <div class="view-more-content">
-            <div class="project-details-grid">
-              <div>
-                <h4>Highlights</h4>
-                <ul>
-                  <li>Computed per-comment scores from Twitter_Data.csv and wrote labeled outputs.</li>
-                  <li>Generated a sentiment-score histogram and calculated the dataset’s average compound sentiment.</li>
-                </ul>
-              </div>
-              <div>
-                <h4>Tech Stack</h4>
-                <div class="tech-stack">
-                  <span>Python</span>
-                  <span>scikit-learn</span>
-                  <span>NLTK</span>
-                  <span>pandas</span>
-                  <span>Matplotlib</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-       <!-- Project 3 -->
-      <article class="project">
-        <h3>Data-Driven Sales Trend Predictor</h3>
-        <img class="project-thumb" src="images/proj-forecast.png" alt="Line and bar chart showing forecasted sales">
-        <div class="project-summary">
-          <span class="summary">Sales forecasting with linear regression and clear error metrics for decision-ready insights.</span>
-            <div class="button-row">
-              <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
-              <a class="project-btn" href="https://github.com/mahmoudmayaleh/sales-forecast" target="_blank" rel="noopener">View on GitHub</a>
-            </div>
-          <div class="view-more-content">
-            <div class="project-details-grid">
-              <div>
-                <h4>Highlights</h4>
-                <ul>
-                  <li>Sales forecasting tool that predicts future demand per store/item from historical transactions.</li>
-                  <li>Pipeline: EDA → cleaning & time-indexing → feature engineering (lags, rolling means, seasonality/holiday flags) → model training → backtesting → error analysis.</li>
-                </ul>
-              </div>
-              <div>
-                <h4>Tech Stack</h4>
-                <div class="tech-stack">
-                  <span>Python</span>
-                  <span>NumPy</span>
-                  <span>pandas</span>
-                  <span>Matplotlib</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+        </article>
 
+        <!-- Project 2: Git Commit Multi-Agent -->
+        <article class="project">
+          <h3>Git Commit Multi-Agent</h3>
+          <img class="project-thumb" src="images/proj-commit-agent.png" alt="Diagram of multi-agent AI pipeline for git commits">
+          <div class="project-summary">
+            <span class="summary">
+              AI-powered multi-agent system that generates high-quality conventional Git commit messages from staged diffs using local LLMs.
+            </span>
+            <div class="button-row">
+              <button class="view-more-toggle" type="button">
+                View more <span class="arrow">▼</span>
+              </button>
+              <a class="project-btn" href="https://github.com/mahmoudmayaleh/Git_commit_Multi_agent" target="_blank" rel="noopener">
+                View on GitHub
+              </a>
+            </div>
+            <div class="view-more-content">
+              <div class="project-details-grid">
+                <div>
+                  <h4>Highlights</h4>
+                  <ul>
+                    <li>Three-agent pipeline (DiffAgent, SummaryAgent, CommitWriterAgent) with shared state for robust commit generation.</li>
+                    <li>Runs entirely on-device via Ollama + OpenChat 7B, with zero API cost and full privacy.</li>
+                    <li>Supports dry-run, verbose mode, and programmatic usage for CI or tooling integration.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Tech Stack</h4>
+                  <div class="tech-stack">
+                    <span>Python</span>
+                    <span>Ollama</span>
+                    <span>OpenChat 7B</span>
+                    <span>GitPython</span>
+                    <span>CLI Tools</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3: BERT Sentiment Augmentation -->
+        <article class="project">
+          <h3>BERT Sentiment Augmentation</h3>
+          <img class="project-thumb" src="images/proj-sentiment.png" alt="Sentiment analysis graph comparing models and augmentation">
+          <div class="project-summary">
+            <span class="summary">
+              Published study on data augmentation and transfer learning for sentiment classification in low-resource settings.
+            </span>
+            <div class="button-row">
+              <button class="view-more-toggle" type="button">
+                View more <span class="arrow">▼</span>
+              </button>
+              <a class="project-btn" href="https://github.com/mahmoudmayaleh/BERT-Sentiment-Augmentation" target="_blank" rel="noopener">
+                View on GitHub
+              </a>
+            </div>
+            <div class="view-more-content">
+              <div class="project-details-grid">
+                <div>
+                  <h4>Highlights</h4>
+                  <ul>
+                    <li>Unified benchmark of EDA, contextual augmentation, and back-translation on a 5k IMDb subset.</li>
+                    <li>Evaluates Logistic Regression, Random Forest, and BERT with rigorous statistics (CIs, t-tests, effect sizes).</li>
+                    <li>Reproducible pipeline with fixed seeds, exported metrics, and augmentation quality analysis via sentence embeddings.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Tech Stack</h4>
+                  <div class="tech-stack">
+                    <span>Python</span>
+                    <span>BERT</span>
+                    <span>Scikit-learn</span>
+                    <span>NLPaug</span>
+                    <span>Sentence-Transformers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4: LipLingo -->
+        <article class="project">
+          <h3>LipLingo: CNN-Based Lip Reading</h3>
+          <img class="project-thumb" src="images/proj-liplingo.png" alt="Frames of a mouth region used for lip reading">
+          <div class="project-summary">
+            <span class="summary">
+              Computer vision model that performs lip reading from video frames for silent speech understanding.
+            </span>
+            <div class="button-row">
+              <button class="view-more-toggle" type="button">
+                View more <span class="arrow">▼</span>
+              </button>
+              <a class="project-btn" href="https://github.com/mahmoudmayaleh/LipLingo" target="_blank" rel="noopener">
+                View on GitHub
+              </a>
+            </div>
+            <div class="view-more-content">
+              <div class="project-details-grid">
+                <div>
+                  <h4>Highlights</h4>
+                  <ul>
+                    <li>CNN-based architecture tailored for visual-only speech recognition.</li>
+                    <li>Preprocessing pipeline for mouth ROI extraction and frame normalization.</li>
+                    <li>Positioned for accessibility and multimodal AI applications.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Tech Stack</h4>
+                  <div class="tech-stack">
+                    <span>Python</span>
+                    <span>CNN</span>
+                    <span>Computer Vision</span>
+                    <span>Deep Learning</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 5: Learning Robotics -->
+        <article class="project">
+          <h3>Learning Robotics: TurtleBot3 DRL Navigation</h3>
+          <img class="project-thumb" src="images/proj-robotics.png" alt="Simulated TurtleBot navigating around obstacles">
+          <div class="project-summary">
+            <span class="summary">
+              Deep reinforcement learning for autonomous TurtleBot3 navigation using PPO in ROS 2 and Gazebo.
+            </span>
+            <div class="button-row">
+              <button class="view-more-toggle" type="button">
+                View more <span class="arrow">▼</span>
+              </button>
+              <a class="project-btn" href="https://github.com/mahmoudmayaleh/Learning_robotics" target="_blank" rel="noopener">
+                View on GitHub
+              </a>
+            </div>
+            <div class="view-more-content">
+              <div class="project-details-grid">
+                <div>
+                  <h4>Highlights</h4>
+                  <ul>
+                    <li>PPO-based policy learning for obstacle-aware navigation in simulation.</li>
+                    <li>ROS 2 integration for realistic robot control interfaces.</li>
+                    <li>Gazebo-based environment with configurable scenarios.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Tech Stack</h4>
+                  <div class="tech-stack">
+                    <span>Python</span>
+                    <span>ROS 2</span>
+                    <span>Gazebo</span>
+                    <span>PPO</span>
+                    <span>Reinforcement Learning</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 6: NOVA_5G -->
+        <article class="project">
+          <h3>NOVA_5G: Network Slicing Testbed</h3>
+          <img class="project-thumb" src="images/proj-5g.png" alt="5G network diagram with core, gNB, and slices">
+          <div class="project-summary">
+            <span class="summary">
+              5G Standalone testbed implementing network slicing using Open5GS core and srsRAN gNB with virtual UEs.
+            </span>
+            <div class="button-row">
+              <button class="view-more-toggle" type="button">
+                View more <span class="arrow">▼</span>
+              </button>
+              <a class="project-btn" href="https://github.com/mahmoudmayaleh/NOVA_5G" target="_blank" rel="noopener">
+                View on GitHub
+              </a>
+            </div>
+            <div class="view-more-content">
+              <div class="project-details-grid">
+                <div>
+                  <h4>Highlights</h4>
+                  <ul>
+                    <li>End-to-end 5G SA setup with Open5GS core and srsRAN gNB + virtual UE.</li>
+                    <li>Implements and evaluates network slicing scenarios.</li>
+                    <li>Foundation for experiments in edge computing and 6G research.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Tech Stack</h4>
+                  <div class="tech-stack">
+                    <span>Shell</span>
+                    <span>Open5GS</span>
+                    <span>srsRAN</span>
+                    <span>5G SA</span>
+                    <span>Network Slicing</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
     </div>
   </div>
 </section>
+
 
     <!-- contact section start -->
     <section class="contact reveal" id="contact">
@@ -674,6 +821,7 @@
     
   </body>
 </html>
+
 
 
 
