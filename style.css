@@ -1044,17 +1044,67 @@ section .title::after {
 
 
 /* === Projects Section === */
+
+/* === Projects Section === */
 .projects .projects-content {
+  /* container just centers the grid */
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+}
+
+/* GRID: 3 columns desktop, responsive */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 30px;
+  width: 100%;
+}
+
+/* Project card */
+.projects .project {
+  position: relative;
+  background: #384953;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+  border: 2px solid rgba(12, 72, 106, 1);
+  overflow: hidden;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.projects .project:hover {
+  box-shadow: 0 0 24px rgba(12, 72, 106, 0.92);
+  border-color: rgba(12, 72, 106, 0.92);
+  transform: scale(1.04);
+}
+
+/* Make project content stretch nicely */
+.project-summary {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+@media (max-width: 992px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .projects .project {
   position: relative;
-  flex: 1 1 300px;
-  max-width: 350px;
   background: #384953;
   padding: 20px;
   border-radius: 10px;
@@ -2350,3 +2400,4 @@ body {
     display: none;
   }
 }
+
