@@ -2328,3 +2328,25 @@ body {
   color: #fff;
 }
 
+.cursor-orb {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;              /* tweak size */
+  height: 220px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at center,
+    var(--accent-soft, rgba(96, 165, 250, 0.35)),
+    transparent
+  );
+  filter: blur(40px);
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;    /* looks nicer on dark bg */
+  z-index: 9999;
+}
+@media (max-width: 768px) {
+  .cursor-orb {
+    display: none;
+  }
+}
