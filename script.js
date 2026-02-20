@@ -502,4 +502,31 @@ const createParticle = () => {
 };
 setInterval(createParticle, 300);
 
-// Timeline auto-highlight & progress bar removed per user request.
+
+// Cursor orb --------------------------------------------------------------
+const orb = document.querySelector('.cursor-orb');
+
+if (orb) {
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+  let currentX = targetX;
+  let currentY = targetY;
+  const easing = 0.12; // 0.05–0.2 is a good range
+
+  window.addEventListener('mousemove', (e) => {
+    targetX = e.clientX;
+    targetY = e.clientY;
+  });
+
+  function animateOrb() {
+    currentX += (targetX - currentX) * easing;
+    currentY += (targetY - currentY) * easing;
+
+    orb.style.transform =
+      `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
+
+    requestAnimationFrame(animateOrb);
+  }
+
+  animateOrb();
+}
