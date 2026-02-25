@@ -699,46 +699,51 @@
           </div>
         </article>
 
-        <!-- Project 6: NOVA_5G -->
-        <article class="project">
-          <h3>NOVA_5G: 5G SA Network Slicing Sandbox</h3>
-          <img class="project-thumb" src="images/proj-5g.png" alt="5G network diagram with core, gNB, and slices">
-          <div class="project-summary">
-            <span class="summary">
-              5G Standalone testbed implementing network slicing using Open5GS core and srsRAN gNB with virtual UEs.
-            </span>
-            <div class="button-row">
-              <button class="view-more-toggle" type="button">
-                View more <span class="arrow">▼</span>
-              </button>
-              <a class="project-btn" href="https://github.com/mahmoudmayaleh/NOVA_5G" target="_blank" rel="noopener">
-                View on GitHub
-              </a>
-            </div>
-            <div class="view-more-content">
-              <div class="project-details-grid">
-                <div>
-                  <h4>Highlights</h4>
-                  <ul>
-                    <li>End-to-end 5G SA setup with Open5GS core and srsRAN gNB + virtual UE.</li>
-                    <li>Implements and evaluates network slicing scenarios.</li>
-                    <li>Foundation for experiments in edge computing and 6G research.</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4>Tech Stack</h4>
-                  <div class="tech-stack">
-                    <span>Shell</span>
-                    <span>Open5GS</span>
-                    <span>srsRAN</span>
-                    <span>5G SA</span>
-                    <span>Network Slicing</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
+        <!-- Project 6: 5G_slicing -->
+<article class="project">
+  <h3>5G Network Slicing Sandbox</h3>
+  <img class="project-thumb" src="images/proj-5g.png" alt="5G network diagram with core, gNB, and slices">
+  <div class="project-summary">
+    <span class="summary">
+      Production-style, containerized 5G standalone sandbox demonstrating network slicing with Open5GS (5GC), srsRAN gNB, GNU Radio, and virtual UEs — built for reproducible research and demos.
+    </span>
+    <div class="button-row">
+      <button class="view-more-toggle" type="button">
+        View more <span class="arrow">▼</span>
+      </button>
+      <a class="project-btn" href="https://github.com/mahmoudmayaleh/5G_Network_slicing" target="_blank" rel="noopener">
+        View on GitHub
+      </a>
+    </div>
+    <div class="view-more-content">
+      <div class="project-details-grid">
+        <div>
+          <h4>Highlights</h4>
+          <ul>
+            <li>End-to-end 5G SA deployment: Open5GS core (NRF, AMF, SMF, UPF, etc.) + srsRAN gNB + virtual UEs.</li>
+            <li>Implements multiple network slices (e.g., eMBB, voice/video, low-latency) with QoS differentiation.</li>
+            <li>Containerized with Docker & docker-compose for reproducible experiments and demos.</li>
+            <li>GNU Radio + ZeroMQ integration for SDR-based radio processing and multiplexing.</li>
+            <li>Includes deployment scripts and CI-ready structure for research or prototype use.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Tech & Artifacts</h4>
+          <ul>
+            <li>Open5GS, srsRAN, GNU Radio, ZeroMQ</li>
+            <li>Docker / docker-compose, MongoDB</li>
+            <li>README, ARCHITECTURE.md, DEPLOYMENT.md, CONTRIBUTING.md</li>
+            <li>Build scripts: build.sh (Linux) and build.bat (Windows)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="project-actions">
+        <a class="project-link" href="https://github.com/mahmoudmayaleh/5G_Network_slicing" target="_blank" rel="noopener">GitHub Repository</a>
+        <a class="project-link" href="#quickstart" title="Quickstart">Quickstart</a>
+      </div>
+    </div>
+  </div>
+</article>
 
       </div>
     </div>
@@ -820,6 +825,7 @@
     
   </body>
 </html>
+
 
 
 
