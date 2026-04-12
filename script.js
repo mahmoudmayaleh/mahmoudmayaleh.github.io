@@ -9,12 +9,12 @@ function initSkillRadar() {
   // Order & percentages aligned with reference (approximate visually):
   // NLP ~85, Computer Vision ~80, MLOps ~90, Data Engineering ~72, Deep Learning ~88, LLMs ~78
   const skills = [
-    { label: "NLP", value: 85 },
-    { label: "Computer Vision", value: 80 },
-    { label: "MLOps", value: 90 },
-    { label: "Data Engineering", value: 72 },
+    { label: "NLP / LLMs", value: 85 },
+    { label: "Computer Vision", value: 78 },
+    { label: "MLOps", value: 80 },
+    { label: "RAG Systems", value: 78 },
     { label: "Deep Learning", value: 88 },
-    { label: "LLMs", value: 78 },
+    { label: "Fed. Learning", value: 82 },
   ];
 
   const gridGroup = svg.querySelector("#radar-grid");
@@ -437,70 +437,141 @@ document.addEventListener("DOMContentLoaded", function () {
   revealOnScroll();
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const toggle = document.getElementById("theme-toggle");
-  const icon = toggle.querySelector("i");
-  toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    if (document.body.classList.contains("dark-mode")) {
-      icon.classList.remove("fa-moon");
-      icon.classList.add("fa-sun");
-    } else {
-      icon.classList.remove("fa-sun");
-      icon.classList.add("fa-moon");
-    }
-  });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-  const typewriter = document.getElementById("typewriter-text");
-  if (typewriter) {
-    const texts = ["AI engineer", "ML engineer"];
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-
-    function type() {
-      const current = texts[textIndex];
-      if (!isDeleting) {
-        typewriter.textContent = current.substring(0, charIndex + 1);
-        charIndex++;
-        if (charIndex === current.length) {
-          setTimeout(() => {
-            isDeleting = true;
-            type();
-          }, 1400);
-        } else {
-          setTimeout(type, 60);
-        }
-      } else {
-        typewriter.textContent = current.substring(0, charIndex - 1);
-        charIndex--;
-        if (charIndex === 0) {
-          isDeleting = false;
-          textIndex = (textIndex + 1) % texts.length;
-          setTimeout(type, 500);
-        } else {
-          setTimeout(type, 30);
-        }
-      }
-    }
-    type();
-  }
-});
+// typewriter replaced by CSS flip animation
 
 // Timeline auto-highlight previously removed was reintroduced in enhanced form further below.
 
-//floating sparks
-const createParticle = () => {
-  const particle = document.createElement("div");
-  particle.classList.add("particle");
-  particle.style.left = `${Math.random() * 100}%`;
-  particle.style.top = `${Math.random() * 100}%`;
-  document.body.appendChild(particle);
-  setTimeout(() => particle.remove(), 5000);
-};
-setInterval(createParticle, 300);
+// Hexagon Background ----------------------------------------------------------
+(function initHexBackground() {
+  const gridEl = document.getElementById("hex-grid");
+  if (!gridEl) return;
+
+  const HW = 52;              // hex width  px
+  const HH = HW * 1.15;      // hex height px  (≈59.8)
+  const RS = HW * 0.86;      // row-step factor (≈44.72)
+  const HM = 2;               // margin / border px
+
+  // Row geometry (derived once, recomputed on resize)
+  // Row 0 top  = -HH*0.25         (rows bleed off the top edge)
+  // Row r top  = -HH*0.25 + r*(HH - RS*0.16)
+  const ROW_STEP   = HH - RS * 0.16;   // ≈52.65 px between row tops
+  const ROW_TOP_0  = -HH * 0.25;       // ≈-14.95
+  const ROW_CY_0   = ROW_TOP_0 + HH / 2; // center-Y of row 0  (≈14.95)
+  const COL_STEP   = HW + HM;           // 54
+
+  // Col center-X for a given row-parity and column index:
+  //   even row marginLeft = HM - HW*0.1 = -3.2  → cx = -3.2 + c*54 + HW/2 = 22.8 + c*54
+  //   odd  row marginLeft = -(HW/2) + HM - HW*0.1 = -29.2 → cx = -3.2 + c*54
+  function colCX(isOdd, c) {
+    return isOdd ? (-3.2 + c * COL_STEP) : (22.8 + c * COL_STEP);
+  }
+
+  // ── 2-D grid of hex elements: hexGrid[row][col] ──────────────────────────
+  let hexGrid  = [];
+  let numRows  = 0;
+  let numCols  = 0;
+  let activeEl = null;
+
+  function buildGrid() {
+    gridEl.innerHTML = "";
+    hexGrid = [];
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    numCols = Math.ceil(w / HW) + 4;
+    numRows = Math.ceil(h / RS) + 4;
+
+    for (let r = 0; r < numRows; r++) {
+      const isOdd = r % 2 === 1;
+      const ml    = isOdd ? (-(HW / 2) + HM - HW * 0.1) : (HM - HW * 0.1);
+      const mt    = r === 0 ? ROW_TOP_0 : -(RS * 0.16);
+
+      const rowEl = document.createElement("div");
+      rowEl.className = "hex-row";
+      rowEl.style.cssText = `display:flex;margin-top:${mt}px;margin-left:${ml}px`;
+
+      const rowArr = [];
+      for (let c = 0; c < numCols; c++) {
+        const hex = document.createElement("div");
+        hex.className = "hex";
+        hex.style.cssText = `width:${HW}px;height:${HH}px;margin-left:${HM}px`;
+        rowEl.appendChild(hex);
+        rowArr.push(hex);
+      }
+      gridEl.appendChild(rowEl);
+      hexGrid.push(rowArr);
+    }
+  }
+
+  // ── Find the hex cell under (mx, my) using grid math ─────────────────────
+  // This is O(1) and works regardless of z-index / pointer-events / clip-path.
+  function hexAt(mx, my) {
+    // Estimate row from Y
+    const rEst = Math.round((my - ROW_CY_0) / ROW_STEP);
+
+    let best = null, bestD2 = Infinity;
+
+    for (let dr = -1; dr <= 1; dr++) {
+      const r = rEst + dr;
+      if (r < 0 || r >= numRows) continue;
+      const isOdd = r % 2 === 1;
+
+      // Estimate col from X
+      const cEst = Math.round(isOdd
+        ? (mx + 3.2) / COL_STEP
+        : (mx - 22.8) / COL_STEP);
+
+      const cy = ROW_CY_0 + r * ROW_STEP;
+
+      for (let dc = -1; dc <= 1; dc++) {
+        const c = cEst + dc;
+        if (c < 0 || c >= numCols) continue;
+        const cx = colCX(isOdd, c);
+        const d2 = (mx - cx) ** 2 + (my - cy) ** 2;
+        if (d2 < bestD2) { bestD2 = d2; best = hexGrid[r][c]; }
+      }
+    }
+
+    // Only light the hex if cursor is roughly within the hex bounds
+    const threshold = (HW / 2) ** 2 + (HH / 2) ** 2;
+    return bestD2 < threshold ? best : null;
+  }
+
+  buildGrid();
+  window.addEventListener("resize", () => { activeEl = null; buildGrid(); });
+
+  window.addEventListener("mousemove", function (e) {
+    const hex = hexAt(e.clientX, e.clientY);
+    if (hex === activeEl) return;
+    if (activeEl) activeEl.classList.remove("hex-lit");
+    activeEl = hex;
+    if (activeEl) activeEl.classList.add("hex-lit");
+  }, { passive: true });
+
+  window.addEventListener("mouseleave", function () {
+    if (activeEl) { activeEl.classList.remove("hex-lit"); activeEl = null; }
+  });
+})();
+
+// Navbar scroll-hide / scroll-show
+document.addEventListener("DOMContentLoaded", function () {
+  const navbar = document.querySelector(".navbar");
+  if (!navbar) return;
+  let lastY = 0;
+
+  function applyNavState() {
+    const y = window.scrollY;
+    const goingDown = y > lastY && y > 80;
+    navbar.style.transition = "transform 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease";
+    navbar.style.transform = goingDown ? "translateY(-120%)" : "translateY(0)";
+    navbar.style.opacity   = goingDown ? "0" : "1";
+    navbar.style.pointerEvents = goingDown ? "none" : "";
+    lastY = y;
+  }
+
+  window.addEventListener("scroll", applyNavState, { passive: true });
+});
 
 
 // Cursor orb --------------------------------------------------------------
