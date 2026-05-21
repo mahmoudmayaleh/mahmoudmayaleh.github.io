@@ -201,7 +201,7 @@ $(document).ready(function () {
     },
   });
 
-  emailjs.init("9ikn3t9V_OwCkCodC");
+  emailjs.init({ publicKey: "9ikn3t9V_OwCkCodC" });
 
   $("form").submit(function (event) {
     event.preventDefault();
@@ -381,7 +381,8 @@ function animateSkillBars() {
   setInterval(checkAndAnimate, 500); // fallback for edge cases
   checkAndAnimate();
 }
-document.addEventListener("DOMContentLoaded", animateSkillBars);
+// Skill bars are now driven by GSAP ScrollTrigger (see initScrollExperience).
+// document.addEventListener("DOMContentLoaded", animateSkillBars);
 
 document.addEventListener("DOMContentLoaded", function () {
   // Scroll reveal effect
@@ -554,24 +555,55 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 })();
 
-// Navbar scroll-hide / scroll-show
-document.addEventListener("DOMContentLoaded", function () {
+// Navbar scroll-hide / scroll-show — inline styles so nothing can override
+(function () {
   const navbar = document.querySelector(".navbar");
   if (!navbar) return;
-  let lastY = 0;
 
-  function applyNavState() {
-    const y = window.scrollY;
-    const goingDown = y > lastY && y > 80;
-    navbar.style.transition = "transform 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease";
-    navbar.style.transform = goingDown ? "translateY(-120%)" : "translateY(0)";
-    navbar.style.opacity   = goingDown ? "0" : "1";
-    navbar.style.pointerEvents = goingDown ? "none" : "";
-    lastY = y;
+  navbar.style.transition = "transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease";
+  navbar.style.willChange = "transform";
+
+  let lastY = window.scrollY;
+  let hidden = false;
+  let ticking = false;
+  const HIDE_AFTER = 120;
+  const DELTA = 6;
+
+  function setHidden(h) {
+    if (h === hidden) return;
+    hidden = h;
+    if (h) {
+      navbar.style.setProperty("transform", "translateY(-110%)", "important");
+      navbar.style.setProperty("opacity", "0", "important");
+      navbar.style.setProperty("pointer-events", "none", "important");
+    } else {
+      navbar.style.setProperty("transform", "translateY(0)", "important");
+      navbar.style.setProperty("opacity", "1", "important");
+      navbar.style.setProperty("pointer-events", "auto", "important");
+    }
   }
 
-  window.addEventListener("scroll", applyNavState, { passive: true });
-});
+  function update() {
+    const y = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+    if (Math.abs(y - lastY) >= DELTA) {
+      setHidden(y > lastY && y > HIDE_AFTER);
+      lastY = y;
+    }
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+  // Capture mode so we catch scroll on whichever element is actually scrolling
+  window.addEventListener("scroll", onScroll, { passive: true, capture: true });
+  document.addEventListener("scroll", onScroll, { passive: true, capture: true });
+  document.addEventListener("wheel", onScroll, { passive: true });
+  document.addEventListener("touchmove", onScroll, { passive: true });
+})();
 
 
 // Cursor orb --------------------------------------------------------------
@@ -601,3 +633,315 @@ if (orb) {
 
   animateOrb();
 }
+
+// ============================================================================
+// Apple-style scroll-driven experience (GSAP + ScrollTrigger + Lenis)
+// ============================================================================
+(function initScrollExperience() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    console.warn("[scroll-fx] GSAP not loaded");
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+
+  // --- Lenis smooth scroll, synced to GSAP ticker ---------------------------
+  let lenis;
+  if (typeof Lenis !== "undefined") {
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+    });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // Make in-page anchor links scroll smoothly via Lenis
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const id = a.getAttribute("href");
+        if (id && id.length > 1) {
+          const target = document.querySelector(id);
+          if (target) {
+            e.preventDefault();
+            lenis.scrollTo(target, { offset: -60, duration: 1.4 });
+          }
+        }
+      });
+    });
+  }
+
+  // Take over from the legacy `.reveal` once-trigger fade — make those
+  // sections always visible so GSAP `from()` controls the entry.
+  document.querySelectorAll(".reveal").forEach((el) => {
+    el.classList.remove("reveal");
+    el.classList.add("active"); // satisfy any leftover CSS targeting .active
+  });
+
+  // ---- Mobile/desktop split: pinning only on desktop -----------------------
+  const mm = gsap.matchMedia();
+
+  // ===========================================================================
+  // DESKTOP — full pinned experience
+  // ===========================================================================
+  mm.add("(min-width: 900px)", () => {
+    // -------- Hero + About: one shared pin, cross-fade between them -------
+    // Timeline structure (0 -> 1):
+    //   0.00 - 0.35  Hero content fades/scales out
+    //   0.30 - 0.55  About cross-fades in (container + content cascade)
+    //   0.55 - 0.80  About holds at full visibility
+    //   0.80 - 1.00  About fades/scales out, ready for Experience
+    const stage = document.querySelector(".hero-about-stage");
+    if (stage) {
+      const heroAboutTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: stage,
+          start: "top top",
+          end: "+=180%",
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.6,
+        },
+      });
+
+      // Phase 1 — Hero exit
+      heroAboutTl
+        .to(".home .text-1", { y: -40, opacity: 0, ease: "power2.in" }, 0)
+        .to(".home .text-2", { y: -50, scale: 0.92, opacity: 0, ease: "power2.in" }, 0.05)
+        .to(".home .text-3", { y: -30, opacity: 0, ease: "power2.in" }, 0.1)
+        .to('.home a[href="#contact"]', { y: -20, scale: 0.9, opacity: 0, ease: "power2.in" }, 0.1)
+        .to(".scroll-arrow", { opacity: 0, ease: "power1.in" }, 0)
+        .to("#home", { opacity: 0, ease: "power2.in" }, 0.25);
+
+      // Phase 2 — About entry (cross-fades over hero)
+      heroAboutTl
+        .to("#about", { opacity: 1, ease: "power2.out" }, 0.3)
+        .from("#about .title", { y: 40, opacity: 0, ease: "power2.out" }, 0.32)
+        .from("#about .left img", { x: -120, opacity: 0, scale: 0.92, ease: "power2.out" }, 0.36)
+        .from("#about .right .text", { y: 40, opacity: 0, ease: "power2.out" }, 0.4)
+        .from("#about .right p", { y: 40, opacity: 0, ease: "power2.out" }, 0.44)
+        .from("#about .right .linkedin-btn, #about .right .cv-btn", {
+          y: 25,
+          opacity: 0,
+          stagger: 0.05,
+          ease: "power2.out",
+        }, 0.48);
+
+      // Phase 3 — About exit (fades away as Experience section enters)
+      heroAboutTl
+        .to("#about .left img", { x: -60, opacity: 0, scale: 0.94, ease: "power2.in" }, 0.82)
+        .to("#about .right", { y: -40, opacity: 0, ease: "power2.in" }, 0.84)
+        .to("#about .title", { y: -40, opacity: 0, ease: "power2.in" }, 0.82);
+    }
+
+    // -------- Timeline (Experience): smooth, free, no pinning -------------
+    gsap.utils.toArray(".timeline-wavy-item").forEach((item) => {
+      const isLeft = item.classList.contains("exp-left");
+      gsap.from(item, {
+        x: isLeft ? -100 : 100,
+        opacity: 0,
+        scale: 0.96,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: item,
+          start: "top 85%",
+          end: "top 45%",
+          scrub: 0.9,
+        },
+      });
+    });
+
+    // -------- Skills: free scroll, scrubbed bar fills + radar scale ------
+    const radar = document.getElementById("radar-polygon-group");
+    if (radar) {
+      gsap.from(radar, {
+        scale: 0.7,
+        opacity: 0.2,
+        transformOrigin: "160px 160px",
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#skills",
+          start: "top 80%",
+          end: "top 30%",
+          scrub: 0.8,
+        },
+      });
+    }
+    gsap.utils.toArray(".skill-bar-fill").forEach((bar) => {
+      const target = bar.dataset.skill || 80;
+      gsap.fromTo(
+        bar,
+        { width: "0%" },
+        {
+          width: target + "%",
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: bar,
+            start: "top 90%",
+            end: "top 55%",
+            scrub: 0.8,
+          },
+        }
+      );
+    });
+
+    // -------- Publications: free scroll, card fade-up scrubbed -----------
+    gsap.utils.toArray(".publications .publication").forEach((card) => {
+      gsap.from(card, {
+        y: 80,
+        opacity: 0,
+        scale: 0.95,
+        rotateX: 6,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 92%",
+          end: "top 60%",
+          scrub: 0.7,
+        },
+      });
+    });
+
+    // -------- Projects: free scroll, card fade-up scrubbed ---------------
+    gsap.utils.toArray(".projects .project").forEach((card) => {
+      gsap.from(card, {
+        y: 80,
+        opacity: 0,
+        scale: 0.95,
+        rotateX: 6,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 92%",
+          end: "top 60%",
+          scrub: 0.7,
+        },
+      });
+    });
+
+    // Section titles: fade in early, stay stable through the section,
+    // fade out near the end. Driven by the SECTION's scroll progress,
+    // not the title's own position — so the title can't trigger late.
+    [
+      { sectionId: "#timeline" },
+      { sectionId: "#skills" },
+      { sectionId: "#publications" },
+      { sectionId: "#projects" },
+    ].forEach(({ sectionId }) => {
+      const section = document.querySelector(sectionId);
+      const title = section && section.querySelector(".title");
+      if (!title) return;
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 85%",
+          end: "bottom 15%",
+          scrub: 0.6,
+        },
+      });
+      // 0.00 - 0.08  fade in
+      // 0.08 - 0.90  stable visible
+      // 0.90 - 1.00  fade out
+      tl.from(title, { y: 30, opacity: 0, duration: 0.08, ease: "power2.out" }, 0)
+        .to(title, { y: -30, opacity: 0, duration: 0.10, ease: "power2.in" }, 0.90);
+    });
+
+    // -------- Contact: free scroll, fields cascade in --------------------
+    gsap.from("#contact .title", {
+      y: 30,
+      opacity: 0,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: "#contact .title",
+        start: "top 90%",
+        end: "top 65%",
+        scrub: 0.6,
+      },
+    });
+    gsap.from(
+      ".contact .left .row, .contact .right .text, .contact .right .field, .contact .right .button-area",
+      {
+        y: 40,
+        opacity: 0,
+        stagger: 0.08,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".contact",
+          start: "top 75%",
+          end: "top 35%",
+          scrub: 0.6,
+        },
+      }
+    );
+
+    // -------- Background parallax: hex grid drifts at half speed -----------
+    gsap.to("#hex-grid", {
+      yPercent: 12,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+
+    // Timeline section title (the only one not handled inside a pinned tl)
+    const timelineTitle = document.querySelector("#timeline .title");
+    if (timelineTitle) {
+      gsap.from(timelineTitle, {
+        y: 30,
+        opacity: 0,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: timelineTitle,
+          start: "top 90%",
+          end: "top 65%",
+          scrub: 0.6,
+        },
+      });
+    }
+  });
+
+  // ===========================================================================
+  // MOBILE — simpler fades, no pinning
+  // ===========================================================================
+  mm.add("(max-width: 899px)", () => {
+    gsap.utils
+      .toArray(
+        ".about, .timeline-wavy-item, .skills-content, .project, .publication, .contact"
+      )
+      .forEach((el) => {
+        gsap.from(el, {
+          y: 50,
+          opacity: 0,
+          duration: 0.9,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 88%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      });
+
+    // Skill bars: trigger once when in view
+    gsap.utils.toArray(".skill-bar-fill").forEach((bar) => {
+      const target = bar.dataset.skill || 80;
+      gsap.fromTo(
+        bar,
+        { width: "0%" },
+        {
+          width: target + "%",
+          duration: 1.2,
+          ease: "power2.out",
+          scrollTrigger: { trigger: bar, start: "top 85%" },
+        }
+      );
+    });
+  });
+
+  // Refresh once everything has settled (images, fonts)
+  window.addEventListener("load", () => ScrollTrigger.refresh());
+})();

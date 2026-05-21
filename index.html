@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href="https://mayaleh.com/">
   <title>Mahmoud Mayaleh</title>
-  <link rel="icon" href="images/mayaleh-logo2.jpg" />
+  <link rel="icon" href="images/mayaleh-icon.png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -41,8 +41,20 @@
     </script>
   </head>
   <body>
+    <div id="splash" aria-hidden="true">
+      <img src="images/mayaleh-icon.png" alt="" />
+    </div>
+    <script>
+      window.addEventListener('load', function () {
+        var s = document.getElementById('splash');
+        if (!s) return;
+        setTimeout(function () {
+          s.classList.add('splash-hidden');
+          setTimeout(function () { s.style.display = 'none'; }, 700);
+        }, 450);
+      });
+    </script>
     <div class="cursor-orb"></div>
-    <script src="main.js"></script>
     <div id="neural-bg">
       <div id="hex-grid"></div>
       <div class="hex-vignette"></div>
@@ -67,6 +79,8 @@
       </div>
     </nav>
 
+    <!-- hero + about share one pinned stage -->
+    <div class="hero-about-stage">
     <!-- home section start -->
     <section class="home" id="home">
       <div class="max-width">
@@ -99,7 +113,7 @@
         <h2 class="title">About me</h2>
         <div class="about-content">
           <div class="column left">
-            <img src="images/mayaleh-logo.jpg" alt="" />
+            <img src="images/mayaleh-logo-new-transparent-removebg.png" alt="mayaleh logo" />
           </div>
                    <div class="column right">
             <div class="text">I’m Mahmoud and I’m an AI engineer</div>
@@ -120,6 +134,8 @@
         </div>
       </div>
     </section>
+    </div>
+    <!-- end hero-about-stage -->
 
 <section class="timeline-wavy" id="timeline">
   <div class="max-width">
@@ -305,10 +321,6 @@
           <div class="skill-bar"><div class="skill-bar-fill" data-skill="78"></div></div>
         </div>
         <div class="skill">
-          <span class="skill-label">LangChain / LlamaIndex</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="76"></div></div>
-        </div>
-        <div class="skill">
           <span class="skill-label">scikit-learn</span>
           <div class="skill-bar"><div class="skill-bar-fill" data-skill="88"></div></div>
         </div>
@@ -319,10 +331,6 @@
         <div class="skill">
           <span class="skill-label">MLflow / MLOps</span>
           <div class="skill-bar"><div class="skill-bar-fill" data-skill="80"></div></div>
-        </div>
-        <div class="skill">
-          <span class="skill-label">Docker &amp; Kubernetes</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="75"></div></div>
         </div>
       </div>
     </div>
@@ -682,7 +690,6 @@
   </div>
 </section>
 
-
     <!-- contact section start -->
     <section class="contact reveal" id="contact">
       <div class="max-width">
@@ -748,7 +755,10 @@
         <span class="far fa-copyright"></span> 2026 All rights reserved.</span
       >
     </footer>
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="script.js"></script>
     <!-- Removed inline duplicate toggle script: logic lives in script.js -->
     
