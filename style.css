@@ -576,13 +576,15 @@ section .title::before {
 }
 section .title::after {
   position: absolute;
-  bottom: -8px;
+  top: 100%;
+  margin-top: 6px;
   left: 50%;
-  font-size: 20px;
+  font-size: 18px;
   color: #5a9ad8;
   padding: 0 5px;
   background: transparent;
   transform: translateX(-50%);
+  white-space: nowrap;
 }
 
 /* navbar styling */
