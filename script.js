@@ -1,0 +1,778 @@
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Skill Radar (reintroduced) -------------------------------------------------
+function initSkillRadar() {
+  const svg = document.getElementById("skill-radar");
+  if (!svg) return; // guard
+
+  const center = { x: 160, y: 160 };
+  const radius = 135;
+  const levels = 5; // concentric hex rings
+  // Order & percentages aligned with reference (approximate visually):
+  // NLP ~85, Computer Vision ~80, MLOps ~90, Data Engineering ~72, Deep Learning ~88, LLMs ~78
+  const skills = [
+    { label: "NLP / LLMs", value: 85 },
+    { label: "Computer Vision", value: 78 },
+    { label: "MLOps", value: 80 },
+    { label: "RAG Systems", value: 78 },
+    { label: "Deep Learning", value: 88 },
+    { label: "Fed. Learning", value: 82 },
+  ];
+
+  const gridGroup = svg.querySelector("#radar-grid");
+  const polygon = svg.querySelector("#radar-polygon");
+  const outline = svg.querySelector("#radar-outline");
+  const pointsGroup = svg.querySelector("#radar-points");
+  const labelsGroup = svg.querySelector("#radar-labels");
+
+  // Utility: build hex path for given radius
+  function hexPath(r) {
+    let d = "";
+    for (let i = 0; i < 6; i++) {
+      const angle = -Math.PI / 2 + i * ((Math.PI * 2) / 6);
+      const x = center.x + Math.cos(angle) * r;
+      const y = center.y + Math.sin(angle) * r;
+      d += `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
+    }
+    return d + " Z";
+  }
+  // Build concentric hex level rings
+  for (let l = 1; l <= levels; l++) {
+    const r = (radius / levels) * l;
+    const ring = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    ring.setAttribute("class", "level-ring");
+    ring.setAttribute("d", hexPath(r));
+    gridGroup.appendChild(ring);
+  }
+
+  // Axis lines & compute points (6 axes for hex)
+  const angleSlice = (Math.PI * 2) / skills.length;
+  const points = skills.map((skill, i) => {
+    const angle = -Math.PI / 2 + i * angleSlice; // start at top
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("class", "axis-line");
+    line.setAttribute("x1", center.x);
+    line.setAttribute("y1", center.y);
+    line.setAttribute("x2", (center.x + Math.cos(angle) * radius).toFixed(2));
+    line.setAttribute("y2", (center.y + Math.sin(angle) * radius).toFixed(2));
+    gridGroup.appendChild(line);
+
+    const valueRadius = (skill.value / 100) * radius;
+    return {
+      x: center.x + Math.cos(angle) * valueRadius,
+      y: center.y + Math.sin(angle) * valueRadius,
+      label: skill.label,
+      value: skill.value,
+      angle,
+    };
+  });
+
+  function buildPolygonPath(scaleFactor = 1) {
+    return (
+      points
+        .map((p, i) => {
+          const sx = center.x + (p.x - center.x) * scaleFactor;
+          const sy = center.y + (p.y - center.y) * scaleFactor;
+          return `${i === 0 ? "M" : "L"}${sx.toFixed(2)},${sy.toFixed(2)}`;
+        })
+        .join(" ") + " Z"
+    );
+  }
+
+  // Initial collapsed state for intro animation
+  polygon.setAttribute("d", buildPolygonPath(0));
+  outline.setAttribute("d", buildPolygonPath(0));
+
+  // Labels only (points optional, minimal)
+  points.forEach((p) => {
+    const label = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "text"
+    );
+    const labelRadius = radius + 28; // push labels outward a bit more
+    const lx = center.x + Math.cos(p.angle) * labelRadius;
+    const ly = center.y + Math.sin(p.angle) * labelRadius;
+    label.setAttribute("x", lx.toFixed(2));
+    label.setAttribute("y", ly.toFixed(2));
+    label.setAttribute(
+      "text-anchor",
+      Math.cos(p.angle) > 0.45
+        ? "start"
+        : Math.cos(p.angle) < -0.45
+        ? "end"
+        : "middle"
+    );
+    label.setAttribute("dominant-baseline", "middle");
+    label.textContent = p.label;
+    labelsGroup.appendChild(label);
+  });
+
+  if (prefersReducedMotion) {
+    polygon.setAttribute("d", buildPolygonPath(1));
+    outline.setAttribute("d", buildPolygonPath(1));
+    return;
+  }
+
+  // Intro animation (expand polygon & grow points)
+  const duration = 1300;
+  const start = performance.now();
+  function animateIntro(t) {
+    const elapsed = t - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease =
+      progress < 0.5
+        ? 2 * progress * progress
+        : -1 + (4 - 2 * progress) * progress; // easeInOutQuad
+    const path = buildPolygonPath(ease);
+    polygon.setAttribute("d", path);
+    outline.setAttribute("d", path);
+    // no point expansion now
+    if (progress < 1) requestAnimationFrame(animateIntro);
+  }
+  requestAnimationFrame(animateIntro);
+
+  // Edge pulse: animate polygon stroke opacity & width
+  function edgePulse() {
+    let last = performance.now();
+    function frame(t) {
+      const dt = (t - last) / 1000;
+      last = t;
+      const pulse = (Math.sin(t / 900) + 1) / 2; // 0..1
+      const w = 1.2 + pulse * 1.4;
+      outline.style.strokeWidth = w.toFixed(2);
+      outline.style.opacity = (0.35 + pulse * 0.45).toFixed(3);
+      polygon.style.fillOpacity = (0.15 + pulse * 0.12).toFixed(3);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  edgePulse();
+}
+document.addEventListener("DOMContentLoaded", initSkillRadar);
+
+// jQuery dependent UI logic
+$(document).ready(function () {
+
+  window.addEventListener("scroll", function () {
+    document.querySelector(".scroll-arrow").style.display =
+      window.scrollY > 50 ? "none" : "block";
+  });
+
+  // toggle menu/navbar script
+  $(".menu-btn").click(function () {
+    $(".navbar .menu").toggleClass("active");
+    $(".menu-btn i").toggleClass("active");
+  });
+
+  emailjs.init({ publicKey: "9ikn3t9V_OwCkCodC" });
+
+  $("form").submit(function (event) {
+    event.preventDefault();
+
+    $("input[name='reply_to']").val($("input[name='from_email']").val());
+
+    emailjs.sendForm("service_brq095l", "template_sn27fo7", this).then(
+      function (response) {
+        console.log("Success", response);
+        alert("Message sent successfully!");
+
+        $("form")[0].reset();
+      },
+      function (error) {
+        console.log("Error", error);
+        alert("Failed to send message. Please try again.");
+      }
+    );
+  });
+
+  // Expand/collapse functionality for projects and publications (robust version)
+  // Markup patterns:
+  //  - Publications: button.view-more-toggle is sibling of span.summary and .view-more-content directly inside .publication-summary
+  //  - Projects: button.view-more-toggle inside .button-row; .view-more-content is sibling of .project-summary (descendant of article.project)
+  // Initial hide to prevent flash
+  $(".view-more-content").hide();
+  $(".view-more-toggle").attr("aria-expanded", "false");
+  $(document).on("click", ".view-more-toggle", function () {
+    const $btn = $(this);
+    let $container = $btn.closest(
+      ".publication, .project, .publication-summary, .project-summary"
+    );
+    if (!$container.length) return;
+
+    // For button inside .button-row inside .project-summary, we want the summary container
+    if ($container.hasClass("project") || $container.hasClass("publication")) {
+      $container = $container
+        .find(".project-summary, .publication-summary")
+        .first();
+    }
+    const $content = $container.find("> .view-more-content");
+    if (!$content.length) return;
+
+    const expanded = $content.is(":visible");
+    if (expanded) {
+      $content.stop(true, true).slideUp(220, () => {
+        $content.removeClass("expanded");
+      });
+      $btn.html('View more <span class="arrow">▼</span>');
+      $btn.attr("aria-expanded", "false");
+    } else {
+      $content.stop(true, true).slideDown(260, () => {
+        $content.addClass("expanded");
+      });
+      $btn.html('View less <span class="arrow">▲</span>');
+      $btn.attr("aria-expanded", "true");
+    }
+  });
+}); // end jQuery ready block
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Scroll reveal effect
+  const reveals = document.querySelectorAll(".reveal");
+  function revealOnScroll() {
+    const windowHeight = window.innerHeight;
+    reveals.forEach((el) => {
+      const top = el.getBoundingClientRect().top;
+      if (top < windowHeight - 60) {
+        el.classList.add("active");
+      }
+    });
+  }
+  window.addEventListener("scroll", revealOnScroll);
+  revealOnScroll();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Live validation for contact form fields
+  const form = document.querySelector(".contact form");
+  if (!form) return;
+
+  function validateInput(input) {
+    let valid = false;
+    if (input.type === "email") {
+      valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+    } else {
+      valid = input.value.trim().length > 0;
+    }
+    input.classList.toggle("valid", valid);
+    input.classList.toggle("invalid", !valid && input.value.length > 0);
+  }
+
+  form.querySelectorAll("input, textarea").forEach((input) => {
+    input.addEventListener("input", () => validateInput(input));
+    input.addEventListener("blur", () => validateInput(input));
+  });
+});
+
+// Hexagon Background ----------------------------------------------------------
+(function initHexBackground() {
+  const gridEl = document.getElementById("hex-grid");
+  if (!gridEl) return;
+
+  const HW = 52;              // hex width  px
+  const HH = HW * 1.15;      // hex height px  (≈59.8)
+  const RS = HW * 0.86;      // row-step factor (≈44.72)
+  const HM = 2;               // margin / border px
+
+  // Row geometry (derived once, recomputed on resize)
+  // Row 0 top  = -HH*0.25         (rows bleed off the top edge)
+  // Row r top  = -HH*0.25 + r*(HH - RS*0.16)
+  const ROW_STEP   = HH - RS * 0.16;   // ≈52.65 px between row tops
+  const ROW_TOP_0  = -HH * 0.25;       // ≈-14.95
+  const ROW_CY_0   = ROW_TOP_0 + HH / 2; // center-Y of row 0  (≈14.95)
+  const COL_STEP   = HW + HM;           // 54
+
+  // Col center-X for a given row-parity and column index:
+  //   even row marginLeft = HM - HW*0.1 = -3.2  → cx = -3.2 + c*54 + HW/2 = 22.8 + c*54
+  //   odd  row marginLeft = -(HW/2) + HM - HW*0.1 = -29.2 → cx = -3.2 + c*54
+  function colCX(isOdd, c) {
+    return isOdd ? (-3.2 + c * COL_STEP) : (22.8 + c * COL_STEP);
+  }
+
+  // ── 2-D grid of hex elements: hexGrid[row][col] ──────────────────────────
+  let hexGrid  = [];
+  let numRows  = 0;
+  let numCols  = 0;
+  let activeEl = null;
+
+  function buildGrid() {
+    gridEl.innerHTML = "";
+    hexGrid = [];
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    numCols = Math.ceil(w / HW) + 4;
+    numRows = Math.ceil(h / RS) + 4;
+
+    for (let r = 0; r < numRows; r++) {
+      const isOdd = r % 2 === 1;
+      const ml    = isOdd ? (-(HW / 2) + HM - HW * 0.1) : (HM - HW * 0.1);
+      const mt    = r === 0 ? ROW_TOP_0 : -(RS * 0.16);
+
+      const rowEl = document.createElement("div");
+      rowEl.className = "hex-row";
+      rowEl.style.cssText = `display:flex;margin-top:${mt}px;margin-left:${ml}px`;
+
+      const rowArr = [];
+      for (let c = 0; c < numCols; c++) {
+        const hex = document.createElement("div");
+        hex.className = "hex";
+        hex.style.cssText = `width:${HW}px;height:${HH}px;margin-left:${HM}px`;
+        rowEl.appendChild(hex);
+        rowArr.push(hex);
+      }
+      gridEl.appendChild(rowEl);
+      hexGrid.push(rowArr);
+    }
+  }
+
+  // ── Find the hex cell under (mx, my) using grid math ─────────────────────
+  // This is O(1) and works regardless of z-index / pointer-events / clip-path.
+  function hexAt(mx, my) {
+    // Estimate row from Y
+    const rEst = Math.round((my - ROW_CY_0) / ROW_STEP);
+
+    let best = null, bestD2 = Infinity;
+
+    for (let dr = -1; dr <= 1; dr++) {
+      const r = rEst + dr;
+      if (r < 0 || r >= numRows) continue;
+      const isOdd = r % 2 === 1;
+
+      // Estimate col from X
+      const cEst = Math.round(isOdd
+        ? (mx + 3.2) / COL_STEP
+        : (mx - 22.8) / COL_STEP);
+
+      const cy = ROW_CY_0 + r * ROW_STEP;
+
+      for (let dc = -1; dc <= 1; dc++) {
+        const c = cEst + dc;
+        if (c < 0 || c >= numCols) continue;
+        const cx = colCX(isOdd, c);
+        const d2 = (mx - cx) ** 2 + (my - cy) ** 2;
+        if (d2 < bestD2) { bestD2 = d2; best = hexGrid[r][c]; }
+      }
+    }
+
+    // Only light the hex if cursor is roughly within the hex bounds
+    const threshold = (HW / 2) ** 2 + (HH / 2) ** 2;
+    return bestD2 < threshold ? best : null;
+  }
+
+  buildGrid();
+  window.addEventListener("resize", () => { activeEl = null; buildGrid(); });
+
+  window.addEventListener("mousemove", function (e) {
+    const hex = hexAt(e.clientX, e.clientY);
+    if (hex === activeEl) return;
+    if (activeEl) activeEl.classList.remove("hex-lit");
+    activeEl = hex;
+    if (activeEl) activeEl.classList.add("hex-lit");
+  }, { passive: true });
+
+  window.addEventListener("mouseleave", function () {
+    if (activeEl) { activeEl.classList.remove("hex-lit"); activeEl = null; }
+  });
+})();
+
+// Navbar scroll-hide / scroll-show — inline styles so nothing can override
+(function () {
+  const navbar = document.querySelector(".navbar");
+  if (!navbar) return;
+
+  navbar.style.transition = "transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease";
+  navbar.style.willChange = "transform";
+
+  let lastY = window.scrollY;
+  let hidden = false;
+  let ticking = false;
+  const HIDE_AFTER = 120;
+  const DELTA = 6;
+
+  function setHidden(h) {
+    if (h === hidden) return;
+    hidden = h;
+    if (h) {
+      navbar.style.setProperty("transform", "translateY(-110%)", "important");
+      navbar.style.setProperty("opacity", "0", "important");
+      navbar.style.setProperty("pointer-events", "none", "important");
+    } else {
+      navbar.style.setProperty("transform", "translateY(0)", "important");
+      navbar.style.setProperty("opacity", "1", "important");
+      navbar.style.setProperty("pointer-events", "auto", "important");
+    }
+  }
+
+  function update() {
+    const y = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+    if (Math.abs(y - lastY) >= DELTA) {
+      setHidden(y > lastY && y > HIDE_AFTER);
+      lastY = y;
+    }
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+  // Capture mode so we catch scroll on whichever element is actually scrolling
+  window.addEventListener("scroll", onScroll, { passive: true, capture: true });
+  document.addEventListener("scroll", onScroll, { passive: true, capture: true });
+  document.addEventListener("wheel", onScroll, { passive: true });
+  document.addEventListener("touchmove", onScroll, { passive: true });
+})();
+
+
+// Cursor orb --------------------------------------------------------------
+const orb = document.querySelector('.cursor-orb');
+
+if (orb && !prefersReducedMotion) {
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+  let currentX = targetX;
+  let currentY = targetY;
+  const easing = 0.12; // 0.05–0.2 is a good range
+
+  window.addEventListener('mousemove', (e) => {
+    targetX = e.clientX;
+    targetY = e.clientY;
+  });
+
+  function animateOrb() {
+    currentX += (targetX - currentX) * easing;
+    currentY += (targetY - currentY) * easing;
+
+    orb.style.transform =
+      `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
+
+    requestAnimationFrame(animateOrb);
+  }
+
+  animateOrb();
+}
+
+// Back-to-top button ----------------------------------------------------------
+(function initScrollUpButton() {
+  const btn = document.querySelector(".scroll-up-btn");
+  if (!btn) return;
+
+  function toggle() {
+    btn.classList.toggle("show", window.scrollY > 500);
+  }
+  window.addEventListener("scroll", toggle, { passive: true });
+  toggle();
+
+  btn.addEventListener("click", () => {
+    if (window.siteLenis) window.siteLenis.scrollTo(0, { duration: 1.4 });
+    else window.scrollTo(0, 0);
+  });
+})();
+
+// ============================================================================
+// Apple-style scroll-driven experience (GSAP + ScrollTrigger + Lenis)
+// ============================================================================
+(function initScrollExperience() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    console.warn("[scroll-fx] GSAP not loaded");
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+
+  // --- Lenis smooth scroll, synced to GSAP ticker ---------------------------
+  let lenis;
+  if (typeof Lenis !== "undefined" && !prefersReducedMotion) {
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+    });
+    window.siteLenis = lenis;
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // Make in-page anchor links scroll smoothly via Lenis
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const id = a.getAttribute("href");
+        if (id && id.length > 1) {
+          const target = document.querySelector(id);
+          if (target) {
+            e.preventDefault();
+            lenis.scrollTo(target, { offset: -60, duration: 1.4 });
+          }
+        }
+      });
+    });
+  }
+
+  // Take over from the legacy `.reveal` once-trigger fade — make those
+  // sections always visible so GSAP `from()` controls the entry.
+  document.querySelectorAll(".reveal").forEach((el) => {
+    el.classList.remove("reveal");
+    el.classList.add("active"); // satisfy any leftover CSS targeting .active
+  });
+
+  // ---- Mobile/desktop split: pinning only on desktop -----------------------
+  const mm = gsap.matchMedia();
+
+  // ===========================================================================
+  // DESKTOP — full pinned experience
+  // ===========================================================================
+  mm.add("(min-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
+    // -------- Hero + About: one shared pin, cross-fade between them -------
+    // Timeline structure (0 -> 1):
+    //   0.00 - 0.35  Hero content fades/scales out
+    //   0.30 - 0.55  About cross-fades in (container + content cascade)
+    //   0.55 - 0.80  About holds at full visibility
+    //   0.80 - 1.00  About fades/scales out, ready for Experience
+    const stage = document.querySelector(".hero-about-stage");
+    if (stage) {
+      const heroAboutTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: stage,
+          start: "top top",
+          end: "+=180%",
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.6,
+        },
+      });
+
+      // Phase 1 — Hero exit
+      heroAboutTl
+        .to(".home .text-1", { y: -40, opacity: 0, ease: "power2.in" }, 0)
+        .to(".home .text-2", { y: -50, scale: 0.92, opacity: 0, ease: "power2.in" }, 0.05)
+        .to(".home .text-3", { y: -30, opacity: 0, ease: "power2.in" }, 0.1)
+        .to('.home a[href="#contact"]', { y: -20, scale: 0.9, opacity: 0, ease: "power2.in" }, 0.1)
+        .to(".scroll-arrow", { opacity: 0, ease: "power1.in" }, 0)
+        .to("#home", { opacity: 0, ease: "power2.in" }, 0.25);
+
+      // Phase 2 — About entry (cross-fades over hero)
+      heroAboutTl
+        .to("#about", { opacity: 1, ease: "power2.out" }, 0.3)
+        .from("#about .title", { y: 40, opacity: 0, ease: "power2.out" }, 0.32)
+        .from("#about .left img", { x: -120, opacity: 0, scale: 0.92, ease: "power2.out" }, 0.36)
+        .from("#about .right .text", { y: 40, opacity: 0, ease: "power2.out" }, 0.4)
+        .from("#about .right p", { y: 40, opacity: 0, ease: "power2.out" }, 0.44)
+        .from("#about .right .linkedin-btn", {
+          y: 25,
+          opacity: 0,
+          stagger: 0.05,
+          ease: "power2.out",
+        }, 0.48);
+
+      // Phase 3 — About exit (fades away as Experience section enters)
+      heroAboutTl
+        .to("#about .left img", { x: -60, opacity: 0, scale: 0.94, ease: "power2.in" }, 0.82)
+        .to("#about .right", { y: -40, opacity: 0, ease: "power2.in" }, 0.84)
+        .to("#about .title", { y: -40, opacity: 0, ease: "power2.in" }, 0.82);
+    }
+
+    // -------- Timeline (Experience): smooth, free, no pinning -------------
+    gsap.utils.toArray(".timeline-wavy-item").forEach((item) => {
+      const isLeft = item.classList.contains("exp-left");
+      gsap.from(item, {
+        x: isLeft ? -100 : 100,
+        opacity: 0,
+        scale: 0.96,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: item,
+          start: "top 85%",
+          end: "top 45%",
+          scrub: 0.9,
+        },
+      });
+    });
+
+    // -------- Skills: free scroll, scrubbed bar fills + radar scale ------
+    const radar = document.getElementById("radar-polygon-group");
+    if (radar) {
+      gsap.from(radar, {
+        scale: 0.7,
+        opacity: 0.2,
+        transformOrigin: "160px 160px",
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#skills",
+          start: "top 80%",
+          end: "top 30%",
+          scrub: 0.8,
+        },
+      });
+    }
+    gsap.utils.toArray(".skill-bar-fill").forEach((bar) => {
+      const target = bar.dataset.skill || 80;
+      gsap.fromTo(
+        bar,
+        { width: "0%" },
+        {
+          width: target + "%",
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: bar,
+            start: "top 90%",
+            end: "top 55%",
+            scrub: 0.8,
+          },
+        }
+      );
+    });
+
+    // -------- Publications: free scroll, card fade-up scrubbed -----------
+    gsap.utils.toArray(".publications .publication").forEach((card) => {
+      gsap.from(card, {
+        y: 80,
+        opacity: 0,
+        scale: 0.95,
+        rotateX: 6,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 92%",
+          end: "top 60%",
+          scrub: 0.7,
+        },
+      });
+    });
+
+    // -------- Projects: free scroll, card fade-up scrubbed ---------------
+    gsap.utils.toArray(".projects .project").forEach((card) => {
+      gsap.from(card, {
+        y: 80,
+        opacity: 0,
+        scale: 0.95,
+        rotateX: 6,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 92%",
+          end: "top 60%",
+          scrub: 0.7,
+        },
+      });
+    });
+
+    // Section titles: fade in early, stay stable through the section,
+    // fade out near the end. Driven by the SECTION's scroll progress,
+    // not the title's own position — so the title can't trigger late.
+    [
+      { sectionId: "#timeline" },
+      { sectionId: "#skills" },
+      { sectionId: "#publications" },
+      { sectionId: "#projects" },
+    ].forEach(({ sectionId }) => {
+      const section = document.querySelector(sectionId);
+      const title = section && section.querySelector(".title");
+      if (!title) return;
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 85%",
+          end: "bottom 15%",
+          scrub: 0.6,
+        },
+      });
+      // 0.00 - 0.08  fade in
+      // 0.08 - 0.90  stable visible
+      // 0.90 - 1.00  fade out
+      tl.from(title, { y: 30, opacity: 0, duration: 0.08, ease: "power2.out" }, 0)
+        .to(title, { y: -30, opacity: 0, duration: 0.10, ease: "power2.in" }, 0.90);
+    });
+
+    // -------- Contact: free scroll, fields cascade in --------------------
+    gsap.from("#contact .title", {
+      y: 30,
+      opacity: 0,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: "#contact .title",
+        start: "top 90%",
+        end: "top 65%",
+        scrub: 0.6,
+      },
+    });
+    gsap.from(
+      ".contact .left .row, .contact .right .text, .contact .right .field, .contact .right .button-area",
+      {
+        y: 40,
+        opacity: 0,
+        stagger: 0.08,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".contact",
+          start: "top 75%",
+          end: "top 35%",
+          scrub: 0.6,
+        },
+      }
+    );
+
+    // -------- Background parallax: hex grid drifts at half speed -----------
+    gsap.to("#hex-grid", {
+      yPercent: 12,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+  });
+
+  // ===========================================================================
+  // MOBILE — simpler fades, no pinning
+  // ===========================================================================
+  mm.add("(max-width: 899px) and (prefers-reduced-motion: no-preference)", () => {
+    gsap.utils
+      .toArray(
+        ".about, .timeline-wavy-item, .skills-content, .project, .publication, .contact"
+      )
+      .forEach((el) => {
+        gsap.from(el, {
+          y: 50,
+          opacity: 0,
+          duration: 0.9,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 88%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      });
+
+    // Skill bars: trigger once when in view
+    gsap.utils.toArray(".skill-bar-fill").forEach((bar) => {
+      const target = bar.dataset.skill || 80;
+      gsap.fromTo(
+        bar,
+        { width: "0%" },
+        {
+          width: target + "%",
+          duration: 1.2,
+          ease: "power2.out",
+          scrollTrigger: { trigger: bar, start: "top 85%" },
+        }
+      );
+    });
+  });
+
+  // ===========================================================================
+  // REDUCED MOTION — no scroll effects, content shown as-is
+  // ===========================================================================
+  mm.add("(prefers-reduced-motion: reduce)", () => {
+    gsap.utils.toArray(".skill-bar-fill").forEach((bar) => {
+      bar.style.width = (bar.dataset.skill || 80) + "%";
+    });
+  });
+
+  // Refresh once everything has settled (images, fonts)
+  window.addEventListener("load", () => ScrollTrigger.refresh());
+})();
