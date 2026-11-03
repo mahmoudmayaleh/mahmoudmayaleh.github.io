@@ -1,3 +1,5 @@
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 // Skill Radar (reintroduced) -------------------------------------------------
 function initSkillRadar() {
   const svg = document.getElementById("skill-radar");
@@ -105,6 +107,12 @@ function initSkillRadar() {
     labelsGroup.appendChild(label);
   });
 
+  if (prefersReducedMotion) {
+    polygon.setAttribute("d", buildPolygonPath(1));
+    outline.setAttribute("d", buildPolygonPath(1));
+    return;
+  }
+
   // Intro animation (expand polygon & grow points)
   const duration = 1300;
   const start = performance.now();
@@ -144,61 +152,16 @@ document.addEventListener("DOMContentLoaded", initSkillRadar);
 
 // jQuery dependent UI logic
 $(document).ready(function () {
-  document.addEventListener("DOMContentLoaded", function () {
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 100 },
-        size: { value: 3 },
-        move: { speed: 2 },
-        color: { value: "#ffffff" },
-        line_linked: { color: "#ffffff" },
-      },
-    });
-  });
 
   window.addEventListener("scroll", function () {
     document.querySelector(".scroll-arrow").style.display =
       window.scrollY > 50 ? "none" : "block";
   });
 
-  // slide-up script
-  $(".scroll-up-btn").click(function () {
-    $("html").animate({ scrollTop: 0 });
-
-    $("html").css("scrollBehavior", "auto");
-  });
-
-  $(".navbar .menu li a").click(function () {
-    $("html").css("scrollBehavior", "smooth");
-  });
-
   // toggle menu/navbar script
   $(".menu-btn").click(function () {
     $(".navbar .menu").toggleClass("active");
     $(".menu-btn i").toggleClass("active");
-  });
-
-  // owl carousel script
-  $(".carousel").owlCarousel({
-    margin: 20,
-    loop: true,
-    autoplay: true,
-    autoplayTimeOut: 2000,
-    autoplayHoverPause: true,
-    responsive: {
-      0: {
-        items: 1,
-        nav: false,
-      },
-      600: {
-        items: 2,
-        nav: false,
-      },
-      1000: {
-        items: 3,
-        nav: false,
-      },
-    },
   });
 
   emailjs.init({ publicKey: "9ikn3t9V_OwCkCodC" });
@@ -228,10 +191,7 @@ $(document).ready(function () {
   //  - Projects: button.view-more-toggle inside .button-row; .view-more-content is sibling of .project-summary (descendant of article.project)
   // Initial hide to prevent flash
   $(".view-more-content").hide();
-  $(".view-more-toggle").attr({
-    "aria-expanded": "false",
-    "aria-controls": "",
-  });
+  $(".view-more-toggle").attr("aria-expanded", "false");
   $(document).on("click", ".view-more-toggle", function () {
     const $btn = $(this);
     let $container = $btn.closest(
@@ -264,125 +224,6 @@ $(document).ready(function () {
     }
   });
 }); // end jQuery ready block
-
-// Sequential neural network animation with gentle bounce and glimmer
-function sequentialNeuralPulse() {
-  const nodeGroups = document.querySelectorAll("#neural-svg .nn-node-group");
-  if (!nodeGroups.length) return;
-
-  let currentNode = 0;
-  const pulseInterval = 800; // ms between pulses
-  const pulseDuration = 1200; // ms for each bounce and glimmer
-
-  function activateNode(index) {
-    if (index >= nodeGroups.length) return;
-
-    const group = nodeGroups[index];
-    const node = group.querySelector(".nn-node");
-    const glow = group.querySelector(".nn-node-glow");
-
-    if (!node || !glow) return;
-
-    // Reset any previous animations
-    node.style.transform = "";
-    node.style.filter = "";
-    glow.style.opacity = "0";
-
-    // Gentle bounce with glimmer animation
-    const startTime = performance.now();
-
-    function animate(time) {
-      const elapsed = time - startTime;
-      const progress = Math.min(elapsed / pulseDuration, 1);
-
-      if (progress < 1) {
-        // Gentle bounce effect (smoother, calmer)
-        const bouncePhase =
-          Math.sin(progress * Math.PI * 2) * Math.exp(-progress * 3);
-        const scale = 1 + bouncePhase * 0.15; // More subtle bounce
-
-        // Glimmer effect with smooth glow
-        const glimmerPhase = Math.sin(progress * Math.PI * 1.5);
-        const glowOpacity = glimmerPhase * 0.6;
-        const brightness = 1 + glimmerPhase * 0.4;
-
-        // Apply gentle transform and glimmer
-        node.style.transform = `scale(${scale})`;
-        node.style.transformOrigin = "center";
-        node.style.filter = `brightness(${brightness})`;
-        glow.style.opacity = Math.max(0, glowOpacity);
-
-        requestAnimationFrame(animate);
-      } else {
-        // Fade out smoothly
-        node.style.transform = "";
-        node.style.filter = "";
-        glow.style.opacity = "0";
-      }
-    }
-
-    requestAnimationFrame(animate);
-  }
-
-  function sequentialActivation() {
-    // Group nodes by layer for proper sequencing
-    const layers = [];
-    nodeGroups.forEach((group) => {
-      const layer = parseInt(group.dataset.layer) || 0;
-      if (!layers[layer]) layers[layer] = [];
-      layers[layer].push(group);
-    });
-
-    let totalDelay = 0;
-
-    layers.forEach((layerNodes, layerIndex) => {
-      layerNodes.forEach((group, nodeIndex) => {
-        const nodeIdx = Array.from(nodeGroups).indexOf(group);
-        setTimeout(() => activateNode(nodeIdx), totalDelay);
-        totalDelay += 200; // Stagger within layer
-      });
-      totalDelay += 400; // Extra delay between layers for calmer effect
-    });
-  }
-
-  // Start sequence and repeat
-  sequentialActivation();
-  setInterval(sequentialActivation, 5000); // Slower repeat for calmness
-}
-document.addEventListener("DOMContentLoaded", sequentialNeuralPulse);
-
-function animateSkillBars() {
-  const bars = document.querySelectorAll(".skill-bar-fill");
-  let animated = false;
-  function checkAndAnimate() {
-    const skillsSection = document.getElementById("skills");
-    if (!skillsSection) return;
-    const rect = skillsSection.getBoundingClientRect();
-    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    const shouldAnimate =
-      isVisible ||
-      skillsSection.classList.contains("active") ||
-      skillsSection.style.opacity === "1";
-    if (shouldAnimate && !animated) {
-      bars.forEach((bar) => {
-        const skill = bar.getAttribute("data-skill");
-        bar.style.width = skill + "%";
-      });
-      animated = true;
-    } else if (!shouldAnimate && animated) {
-      bars.forEach((bar) => {
-        bar.style.width = "0";
-      });
-      animated = false;
-    }
-  }
-  window.addEventListener("scroll", checkAndAnimate);
-  window.addEventListener("resize", checkAndAnimate);
-  setInterval(checkAndAnimate, 500); // fallback for edge cases
-  checkAndAnimate();
-}
-// Skill bars are now driven by GSAP ScrollTrigger (see initScrollExperience).
-// document.addEventListener("DOMContentLoaded", animateSkillBars);
 
 document.addEventListener("DOMContentLoaded", function () {
   // Scroll reveal effect
@@ -421,27 +262,6 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("blur", () => validateInput(input));
   });
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Scroll reveal effect
-  const reveals = document.querySelectorAll(".reveal");
-  function revealOnScroll() {
-    const windowHeight = window.innerHeight;
-    reveals.forEach((el) => {
-      const top = el.getBoundingClientRect().top;
-      if (top < windowHeight - 60) {
-        el.classList.add("active");
-      }
-    });
-  }
-  window.addEventListener("scroll", revealOnScroll);
-  revealOnScroll();
-});
-
-
-// typewriter replaced by CSS flip animation
-
-// Timeline auto-highlight previously removed was reintroduced in enhanced form further below.
 
 // Hexagon Background ----------------------------------------------------------
 (function initHexBackground() {
@@ -609,7 +429,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Cursor orb --------------------------------------------------------------
 const orb = document.querySelector('.cursor-orb');
 
-if (orb) {
+if (orb && !prefersReducedMotion) {
   let targetX = window.innerWidth / 2;
   let targetY = window.innerHeight / 2;
   let currentX = targetX;
@@ -634,6 +454,23 @@ if (orb) {
   animateOrb();
 }
 
+// Back-to-top button ----------------------------------------------------------
+(function initScrollUpButton() {
+  const btn = document.querySelector(".scroll-up-btn");
+  if (!btn) return;
+
+  function toggle() {
+    btn.classList.toggle("show", window.scrollY > 500);
+  }
+  window.addEventListener("scroll", toggle, { passive: true });
+  toggle();
+
+  btn.addEventListener("click", () => {
+    if (window.siteLenis) window.siteLenis.scrollTo(0, { duration: 1.4 });
+    else window.scrollTo(0, 0);
+  });
+})();
+
 // ============================================================================
 // Apple-style scroll-driven experience (GSAP + ScrollTrigger + Lenis)
 // ============================================================================
@@ -646,13 +483,14 @@ if (orb) {
 
   // --- Lenis smooth scroll, synced to GSAP ticker ---------------------------
   let lenis;
-  if (typeof Lenis !== "undefined") {
+  if (typeof Lenis !== "undefined" && !prefersReducedMotion) {
     lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       smoothTouch: false,
     });
+    window.siteLenis = lenis;
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -685,7 +523,7 @@ if (orb) {
   // ===========================================================================
   // DESKTOP — full pinned experience
   // ===========================================================================
-  mm.add("(min-width: 900px)", () => {
+  mm.add("(min-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
     // -------- Hero + About: one shared pin, cross-fade between them -------
     // Timeline structure (0 -> 1):
     //   0.00 - 0.35  Hero content fades/scales out
@@ -721,7 +559,7 @@ if (orb) {
         .from("#about .left img", { x: -120, opacity: 0, scale: 0.92, ease: "power2.out" }, 0.36)
         .from("#about .right .text", { y: 40, opacity: 0, ease: "power2.out" }, 0.4)
         .from("#about .right p", { y: 40, opacity: 0, ease: "power2.out" }, 0.44)
-        .from("#about .right .linkedin-btn, #about .right .cv-btn", {
+        .from("#about .right .linkedin-btn", {
           y: 25,
           opacity: 0,
           stagger: 0.05,
@@ -886,28 +724,12 @@ if (orb) {
         scrub: 1,
       },
     });
-
-    // Timeline section title (the only one not handled inside a pinned tl)
-    const timelineTitle = document.querySelector("#timeline .title");
-    if (timelineTitle) {
-      gsap.from(timelineTitle, {
-        y: 30,
-        opacity: 0,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: timelineTitle,
-          start: "top 90%",
-          end: "top 65%",
-          scrub: 0.6,
-        },
-      });
-    }
   });
 
   // ===========================================================================
   // MOBILE — simpler fades, no pinning
   // ===========================================================================
-  mm.add("(max-width: 899px)", () => {
+  mm.add("(max-width: 899px) and (prefers-reduced-motion: no-preference)", () => {
     gsap.utils
       .toArray(
         ".about, .timeline-wavy-item, .skills-content, .project, .publication, .contact"
@@ -939,6 +761,12 @@ if (orb) {
           scrollTrigger: { trigger: bar, start: "top 85%" },
         }
       );
+    });
+  });
+
+  mm.add("(prefers-reduced-motion: reduce)", () => {
+    gsap.utils.toArray(".skill-bar-fill").forEach((bar) => {
+      bar.style.width = (bar.dataset.skill || 80) + "%";
     });
   });
 
