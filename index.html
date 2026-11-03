@@ -2,19 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Mahmoud Mayaleh — AI Engineer in Paris. Deep learning, NLP, and MLOps projects: LipLingo, sentiment analysis, sales forecasting.">
+    <meta name="description" content="Mahmoud Mayaleh — AI Researcher at LIX, École polytechnique &amp; Inria in Paris. Research on privacy-preserving LLMs, federated learning, and LLM agents: ORION, ATLAS, LipLingo.">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href="https://mayaleh.com/">
-  <title>Mahmoud Mayaleh</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mayaleh.com/">
+    <meta property="og:title" content="Mahmoud Mayaleh — AI Researcher">
+    <meta property="og:description" content="Research on privacy-preserving LLMs, federated learning, and LLM agents at LIX, École polytechnique &amp; Inria.">
+    <meta property="og:image" content="https://mayaleh.com/images/ATLAS_infograph.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+  <title>Mahmoud Mayaleh — AI Researcher</title>
   <link rel="icon" href="images/mayaleh-icon.png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <!-- Person schema-->
     <script type="application/ld+json">
     {
@@ -22,11 +23,17 @@
       "@type": "Person",
       "name": "Mahmoud Mayaleh",
       "url": "https://mayaleh.com/",
-      "jobTitle": "AI Engineer",
-      "email": "mailto:mahmoudmayaleh@gmail.com",
+      "jobTitle": "AI Researcher",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "LIX, École polytechnique",
+        "url": "https://www.lix.polytechnique.fr/"
+      },
+      "email": "mailto:mahmoud@mayaleh.com",
       "sameAs": [
         "https://www.linkedin.com/in/mahmoud-mayaleh/",
-        "https://github.com/mahmoudmayaleh"
+        "https://github.com/mahmoudmayaleh",
+        "https://www.lix.polytechnique.fr/~mayaleh/"
       ]
     }
     </script>
@@ -68,9 +75,9 @@
           <li><a href="#home" class="menu-btn">Home</a></li>
           <li><a href="#about" class="menu-btn">About</a></li>
           <li><a href="#timeline" class="menu-btn">Experience</a></li>
-          <li><a href="#skills" class="menu-btn">Skills</a></li>
           <li><a href="#publications" class="menu-btn">Publications</a></li>
           <li><a href="#projects" class="menu-btn">Projects</a></li>
+          <li><a href="#skills" class="menu-btn">Skills</a></li>
           <li><a href="#contact" class="menu-btn">Contact</a></li>
         </ul>
         <div class="menu-btn">
@@ -116,23 +123,20 @@
             <img src="images/mayaleh-logo-new-transparent-removebg.png" alt="mayaleh logo" />
           </div>
                    <div class="column right">
-            <div class="text">I’m Mahmoud and I’m an AI engineer</div>
+            <div class="text">I’m Mahmoud and I’m an AI Researcher</div>
             <p>
-              AI Engineer with a Master’s in AI, specializing in LLM systems, deep learning, and distributed model training at scale.
-              I build end-to-end AI pipelines — from data and fine-tuning to deployment and MLOps — with research publications in NLP and computer vision.
-              Currently working at the intersection of AI and 6G networks at Telecom SudParis.
+              AI Researcher at LIX, École polytechnique &amp; Inria Saclay (COMETE team), working on privacy-preserving prompts for large language models.
+              I build LLM-based systems, from fine-tuning and federated learning to multi-agent RL, with research published in NLP, federated learning, and 6G networking.
             </p>
               <a
                 class="linkedin-btn"
-                href="https://tr.linkedin.com/in/mahmoud-mayaleh-450510200?trk=profile-badge"
+                href="https://www.linkedin.com/in/mahmoud-mayaleh/"
                 target="_blank" rel="noopener">linkedin</a>
-              <a href="images/Mahmoud-Mayaleh-CV-04-2026.pdf" class="cv-btn" target="_blank" rel="noopener">View CV</a>
-              
+
             </div>
-            
+
           </div>
         </div>
-      </div>
     </section>
     </div>
     <!-- end hero-about-stage -->
@@ -142,15 +146,52 @@
     <h2 class="title">My Journey</h2>
     <div class="timeline-wavy-container">
 
-      <!-- Row 1: Research Engineer (Left) -->
+      <!-- Doctoral Researcher (Left) -->
       <div class="timeline-wavy-item exp-left">
         <div class="timeline-content exp-color-progress left-align">
-          <h3>AI &amp; 6G Network Researcher</h3>
-          <p>Telecom SudParis (SAMOVAR) - Paris</p>
+          <h3>Doctoral Researcher</h3>
+          <p>LIX, École polytechnique &amp; Inria Saclay (COMETE team) - Paris</p>
           <ul class="timeline-bullets">
-            <li>Engineering distributed AI models for intelligent NF placement and migration in multi-domain 6G slicing.</li>
-            <li>Developing multi-agent AI systems for end-to-end slicing optimization under privacy constraints.</li>
-            <li>Implementing RL-based orchestration for dynamic VNF scaling and predictive migration.</li>
+            <li>Researching privacy-preserving methods for LLM prompts.</li>
+          </ul>
+        </div>
+        <div class="timeline-logo-wrapper timeline-logo-pair">
+          <div class="timeline-logo">
+            <a href="https://www.polytechnique.edu" target="_blank" rel="noopener">
+              <img class="logo-contain" src="images/polytechnique.png" alt="École polytechnique logo">
+            </a>
+          </div>
+          <div class="timeline-logo">
+            <a href="https://www.inria.fr" target="_blank" rel="noopener">
+              <img src="images/inria.jpg" alt="Inria logo">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PhD (Right) -->
+      <div class="timeline-wavy-item edu-right">
+        <div class="timeline-logo-wrapper">
+          <div class="timeline-logo">
+            <a href="https://www.polytechnique.edu" target="_blank" rel="noopener">
+              <img class="logo-contain" src="images/polytechnique.png" alt="École polytechnique logo">
+            </a>
+          </div>
+        </div>
+        <div class="timeline-content edu-color-progress right-align">
+          <h3>PhD in Computer Science</h3>
+          <p>École polytechnique, Paris, France</p>
+        </div>
+      </div>
+
+      <!-- Research Engineer (Left) -->
+      <div class="timeline-wavy-item exp-left">
+        <div class="timeline-content exp-color-done left-align">
+          <h3>Research Engineer</h3>
+          <p>Telecom SudParis (Institut Polytechnique de Paris) - Paris</p>
+          <ul class="timeline-bullets">
+            <li>Led the design, implementation, and evaluation of ORION, a hierarchical multi-agent RL framework where an LLM guides network-function placement across 6G domains.</li>
+            <li>Designed an outcome-driven episodic memory that improved slice admission by 4.6–11.5 percentage points over the same planner without memory.</li>
           </ul>
         </div>
         <div class="timeline-logo-wrapper">
@@ -162,14 +203,14 @@
         </div>
       </div>
 
-      <!-- Row 2: Research Intern (Left) -->
+      <!-- Research Intern (Left) -->
       <div class="timeline-wavy-item exp-left">
-        <div class="timeline-content exp-color-progress left-align">
-          <h3>Research Engineer</h3>
+        <div class="timeline-content exp-color-done left-align">
+          <h3>Research Intern</h3>
           <p>CNAM - Paris</p>
           <ul class="timeline-bullets">
-            <li>Researched RDMA + LLM traffic to design scheduling strategies, model topologies, and compute overlaps using ns-3 & SimAI.</li>
-            <li>Simulated GPT workloads (up to 175B on 1024 GPUs) with SimAI to optimize NCCL/RDMA, and prototyped MSCCL collectives for scalability. </li>
+            <li>Modeled LLM communication patterns and scheduling strategies for inference pipelines.</li>
+            <li>Simulated distributed training of GPT-175B on 1,024 GPUs (ns-3, SimAI, NCCL/MSCCL) to study communication and scheduling bottlenecks.</li>
           </ul>
         </div>
         <div class="timeline-logo-wrapper">
@@ -181,7 +222,7 @@
         </div>
       </div>
 
-      <!-- Row 3: Master's (Right) -->
+      <!-- Master's (Right) -->
       <div class="timeline-wavy-item edu-right">
         <div class="timeline-logo-wrapper">
           <div class="timeline-logo">
@@ -190,13 +231,13 @@
             </a>
           </div>
         </div>
-        <div class="timeline-content edu-color-progress right-align">
+        <div class="timeline-content edu-color-done right-align">
           <h3>Master's in Artificial Intelligence for Connected Industries</h3>
           <p>CNAM, Paris, France</p>
         </div>
       </div>
 
-      <!-- Row 4: Back End Developer (Left) -->
+      <!-- Back End Developer (Left) -->
       <div class="timeline-wavy-item exp-left">
         <div class="timeline-content exp-color-done left-align">
           <h3>Back End Developer</h3>
@@ -216,7 +257,7 @@
         </div>
       </div>
 
-      <!-- Row 5: ML Intern (Left) -->
+      <!-- ML Intern (Left) -->
       <div class="timeline-wavy-item exp-left">
         <div class="timeline-content exp-color-done left-align">
           <h3>Machine Learning Intern</h3>
@@ -236,7 +277,7 @@
         </div>
       </div>
 
-      <!-- Row 6: Bachelor's (Right) -->
+      <!-- Bachelor's (Right) -->
       <div class="timeline-wavy-item edu-right">
         <div class="timeline-logo-wrapper">
           <div class="timeline-logo">
@@ -258,84 +299,6 @@
 
 
 
-  <!-- Skills section -->
-  <!-- skills section start -->
-
-<section class="skills reveal" id="skills">
-  <div class="max-width">
-    <h2 class="title">Skills</h2>
-    <!-- (Radar chart removed) -->
-    <div class="skills-content">
-      <div class="column left">
-        <div class="skill-radar-wrapper">
-          <svg id="skill-radar" viewBox="0 0 320 320" width="320" height="320" aria-label="Skill radar" role="img">
-            <defs>
-              <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="var(--accent-glow)" stop-opacity="0.35" />
-                <stop offset="70%" stop-color="var(--accent)" stop-opacity="0.06" />
-                <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
-              </radialGradient>
-              <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
-                <feGaussianBlur stdDeviation="18" result="blur" />
-                <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0 0 0 0.85  0 0 0 0 0.95  0 0 0 0.65 0" />
-              </filter>
-            </defs>
-            <g id="radar-bg">
-              <circle cx="160" cy="160" r="140" fill="url(#radarGlow)" opacity="0.55" />
-            </g>
-            <g id="radar-grid"></g>
-            <g id="radar-polygon-group">
-              <path id="radar-polygon" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent-glow)" stroke-width="2" filter="url(#softGlow)" />
-              <path id="radar-outline" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linejoin="round" />
-            </g>
-            <g id="radar-points"></g>
-            <g id="radar-labels" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="600"></g>
-          </svg>
-        </div>
-        <div class="text">Core stack</div>
-        <p>
-          Applied AI/ML engineer focused on building end-to-end systems—data pipelines, model training/serving, and MLOps.
-          Strong in Python + PyTorch, with hands-on work in NLP and Computer Vision.
-        </p>
-      </div>
-      <div class="column right">
-        <!-- Programming & ML -->
-        <div class="skill">
-          <span class="skill-label">Python</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="92"></div></div>
-        </div>
-        <div class="skill">
-          <span class="skill-label">PyTorch</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="85"></div></div>
-        </div>
-        <div class="skill">
-          <span class="skill-label">HuggingFace Transformers</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="85"></div></div>
-        </div>
-        <div class="skill">
-          <span class="skill-label">NLP &amp; LLMs</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="82"></div></div>
-        </div>
-        <div class="skill">
-          <span class="skill-label">RAG &amp; Vector DBs</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="78"></div></div>
-        </div>
-        <div class="skill">
-          <span class="skill-label">scikit-learn</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="88"></div></div>
-        </div>
-        <div class="skill">
-          <span class="skill-label">Computer Vision (OpenCV)</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="75"></div></div>
-        </div>
-        <div class="skill">
-          <span class="skill-label">MLflow / MLOps</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-skill="80"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 
 <!-- publications section start -->
@@ -343,89 +306,129 @@
   <div class="max-width">
     <h2 class="title">Publications</h2>
 
+    <!-- Newest first. To add a paper, copy an <article> block. -->
     <div class="publications-content">
-      <!-- Card 1 -->
       <article class="publication">
-  <img class="thumb" src="images/bert.png" alt="Visualization from the sentiment augmentation study">
-  <h3>Enhancing Sentiment Classification on Small Datasets through Data Augmentation and Transfer Learning</h3>
-
-  <div class="publication-summary">
-    <span class="summary">
-      This work provides a unified benchmark of Easy Data Augmentation (EDA), back-translation, and contextual token substitution (NLPaug) on low-resource IMDb sentiment data, evaluated with Logistic Regression, Random Forest, and BERT under identical experimental conditions.
-    </span>
-
-    <button class="view-more-toggle" type="button">
-      View more <span class="arrow">▼</span>
-    </button>
-
-    <div class="view-more-content">
-      <div class="publication-abstract">
-        <strong>Abstract:</strong>
-        <p>
-          Small-scale sentiment classification suffers from data scarcity, which limits model generalization. This study systematically compares three text augmentation strategies under a controlled, reproducible framework.
-        </p>
-        <ul>
-          <li><strong>EDA (Easy Data Augmentation)</strong> based on token-level synonym replacement, insertion, deletion, and swapping.</li>
-          <li><strong>Back-translation</strong> using English↔French MarianMT models to create high-fidelity paraphrases.</li>
-          <li><strong>Contextual token substitution (NLPaug-style)</strong> with pre-trained language models for semantics-preserving edits.</li>
-        </ul>
-        <p>
-          <strong>Methods:</strong> Experiments use a 5,000-sample IMDb subset with 100% augmentation, 10-fold cross-validation, and fixed seeds, comparing traditional classifiers (Logistic Regression, Random Forest) and a fine-tuned BERT base model on accuracy, F1, AUC, and effect sizes.
-        </p>
-        <ul>
-          <li>All augmentation strategies yield significant and statistically robust performance gains over non-augmented baselines.</li>
-          <li><strong>Contextual augmentation</strong> delivers the most consistent improvements for BERT, reaching about 97% test accuracy on the augmented setting.</li>
-          <li><strong>EDA and back-translation</strong> provide larger relative gains for traditional models, especially Random Forest, while exhibiting different diversity–cost trade-offs.</li>
-        </ul>
-        <div class="pub-meta">
-          <span><strong>Published in:</strong> Discover Artificial Intelligence (Springer), 2026</span>
+        <div class="publication-head">
+          <div class="publication-info">
+            <h3>ORION: An Outcome-Driven LLM Advisor for RL-Based Multi-Domain 6G Slice Placement</h3>
+            <p class="pub-venue">IEEE MobiWac 2026, co-located with MSWiM 2026</p>
+          </div>
+          <a class="project-btn" href="https://arxiv.org/abs/2610.41563" target="_blank" rel="noopener">Read Paper</a>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <a class="project-btn"
-     href="https://link.springer.com/article/10.1007/s44163-025-00813-9"
-     target="_blank" rel="noopener">
-    Read Publication
-  </a>
-</article>
-
-      <!-- Card 2 -->
-      <article class="publication">
-        <img class="thumb" src="images/liplingo-model.png" alt="LipLingo CNN lip-reading model schematic">
-        <h3>LipLingo: CNN Model for Lip Reading</h3>
         <div class="publication-summary">
-          <span class="summary">LipLingo is a deep learning lip-reading system built on LipNet with enhanced preprocessing and spatio-temporal modeling. It achieves 95% character-level and 87% sentence-level accuracy, showing strong potential for assistive tech and biometrics.</span>
           <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
           <div class="view-more-content">
             <div class="publication-abstract">
-              <strong>Abstract:</strong>
+              <p>
+                Deploying 6G network slices across administrative domains requires an online decision for each arriving request, and this joint problem is NP-hard under continuous arrivals. Experiments on multi-domain topologies show that no fixed planning strategy dominates, which identifies the plan layer as the decisive performance lever.
+              </p>
+              <ul>
+                <li>Two LLM agents translate service intents into structured requests and generate abstract placement plans.</li>
+                <li>A cooperative multi-agent RL coordinator selects the cross-domain partition, treating the plan as a persistent soft prior, while per-domain agents place the functions.</li>
+                <li>An outcome-driven episodic memory feeds verified successes and labelled failures back to the planner.</li>
+                <li>Admission improves by 4.6–11.5 percentage points over the same planner without memory, on held-out topology families.</li>
+              </ul>
+              <div class="pub-meta">
+                <span><strong>Authors:</strong> Mahmoud S. Mayaleh, Fetia Bannour, Nour-El-Houda Yellas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="publication">
+        <div class="publication-head">
+          <div class="publication-info">
+            <h3>ATLAS: Adaptive Task-Aware Federated Learning with Heterogeneous LoRA and Split Learning for Edge LLMs</h3>
+            <p class="pub-venue">AAAI 2026 Fall Symposium on Trustworthy Agentic Systems (TAS 2026)</p>
+          </div>
+          <a class="project-btn" href="https://github.com/mahmoudmayaleh/ATLAS" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+        <div class="publication-summary">
+          <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+          <div class="view-more-content">
+            <div class="publication-abstract">
+              <p>Federated fine-tuning of LLMs across edge devices with different resources, without sharing raw data.</p>
+              <ul>
+                <li><strong>Phase 1:</strong> gradient fingerprinting and task clustering.</li>
+                <li><strong>Phase 2:</strong> device-aware heterogeneous LoRA rank allocation.</li>
+                <li><strong>Phase 3:</strong> split federated learning.</li>
+                <li><strong>Phase 4:</strong> Laplacian regularization for personalization.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="publication">
+        <div class="publication-head">
+          <div class="publication-info">
+            <h3>Enhancing Sentiment Classification on Small Datasets through Data Augmentation and Transfer Learning</h3>
+            <p class="pub-venue">Discover Artificial Intelligence (Springer), 2026</p>
+          </div>
+          <a class="project-btn" href="https://link.springer.com/article/10.1007/s44163-025-00813-9" target="_blank" rel="noopener">Read Paper</a>
+        </div>
+        <div class="publication-summary">
+          <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+          <div class="view-more-content">
+            <div class="publication-abstract">
+              <p>
+                Small-scale sentiment classification suffers from data scarcity, which limits model generalization. This study systematically compares three text augmentation strategies under a controlled, reproducible framework.
+              </p>
+              <ul>
+                <li><strong>EDA (Easy Data Augmentation)</strong> based on token-level synonym replacement, insertion, deletion, and swapping.</li>
+                <li><strong>Back-translation</strong> using English↔French MarianMT models to create high-fidelity paraphrases.</li>
+                <li><strong>Contextual token substitution (NLPaug-style)</strong> with pre-trained language models for semantics-preserving edits.</li>
+              </ul>
+              <p>
+                <strong>Methods:</strong> Experiments use a 5,000-sample IMDb subset with 100% augmentation, 10-fold cross-validation, and fixed seeds, comparing traditional classifiers (Logistic Regression, Random Forest) and a fine-tuned BERT base model on accuracy, F1, AUC, and effect sizes.
+              </p>
+              <ul>
+                <li>All augmentation strategies yield significant and statistically robust performance gains over non-augmented baselines.</li>
+                <li><strong>Contextual augmentation</strong> delivers the most consistent improvements for BERT, reaching about 97% test accuracy on the augmented setting.</li>
+                <li><strong>EDA and back-translation</strong> provide larger relative gains for traditional models, especially Random Forest, while exhibiting different diversity–cost trade-offs.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="publication">
+        <div class="publication-head">
+          <div class="publication-info">
+            <h3>LipLingo: CNN Model for Lip Reading</h3>
+            <p class="pub-venue">arXiv preprint, 2026</p>
+          </div>
+          <a class="project-btn" href="https://arxiv.org/abs/2611.02776" target="_blank" rel="noopener">Read Paper</a>
+        </div>
+        <div class="publication-summary">
+          <button class="view-more-toggle" type="button">View more <span class="arrow">▼</span></button>
+          <div class="view-more-content">
+            <div class="publication-abstract">
               <p>
                 Lip reading plays a crucial role in applications such as speech recognition, assistive technologies for the hearing-impaired, and biometric authentication. However, performance often degrades when the speaker varies, the environment changes, or the speech sounds are visually similar. To overcome these challenges, we propose <strong>LipLingo</strong>:
               </p>
               <ul>
                 <li>Based on the LipNet architecture</li>
                 <li>Enhanced with standardized preprocessing for consistent mouth-region representation</li>
-                <li>Uses rotational validation for better generalization</li>
+                <li>Uses rotational validation for better generalization to unseen speakers</li>
+                <li>Adds a flexible similarity evaluation for more reliable sentence-level assessment</li>
                 <li>Combines 3D convolutional layers (spatio-temporal features) and bidirectional recurrent layers (sequence modeling)</li>
                 <li>Optimized with Adam optimizer and CTC loss</li>
               </ul>
-              <p><strong>Results:</strong></p>
+              <p><strong>Results on the GRID dataset:</strong></p>
               <ul>
-                <li>95% character-level accuracy</li>
-                <li>87% sentence-level accuracy</li>
+                <li>95.0% character-level accuracy (CER 4.99%)</li>
+                <li>87.2% sentence-level accuracy (corpus-level WER 13.1%)</li>
                 <li>Outperforms baseline LipNet</li>
               </ul>
               <div class="pub-meta">
-                <span><strong>Published in:</strong> 2025</span>
+                <span><strong>Authors:</strong> Mahmoud S. Mayaleh, Liban Ali Achkir, Nijat Mehdiyev, Ahmet Ozdil</span>
               </div>
             </div>
           </div>
         </div>
-        <a class="project-btn" href="#" target="_blank" rel="noopener">
-          Read Publication
-        </a>
       </article>
     </div>
   </div>
@@ -441,7 +444,7 @@
         <!-- Project 1: ATLAS -->
         <article class="project">
           <h3>ATLAS: Adaptive Task-aware Federated Learning for LLMs</h3>
-          <img class="project-thumb" src="images/ATLAS_infograph.png" alt="Diagram of federated learning with edge devices">
+          <img class="project-thumb" src="images/ATLAS_infograph.jpg" alt="Diagram of federated learning with edge devices" loading="lazy">
           <div class="project-summary">
             <span class="summary">
               A production-ready federated learning framework that enables efficient, multi-task fine-tuning of large language models across diverse edge devices.
@@ -481,7 +484,7 @@
         <!-- Project 2: Git Commit Multi-Agent -->
         <article class="project">
           <h3>Git Commit Multi-Agent</h3>
-          <img class="project-thumb" src="images/git-commit.png" alt="Diagram of multi-agent AI pipeline for git commits">
+          <img class="project-thumb" src="images/git-commit.jpg" alt="Diagram of multi-agent AI pipeline for git commits" loading="lazy">
           <div class="project-summary">
             <span class="summary">
               AI-powered multi-agent system that generates high-quality conventional Git commit messages from staged diffs using local LLMs.
@@ -522,7 +525,7 @@
         <!-- Project 3: BERT Sentiment Augmentation -->
         <article class="project">
           <h3>Data Augmentation for Low-Resource Sentiment with BERT</h3>
-          <img class="project-thumb" src="images/proj-sentiment.png" alt="Sentiment analysis graph comparing models and augmentation">
+          <img class="project-thumb" src="images/proj-sentiment.jpg" alt="Sentiment analysis graph comparing models and augmentation" loading="lazy">
           <div class="project-summary">
             <span class="summary">
               Published study on data augmentation and transfer learning for sentiment classification in low-resource settings.
@@ -563,7 +566,7 @@
         <!-- Project 4: LipLingo -->
         <article class="project">
           <h3>LipLingo: CNN-Based Lip Reading</h3>
-          <img class="project-thumb" src="images/proj-liplingo.png" alt="Frames of a mouth region used for lip reading">
+          <img class="project-thumb" src="images/proj-liplingo.png" alt="Frames of a mouth region used for lip reading" loading="lazy">
           <div class="project-summary">
             <span class="summary">
               Computer vision model that performs lip reading from video frames for silent speech understanding.
@@ -603,7 +606,7 @@
         <!-- Project 5: Learning Robotics -->
         <article class="project">
           <h3>Deep RL for Autonomous Robot Navigation</h3>
-          <img class="project-thumb" src="images/robot-nav.png" alt="Simulated TurtleBot navigating around obstacles">
+          <img class="project-thumb" src="images/robot-nav.jpg" alt="Simulated TurtleBot navigating around obstacles" loading="lazy">
           <div class="project-summary">
             <span class="summary">
               Deep reinforcement learning for autonomous TurtleBot3 navigation using PPO in ROS 2 and Gazebo.
@@ -644,7 +647,7 @@
         <!-- Project 6: 5G_slicing -->
 <article class="project">
   <h3>5G Network Slicing Sandbox</h3>
-  <img class="project-thumb" src="images/proj-5g.png" alt="5G network diagram with core, gNB, and slices">
+  <img class="project-thumb" src="images/proj-5g.jpg" alt="5G network diagram with core, gNB, and slices" loading="lazy">
   <div class="project-summary">
     <span class="summary">
       Production-style, containerized 5G standalone sandbox demonstrating network slicing with Open5GS (5GC), srsRAN gNB, GNU Radio, and virtual UEs — built for reproducible research and demos.
@@ -664,7 +667,7 @@
           <ul>
             <li>End-to-end 5G SA deployment: Open5GS core (NRF, AMF, SMF, UPF, etc.) + srsRAN gNB + virtual UEs.</li>
             <li>Implements multiple network slices (e.g., eMBB, voice/video, low-latency) with QoS differentiation.</li>
-            <li>Containerized with Docker & docker-compose for reproducible experiments and demos.</li>
+            <li>Containerized with Docker &amp; docker-compose for reproducible experiments and demos.</li>
             <li>GNU Radio + ZeroMQ integration for SDR-based radio processing and multiplexing.</li>
             <li>Includes deployment scripts and CI-ready structure for research or prototype use.</li>
           </ul>
@@ -685,6 +688,84 @@
   </div>
 </article>
 
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- skills section start -->
+
+<section class="skills reveal" id="skills">
+  <div class="max-width">
+    <h2 class="title">Skills</h2>
+    <div class="skills-content">
+      <div class="column left">
+        <div class="skill-radar-wrapper">
+          <svg id="skill-radar" viewBox="0 0 320 320" width="320" height="320" aria-label="Skill radar" role="img">
+            <defs>
+              <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="var(--accent-glow)" stop-opacity="0.35" />
+                <stop offset="70%" stop-color="var(--accent)" stop-opacity="0.06" />
+                <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+              </radialGradient>
+              <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="18" result="blur" />
+                <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0 0 0 0.85  0 0 0 0 0.95  0 0 0 0.65 0" />
+              </filter>
+            </defs>
+            <g id="radar-bg">
+              <circle cx="160" cy="160" r="140" fill="url(#radarGlow)" opacity="0.55" />
+            </g>
+            <g id="radar-grid"></g>
+            <g id="radar-polygon-group">
+              <path id="radar-polygon" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent-glow)" stroke-width="2" filter="url(#softGlow)" />
+              <path id="radar-outline" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linejoin="round" />
+            </g>
+            <g id="radar-points"></g>
+            <g id="radar-labels" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="600"></g>
+          </svg>
+        </div>
+        <div class="text">Core stack</div>
+        <p>
+          Applied AI/ML engineer focused on building end-to-end systems—data pipelines, model training/serving, and MLOps.
+          Strong in Python + PyTorch, with hands-on work in NLP and Computer Vision.
+          Research interests: large language models, privacy-preserving machine learning, differential privacy, federated learning, and LLM agents.
+        </p>
+      </div>
+      <div class="column right">
+        <!-- Programming & ML -->
+        <div class="skill">
+          <span class="skill-label">Python</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-skill="92"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-label">PyTorch</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-skill="85"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-label">HuggingFace Transformers</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-skill="85"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-label">NLP &amp; LLMs</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-skill="82"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-label">RAG &amp; Vector DBs</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-skill="78"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-label">scikit-learn</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-skill="88"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-label">Computer Vision (OpenCV)</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-skill="75"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-label">MLflow / MLOps</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-skill="80"></div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -751,7 +832,7 @@
     <!-- footer section start -->
     <footer>
       <span
-        >By <a href="https://www.linkedin.com/in/mahmoud-mayaleh">Mahmoud Mayaleh</a> |
+        >By <a href="https://www.linkedin.com/in/mahmoud-mayaleh/">Mahmoud Mayaleh</a> |
         <span class="far fa-copyright"></span> 2026 All rights reserved.</span
       >
     </footer>
@@ -760,41 +841,6 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="script.js"></script>
-    <!-- Removed inline duplicate toggle script: logic lives in script.js -->
     
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
