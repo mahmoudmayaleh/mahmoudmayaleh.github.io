@@ -9,8 +9,12 @@
     <meta property="og:url" content="https://mayaleh.com/">
     <meta property="og:title" content="Mahmoud Mayaleh — AI Researcher">
     <meta property="og:description" content="Research on privacy-preserving LLMs, federated learning, and LLM agents at LIX, École polytechnique &amp; Inria.">
-    <meta property="og:image" content="https://mayaleh.com/images/ATLAS_infograph.jpg">
+    <meta property="og:image" content="https://mayaleh.com/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mahmoud Mayaleh, AI Researcher. mayaleh.com">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://mayaleh.com/images/og-image.jpg">
   <title>Mahmoud Mayaleh — AI Researcher</title>
   <link rel="icon" href="images/mayaleh-icon.png" />
   <link rel="stylesheet" href="style.css" />
@@ -69,6 +73,35 @@
     <div class="scroll-up-btn">
       <i class="fas fa-angle-up"></i>
     </div>
+    <div class="robot" aria-hidden="true">
+      <div class="robot-bubble"></div>
+      <span class="robot-z">z</span>
+      <span class="robot-z">z</span>
+      <svg viewBox="0 0 100 100">
+        <g class="robot-body">
+          <polygon points="49,6 93,50 49,95 6,50" />
+          <polygon points="17,16 33,17 17,33" />
+          <polygon points="67,18 84,19 84,33" />
+          <polygon points="15,67 32,84 15,84" />
+          <polygon points="84,67 84,84 67,84" />
+        </g>
+        <g class="robot-eyes">
+          <circle class="robot-eye" cx="37" cy="40" r="8" />
+          <circle class="robot-eye" cx="60" cy="40" r="8" />
+          <g class="robot-pupils">
+            <circle class="robot-pupil" cx="37" cy="40" r="3.5" />
+            <circle class="robot-pupil" cx="60" cy="40" r="3.5" />
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="cmdk" role="dialog" aria-modal="true" aria-label="Search this site" hidden>
+      <div class="cmdk-panel">
+        <input class="cmdk-input" type="text" placeholder="Search papers, projects, skills..." aria-label="Search" role="combobox" aria-expanded="true" aria-controls="cmdk-list" autocomplete="off" spellcheck="false" />
+        <ul class="cmdk-list" id="cmdk-list" role="listbox" data-lenis-prevent></ul>
+        <p class="cmdk-empty" hidden>No matches. Try another word.</p>
+      </div>
+    </div>
     <nav class="navbar">
       <div class="max-width">
         <ul class="menu">
@@ -79,6 +112,7 @@
           <li><a href="#projects" class="menu-btn">Projects</a></li>
           <li><a href="#skills" class="menu-btn">Skills</a></li>
           <li><a href="#contact" class="menu-btn">Contact</a></li>
+          <li><button class="cmdk-open" type="button" aria-label="Search this site">Search <kbd></kbd></button></li>
         </ul>
         <div class="menu-btn">
           <i class="fas fa-bars"></i>
@@ -438,6 +472,26 @@
 <section class="projects reveal" id="projects">
   <div class="max-width">
     <h2 class="title">Projects</h2>
+    <div class="gh-activity" hidden>
+      <div class="gh-head">
+        <span class="gh-total"></span>
+        <a href="https://github.com/mahmoudmayaleh" target="_blank" rel="noopener">View GitHub</a>
+      </div>
+      <a class="gh-status" target="_blank" rel="noopener" hidden><span class="gh-live" aria-hidden="true"></span><span class="gh-status-text"></span></a>
+      <div class="gh-scroll">
+        <div class="gh-graph" role="img"></div>
+      </div>
+      <div class="gh-tip" role="tooltip" hidden></div>
+      <div class="gh-legend" aria-hidden="true">
+        <span class="gh-legend-label">Less</span>
+        <span class="gh-cell gh-level-0"></span>
+        <span class="gh-cell gh-level-1"></span>
+        <span class="gh-cell gh-level-2"></span>
+        <span class="gh-cell gh-level-3"></span>
+        <span class="gh-cell gh-level-4"></span>
+        <span class="gh-legend-label">More</span>
+      </div>
+    </div>
     <div class="projects-content">
       <div class="projects-grid">
 
@@ -841,6 +895,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="script.js"></script>
+    <!-- Removed inline duplicate toggle script: logic lives in script.js -->
     
   </body>
 </html>
